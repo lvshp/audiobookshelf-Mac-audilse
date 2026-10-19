@@ -126,10 +126,10 @@ struct ServerScanCancellation: Identifiable, Sendable {
         // HTTP remains usable even if the realtime channel fails to connect.
         await withTaskCancellationHandler(operation: {
             await refresh(store: store, source: expected)
-        }, onCancel: { [weak self] in
-            Task { @MainActor in
-                guard self?.generation == attempt else { return }
-                self?.cancel()
+        }, onCancel: { [self] in
+            Task { @MainActor [self] in
+                guard generation == attempt else { return }
+                cancel()
             }
         })
     }

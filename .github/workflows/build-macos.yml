@@ -24,7 +24,7 @@ jobs:
       VLC_BUNDLE_URL: ${{ secrets.VLC_BUNDLE_URL }}
       VLC_BUNDLE_SHA256: ${{ vars.VLC_BUNDLE_SHA256 }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: Check runner and dependency configuration
@@ -68,7 +68,7 @@ jobs:
           cp build/ci-inputs/Audilse-vlc-dependencies.tar.gz build/ci-output/
           (cd build/ci-output && shasum -a 256 Audilse-source.tar.gz Audilse-vlc-dependencies.tar.gz > SOURCE-SHA256SUMS.txt)
       - name: Upload build and corresponding VLC materials
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Audilse-arm64-${{ github.run_number }}
           path: build/ci-output/
@@ -83,7 +83,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: Audilse-arm64-${{ github.run_number }}
           path: release-assets
