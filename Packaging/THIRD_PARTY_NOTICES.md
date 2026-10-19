@@ -1,8 +1,8 @@
 # Third-party components
 
-Updated 2026-10-19. The PolyForm Noncommercial License 1.0.0 covers only original Audilse project material for which its licensors hold the necessary rights. It does not restrict or replace any third-party license. Each dependency retains its own copyright and license. This document accompanies the exact license texts; it does not replace them.
+Updated 2026-10-19. The MIT License covers only original Audilse project material for which its licensors hold the necessary rights. It does not restrict or replace any third-party license. Each dependency retains its own copyright and license. This document accompanies the exact license texts; it does not replace them.
 
-Required Notice: Copyright (c) 2026 Audilse contributors
+Copyright (c) 2026 Audilse contributors
 
 | Component | Fixed version or source | License basis |
 | --- | --- | --- |

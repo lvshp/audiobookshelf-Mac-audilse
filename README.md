@@ -4,6 +4,8 @@
 
 <h1 align="center">Audilse</h1>
 
+<p align="center">简体中文 · <a href="README.en.md">English</a></p>
+
 <p align="center">在 Mac 上收听你的 Audiobookshelf 书库。</p>
 
 <p align="center">
@@ -104,9 +106,7 @@ bash scripts/test.sh
 
 ## 许可证
 
-项目原创部分采用 [PolyForm Noncommercial License 1.0.0](LICENSE)，允许按条款进行非商业使用、修改和分发。许可用途及非商业组织的适用范围见 [协议原文](https://polyformproject.org/licenses/noncommercial/1.0.0)。
-
-这是限制商业用途的源码可用许可证，不属于 OSI 认可的开源许可证。历史发布版本以其随附的 LICENSE 为准。
+项目原创部分采用 [MIT 开源许可证](LICENSE)。
 
 第三方组件遵循各自的许可证，详见 [第三方声明](Packaging/THIRD_PARTY_NOTICES.md)。分发包含 VLC 的应用时，请同时提供 [对应源码与许可材料](Packaging/VLC_DISTRIBUTION.md)。
 
