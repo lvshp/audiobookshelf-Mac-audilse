@@ -976,8 +976,9 @@ public final class PlaybackController {
         guard ownsSystemMediaControls, let ownerToken = systemMediaControlToken, let url = media.coverURL else { return }
         artworkTask = Task { [weak self] in
             guard let (data, _) = try? await URLSession.shared.data(from: url), !Task.isCancelled,
-                  let self, self.generation == operation, self.ownsSystemMediaControls, self.systemMediaControlToken == ownerToken, let image = NSImage(data: data) else { return }
-            self.nowPlayingArtwork = MPMediaItemArtwork(boundsSize: image.size) { _ in image }
+                  let self, self.generation == operation, self.ownsSystemMediaControls, self.systemMediaControlToken == ownerToken,
+                  let artwork = NowPlayingArtworkFactory.make(data: data) else { return }
+            self.nowPlayingArtwork = artwork
             self.updateNowPlaying()
         }
     }
@@ -1040,27 +1041,25 @@ public final class PlaybackController {
         guard ownsSystemMediaControls, let token = systemMediaControlToken else { return }
         let center = MPRemoteCommandCenter.shared()
         func command(_ remote: MPRemoteCommand, _ action: PlaybackSystemMediaCommand) {
-            let target = remote.addTarget { [weak self] _ in
-                Task { @MainActor in self?.enqueueSystemMediaCommand(action, token: token) }
-                return .success
+            let handler = SystemMediaCommandHandler.make(extract: { (_: MPRemoteCommandEvent) in action }) { [weak self] command in
+                self?.enqueueSystemMediaCommand(command, token: token)
             }
+            let target = remote.addTarget(handler: handler)
             remoteTargets.append((remote, target))
         }
         command(center.playCommand, .play); command(center.pauseCommand, .pause)
         command(center.togglePlayPauseCommand, .toggle); command(center.nextTrackCommand, .next)
         command(center.skipForwardCommand, .forward); command(center.skipBackwardCommand, .backward)
         configureRemoteCommands(jumpForward: jumpForwardAmount, jumpBackward: jumpBackwardAmount, rateStep: remoteRateStep)
-        let positionTarget = center.changePlaybackPositionCommand.addTarget { [weak self] event in
-            guard let event = event as? MPChangePlaybackPositionCommandEvent else { return .commandFailed }
-            let position = event.positionTime
-            Task { @MainActor in self?.enqueueSystemMediaCommand(.seek(position), token: token) }; return .success
-        }
+        let positionTarget = center.changePlaybackPositionCommand.addTarget(handler: SystemMediaCommandHandler.make(extract: { event in
+            guard let event = event as? MPChangePlaybackPositionCommandEvent else { return nil }
+            return .seek(event.positionTime)
+        }) { [weak self] command in self?.enqueueSystemMediaCommand(command, token: token) })
         remoteTargets.append((center.changePlaybackPositionCommand, positionTarget))
-        let rateTarget = center.changePlaybackRateCommand.addTarget { [weak self] event in
-            guard let event = event as? MPChangePlaybackRateCommandEvent else { return .commandFailed }
-            let rate = event.playbackRate
-            Task { @MainActor in self?.enqueueSystemMediaCommand(.rate(rate), token: token) }; return .success
-        }
+        let rateTarget = center.changePlaybackRateCommand.addTarget(handler: SystemMediaCommandHandler.make(extract: { event in
+            guard let event = event as? MPChangePlaybackRateCommandEvent else { return nil }
+            return .rate(event.playbackRate)
+        }) { [weak self] command in self?.enqueueSystemMediaCommand(command, token: token) })
         remoteTargets.append((center.changePlaybackRateCommand, rateTarget))
     }
     private func observeSleep() {
