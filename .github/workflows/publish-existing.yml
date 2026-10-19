@@ -1,0 +1,82 @@
+name: Publish a verified build
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Successful Build Audilse run ID
+        required: true
+        type: string
+      tag:
+        description: Existing version tag pointing to the tested commit
+        required: true
+        type: string
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: publish-${{ inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Verify successful build and version tag
+        id: build
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ inputs.run_id }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$RUN_ID" =~ ^[0-9]+$ ]]
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          gh api "repos/$GH_REPO/actions/runs/$RUN_ID" > "$RUNNER_TEMP/run.json"
+          jq -e '.conclusion == "success" and .path == ".github/workflows/build-macos.yml" and (.event == "workflow_dispatch" or .event == "push")' "$RUNNER_TEMP/run.json"
+          BUILD_SHA=$(jq -r .head_sha "$RUNNER_TEMP/run.json")
+          TAG_SHA=$(gh api "repos/$GH_REPO/commits/$RELEASE_TAG" --jq .sha)
+          test "$BUILD_SHA" = "$TAG_SHA"
+          RUN_NUMBER=$(jq -r .run_number "$RUNNER_TEMP/run.json")
+          echo "artifact=Audilse-arm64-$RUN_NUMBER" >> "$GITHUB_OUTPUT"
+      - name: Download the verified build
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: ${{ steps.build.outputs.artifact }}
+          path: release-assets
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ github.token }}
+      - name: Verify assets and publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd release-assets
+          sha256sum -c SOURCE-SHA256SUMS.txt
+          shopt -s nullglob
+          DMGS=(Audilse-*-arm64.dmg)
+          test "${#DMGS[@]}" = 1
+          DMG="${DMGS[0]}"
+          [[ "$DMG" == "Audilse-${RELEASE_TAG#v}-build"*"-arm64.dmg" ]]
+          EXPECTED=$(awk '{print $1}' "$DMG.sha256")
+          [[ "$EXPECTED" =~ ^[0-9a-f]{64}$ ]]
+          printf '%s  %s\n' "$EXPECTED" "$DMG" | sha256sum -c -
+          cat > "$RUNNER_TEMP/release-notes.md" <<'NOTES'
+          Audiobookshelf 的原生 macOS 客户端，适用于 Apple Silicon（M 系列），需要 macOS 14 或更新版本。
+
+          下载 DMG，将 Audilse 拖入 Applications。支持有声书在线与离线收听、章节跳转、进度同步、播客订阅、电子书阅读和服务器管理，提供简体中文与 English。
+
+          包含 HLS 缓冲与章节跳转修复，以及 VLC 在 macOS 27 之前系统上的兼容性修复。
+
+          安装包采用 ad-hoc 签名，未经过 Apple 公证。项目原创部分仅限非商业使用；第三方组件保留各自许可证。附件同时提供项目源码、VLC 对应源码材料、许可声明及校验值。
+          NOTES
+          gh release create "$RELEASE_TAG" ./* --verify-tag \
+            --title "Audilse ${RELEASE_TAG#v}" --notes-file "$RUNNER_TEMP/release-notes.md" --latest
