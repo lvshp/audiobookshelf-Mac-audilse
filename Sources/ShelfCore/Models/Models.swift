@@ -300,7 +300,7 @@ public struct DeviceInfo: Codable, Hashable, Sendable {
     public var model: String
     public var deviceId: String
     public var clientName: String
-    public init(deviceId: String, clientVersion: String = "0.1.0", manufacturer: String = "Apple", model: String = "Mac", clientName: String = "Audisle") { self.deviceId = deviceId; self.clientVersion = clientVersion; self.manufacturer = manufacturer; self.model = model; self.clientName = clientName }
+    public init(deviceId: String, clientVersion: String = "1.0.0", manufacturer: String = "Apple", model: String = "Mac", clientName: String = "Audisle") { self.deviceId = deviceId; self.clientVersion = clientVersion; self.manufacturer = manufacturer; self.model = model; self.clientName = clientName }
 }
 
 public struct LocalPlaybackSession: Codable, Hashable, Sendable, Identifiable {

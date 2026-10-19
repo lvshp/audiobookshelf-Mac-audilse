@@ -257,7 +257,7 @@ public actor ABSClient {
         try Task.checkCancellation()
         var request = URLRequest(url: try resourceURL(path: "api/me"))
         request.setValue("Bearer \(access)", forHTTPHeaderField: "Authorization")
-        request.setValue("Audisle/0.1.0 (macOS)", forHTTPHeaderField: "User-Agent")
+        request.setValue("Audisle/1.0.0 (macOS)", forHTTPHeaderField: "User-Agent")
         // No fallback to the pre-restore token and no automatic refresh/replay.
         let data = try await perform(request, using: session)
         try requireActive(generation: expectedGeneration)
@@ -382,7 +382,7 @@ public actor ABSClient {
         try requireActive(generation: expectedGeneration)
         var request = URLRequest(url: try resourceURL(path: path)); request.httpMethod = method.uppercased(); request.httpBody = body
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        request.setValue("Audisle/0.1.0 (macOS)", forHTTPHeaderField: "User-Agent")
+        request.setValue("Audisle/1.0.0 (macOS)", forHTTPHeaderField: "User-Agent")
         if body != nil { request.setValue("application/json", forHTTPHeaderField: "Content-Type") }
         return request
     }

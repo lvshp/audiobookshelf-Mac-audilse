@@ -21,8 +21,8 @@ private final class SettingsGapResponses: @unchecked Sendable {
     private var handler: (@Sendable (URLRequest) throws -> Data)?
     func install(_ value: @escaping @Sendable (URLRequest) throws -> Data) { lock.withLock { handler = value } }
     func respond(_ request: URLRequest) throws -> Data {
-        let handler = lock.withLock { handler }
-        return try handler!(request)
+        let responseHandler = lock.withLock { self.handler }
+        return try responseHandler!(request)
     }
 }
 private func settingsGapBody(_ request: URLRequest) -> Data {

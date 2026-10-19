@@ -48,7 +48,7 @@
 "%1$@需要 Audiobookshelf %2$@ 或更高版本。" = "%1$@ requires Audiobookshelf %2$@ or later.";
 "%1$@；本地保存失败：%2$@" = "%1$@; local save failed: %2$@";
 "0 项" = "0 items";
-"0.1.0 · 原生 macOS 客户端" = "0.1.0 · Native macOS client";
+"1.0.0 · 原生 macOS 客户端" = "1.0.0 · Native macOS client";
 "12 小时制（h:mma）" = "12-hour time (h:mma)";
 "24 小时制（HH:mm）" = "24-hour time (HH:mm)";
 "API Key 管理" = "API key management";

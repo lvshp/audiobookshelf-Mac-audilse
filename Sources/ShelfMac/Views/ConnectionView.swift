@@ -210,7 +210,7 @@ struct PreferencesView: View {
                     .disabled(store.partition == nil || store.user?.isActive != true || store.isConnecting)
             }
             Section(L10n.tr("关于")) {
-                LabeledContent("Audisle", value: L10n.tr("0.1.0 · 原生 macOS 客户端"))
+                LabeledContent("Audisle", value: L10n.tr("1.0.0 · 原生 macOS 客户端"))
                 Text(L10n.tr("所有内容来自你连接的 Audiobookshelf 服务器。离线内容保存在此 Mac。"))
                     .font(.caption).foregroundStyle(.secondary)
             }
