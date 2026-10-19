@@ -15,8 +15,8 @@ cp "$BIN_DIR/ShelfMac" "$APP_PATH/Contents/MacOS/ShelfMac"
 cp Packaging/Info.plist "$APP_PATH/Contents/Info.plist"
 ditto Packaging/Licenses "$APP_PATH/Contents/Resources/Licenses"
 cp LICENSE "$APP_PATH/Contents/Resources/Audisle-LICENSE.txt"
-cp docs/THIRD_PARTY_NOTICES.md "$APP_PATH/Contents/Resources/THIRD_PARTY_NOTICES.md"
-cp docs/VLC_DISTRIBUTION.md "$APP_PATH/Contents/Resources/VLC_DISTRIBUTION.md"
+cp Packaging/THIRD_PARTY_NOTICES.md "$APP_PATH/Contents/Resources/THIRD_PARTY_NOTICES.md"
+cp Packaging/VLC_DISTRIBUTION.md "$APP_PATH/Contents/Resources/VLC_DISTRIBUTION.md"
 if [[ -d "$BIN_DIR/ShelfMac_ShelfMac.bundle" ]]; then
   ditto "$BIN_DIR/ShelfMac_ShelfMac.bundle" "$APP_PATH/Contents/Resources/ShelfMac_ShelfMac.bundle"
 fi

@@ -36,3 +36,6 @@ TestServers/config/
 !.env.example
 __pycache__/
 *.pyc
+
+# Project notes and acceptance records remain local only.
+/docs/

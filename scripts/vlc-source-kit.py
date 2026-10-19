@@ -273,7 +273,7 @@ def main():
                         if path.exists():
                             archive.add(path, arcname=name, filter=lambda member: None if ".git" in PurePosixPath(member.name).parts else member)
                     for name in ["Packaging/VLC/source-lock.json", "Packaging/Licenses/VLCKit-LGPL-2.1.txt",
-                                 "docs/VLC_DISTRIBUTION.md", "docs/THIRD_PARTY_NOTICES.md", "LICENSE",
+                                 "Packaging/VLC_DISTRIBUTION.md", "Packaging/THIRD_PARTY_NOTICES.md", "LICENSE",
                                  "scripts/vlc-source-kit.py", "scripts/vlc-source-kit.sh"]:
                         archive.add(PROJECT / name, arcname=name)
                 temporary.replace(target)

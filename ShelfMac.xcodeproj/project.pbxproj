@@ -1,7 +1,7 @@
 // !$*UTF8*$!
 { archiveVersion = 1; classes = {}; objectVersion = 60; objects = {
 00F209874A1F7309F6DCEAA7 = { isa = XCBuildConfiguration; buildSettings = { SDKROOT = "macosx"; MACOSX_DEPLOYMENT_TARGET = "14.0"; SWIFT_VERSION = "6.0"; CLANG_ENABLE_MODULES = "YES"; SWIFT_OPTIMIZATION_LEVEL = "-O"; ONLY_ACTIVE_ARCH = "NO"; }; name = Release; };
-0189424A5A60FED329FA868E = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (C72924BFC29B7C9B3AD8DE4C, D25713ECEF86A89F07BB9E17, 95F511CBF89C950DC757585F, 91E262619FF56700A3B99B0E, 5A21DAF7238C33DF9F6F58F6, A4AA0728B4054FF71D1FA1FC, 6D534FA299A57611921B468A,); runOnlyForDeploymentPostprocessing = 0; };
+0189424A5A60FED329FA868E = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (C72924BFC29B7C9B3AD8DE4C, D25713ECEF86A89F07BB9E17, 95F511CBF89C950DC757585F, 91E262619FF56700A3B99B0E, 8A67CD99840FD6B2CC3E0BDD, 6EDD600EB0AA2A00BBE7D618, 6D534FA299A57611921B468A,); runOnlyForDeploymentPostprocessing = 0; };
 03503A89A0A5EE5DA5ABA052 = { isa = PBXBuildFile; fileRef = 87C0E60B07B25ACF27E93F85; };
 0398CCD0F49298B10A3D76A4 = { isa = PBXFileReference; lastKnownFileType = file; path = "LICENSE"; sourceTree = SOURCE_ROOT; };
 04E8F13A93BC123682B7F112 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Search/LibrarySearchActions.swift"; sourceTree = SOURCE_ROOT; };
@@ -60,7 +60,6 @@
 582681C2EAE02B3F3D399C0C = { isa = XCLocalSwiftPackageReference; relativePath = "."; };
 586E345F0137180FB27BB477 = { isa = PBXBuildFile; fileRef = 89C1F67FAF455AE0955AD3B4; };
 59CDE431A8DAFB0AC41C815E = { isa = PBXBuildFile; fileRef = 3553DC0351A4E146C0FD19CA; };
-5A21DAF7238C33DF9F6F58F6 = { isa = PBXBuildFile; fileRef = 7A308FFCDC81AC32FDBF362E; };
 5A770B915CB6CABDE6546DD6 = { isa = PBXBuildFile; fileRef = 8675991E8095C32594EC7CD6; };
 5ADC25CE18F23C01B2F9D925 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Narrators/NarratorDirectoryModel.swift"; sourceTree = SOURCE_ROOT; };
 5B7B2E521539994E95417FD7 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/PublicSharing/PublicShareExportCoordinator.swift"; sourceTree = SOURCE_ROOT; };
@@ -82,10 +81,10 @@
 6CA6486802269059AFCB39A0 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/ServerAdmin/ServerRecoveryView.swift"; sourceTree = SOURCE_ROOT; };
 6D08A010ACF8E4EDE2EE6AFF = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/AuthorManagement/AuthorManagementView.swift"; sourceTree = SOURCE_ROOT; };
 6D534FA299A57611921B468A = { isa = PBXBuildFile; fileRef = F8995BA5891B07E328C60D6B; };
+6EDD600EB0AA2A00BBE7D618 = { isa = PBXBuildFile; fileRef = 9235130FBBBA0FB1012BFB32; };
 72418B11231A41A2A0BC4F14 = { isa = PBXBuildFile; fileRef = A550982FE9E877FD7B95F160; };
 72573B9BE3FB0FADDA0F1E8A = { isa = PBXBuildFile; fileRef = E03411054F90E160267D2007; };
 72BF5C00FF6E547E50ABCFD6 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Design/SheetCloseButton.swift"; sourceTree = SOURCE_ROOT; };
-7313F1779221BC26E03C8BEF = { isa = PBXFileReference; lastKnownFileType = file; path = "docs/VLC_DISTRIBUTION.md"; sourceTree = SOURCE_ROOT; };
 732CCEA37DCEF7C5405535FE = { isa = PBXBuildFile; fileRef = 75711F377131BD65A92D86EE; };
 742A1ECAC5B15EEF8B058F22 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Reading/ReaderModel.swift"; sourceTree = SOURCE_ROOT; };
 746F09FA3DE8A6A9107F2EBF = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Design/LeadingTextFieldStyle.swift"; sourceTree = SOURCE_ROOT; };
@@ -95,7 +94,6 @@
 75711F377131BD65A92D86EE = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Views/ConnectionView.swift"; sourceTree = SOURCE_ROOT; };
 77D680D95D846132D05F1FE9 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Podcasts/PodcastAccountSession.swift"; sourceTree = SOURCE_ROOT; };
 7A0A687E817C56CE86067C5B = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Reading/ReaderView.swift"; sourceTree = SOURCE_ROOT; };
-7A308FFCDC81AC32FDBF362E = { isa = PBXFileReference; lastKnownFileType = file; path = "docs/THIRD_PARTY_NOTICES.md"; sourceTree = SOURCE_ROOT; };
 7CFBC1587571FC8AC611D210 = { isa = PBXBuildFile; fileRef = 6B9BDF3A366B386FBF749FAF; };
 7D1043473D55BFA90E8530D3 = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShelfMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 7DA99E28189C6843E5E28539 = { isa = PBXBuildFile; fileRef = CD2727997CF61C1FA98E996B; };
@@ -110,6 +108,7 @@
 87C0E60B07B25ACF27E93F85 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Management/ContentManagementModel.swift"; sourceTree = SOURCE_ROOT; };
 87C970EC1BA48E1F3D384C32 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Features/YearReviewGallery.swift"; sourceTree = SOURCE_ROOT; };
 89C1F67FAF455AE0955AD3B4 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/ServerAdmin/ServerSettingOptions.swift"; sourceTree = SOURCE_ROOT; };
+8A67CD99840FD6B2CC3E0BDD = { isa = PBXBuildFile; fileRef = E4FB406F52E4C7E041ADF11D; };
 8A93FF03AC5F76E36F96DD1F = { isa = PBXBuildFile; fileRef = C1808B36BD74E356D790CD2E; };
 8AD273AF60E84E3C4D4E542D = { isa = PBXBuildFile; fileRef = 746F09FA3DE8A6A9107F2EBF; };
 8BCD913F5689B1F0168A3A4A = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Podcasts/PodcastLibraryView.swift"; sourceTree = SOURCE_ROOT; };
@@ -120,6 +119,7 @@
 90A7AD486C78365ACCC03C3D = { isa = PBXBuildFile; fileRef = 6343883CE970E6AF593B59D1; };
 9120EDF1EFC01359A91A3529 = { isa = PBXBuildFile; fileRef = 72BF5C00FF6E547E50ABCFD6; };
 91E262619FF56700A3B99B0E = { isa = PBXBuildFile; fileRef = 0398CCD0F49298B10A3D76A4; };
+9235130FBBBA0FB1012BFB32 = { isa = PBXFileReference; lastKnownFileType = file; path = "Packaging/VLC_DISTRIBUTION.md"; sourceTree = SOURCE_ROOT; };
 92D0BEF7191E21015DABD40D = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Personal/AllDevicesSignOutView.swift"; sourceTree = SOURCE_ROOT; };
 9320E5F267A0FFECD4FC6FBD = { isa = PBXBuildFile; fileRef = 756675B2C6CCAB7E46E8FBFF; };
 93A71BCFC35A1FFCC86C9625 = { isa = PBXBuildFile; fileRef = 9AABC6A8AB2C9712EDE5F289; };
@@ -133,11 +133,10 @@
 9AABC6A8AB2C9712EDE5F289 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Library/LibraryStatisticsModel.swift"; sourceTree = SOURCE_ROOT; };
 9B026E11239BB8DC4302DE9C = { isa = PBXBuildFile; fileRef = 05062001802B51FC18174F04; };
 9C8B5A0F0E2BDE8977B3948D = { isa = PBXBuildFile; fileRef = 40A5965AE6B6B5DB5C2398E8; };
-9D8AE853B3291004D3E76343 = { isa = PBXGroup; children = (5F8315E66E6254402A74E558, 61742F0E895CB17D68FF9A56, 0C4C23841971F50B4AF1D05B, 0398CCD0F49298B10A3D76A4, 7A308FFCDC81AC32FDBF362E, 7313F1779221BC26E03C8BEF, F8995BA5891B07E328C60D6B,); name = Resources; sourceTree = "<group>"; };
+9D8AE853B3291004D3E76343 = { isa = PBXGroup; children = (5F8315E66E6254402A74E558, 61742F0E895CB17D68FF9A56, 0C4C23841971F50B4AF1D05B, 0398CCD0F49298B10A3D76A4, E4FB406F52E4C7E041ADF11D, 9235130FBBBA0FB1012BFB32, F8995BA5891B07E328C60D6B,); name = Resources; sourceTree = "<group>"; };
 A2E99D02EF83436F593CEE4C = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Library/LibraryBrowseNavigation.swift"; sourceTree = SOURCE_ROOT; };
 A34D657FF36254D921930E74 = { isa = PBXBuildFile; fileRef = A427412952174354039829EE; };
 A427412952174354039829EE = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Management/LibraryManagementView.swift"; sourceTree = SOURCE_ROOT; };
-A4AA0728B4054FF71D1FA1FC = { isa = PBXBuildFile; fileRef = 7313F1779221BC26E03C8BEF; };
 A5296793EAF3DDF4DE594B54 = { isa = PBXBuildFile; fileRef = DDB4F99D3090E2DC2E5E71F2; };
 A550982FE9E877FD7B95F160 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Views/PlayerBar.swift"; sourceTree = SOURCE_ROOT; };
 A63928F21712E0261414F068 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/ContinueListening/ContinueListeningView.swift"; sourceTree = SOURCE_ROOT; };
@@ -197,6 +196,7 @@ E350C4524783EFD7E2648AFB = { isa = PBXFileReference; lastKnownFileType = sourcec
 E4110EAE0C17424968499B3D = { isa = PBXBuildFile; fileRef = A7EE1629E6E8FD8C5FA1CF88; };
 E442FFF03D8B39CA0AF4C8A9 = { isa = PBXBuildFile; fileRef = 469122025E2BA102DEFB453D; };
 E4B5118EDA5ECC6AEFCD0DEA = { isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputPaths = (); outputPaths = (); runOnlyForDeploymentPostprocessing = 0; alwaysOutOfDate = 1; name = "Verify bundled audio decoder"; shellPath = "/bin/bash"; shellScript = "set -euo pipefail\nbash \"$SRCROOT/scripts/prepare-vlc.sh\"\n"; };
+E4FB406F52E4C7E041ADF11D = { isa = PBXFileReference; lastKnownFileType = file; path = "Packaging/THIRD_PARTY_NOTICES.md"; sourceTree = SOURCE_ROOT; };
 E539D245D56BC873E9AC65FC = { isa = PBXBuildFile; fileRef = B186D2710CFBA7DFD5A2DEA4; };
 E5B6C74283F807A7912EE95D = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/ShelfMac/Podcasts/PodcastManagementView.swift"; sourceTree = SOURCE_ROOT; };
 E5B721917AA47714CA597A0E = { isa = PBXBuildFile; fileRef = 395DE7BA8D7A197B237B1ACC; };

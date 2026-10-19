@@ -44,9 +44,11 @@ Audisle 是使用 Swift、SwiftUI 和 AppKit 编写的原生 macOS 客户端，�
 | 芯片 | Apple Silicon（M 系列） |
 | 服务器 | Audiobookshelf 2.26+；功能适配基线为 2.37.1 |
 
-安装包由 [GitHub Actions](https://github.com/lvshp/audiobookshelf-Mac-audilse/actions/workflows/build-macos.yml) 构建。打开一次成功的运行，在 **Artifacts** 中下载 `Audisle-arm64-…`，解压后打开 DMG，将 **Audisle.app** 拖入 **Applications**。
+优先从 [Releases](https://github.com/lvshp/audiobookshelf-Mac-audilse/releases/latest) 下载 DMG。
 
-如果还没有成功的构建，仓库维护者需要先按 [自动打包说明](docs/GITHUB_ACTIONS.md) 配置 VLC 依赖。
+安装包也由 [GitHub Actions](https://github.com/lvshp/audiobookshelf-Mac-audilse/actions/workflows/build-macos.yml) 构建。打开一次成功的运行，在 **Artifacts** 中下载 `Audisle-arm64-…`，解压后打开 DMG，将 **Audisle.app** 拖入 **Applications**。
+
+如果还没有成功的构建，仓库维护者需要先按 [自动打包说明](BUILDING.md) 配置 VLC 依赖。
 
 应用使用 ad-hoc 签名，尚未经过 Apple 公证。首次打开可能需要在 macOS「系统设置 → 隐私与安全性」中确认允许打开。
 
@@ -68,7 +70,7 @@ Audisle 是使用 Swift、SwiftUI 和 AppKit 编写的原生 macOS 客户端，�
 
 ## 从源码构建
 
-需要完整的 Xcode、Swift 6.1 或更新工具链，以及本项目使用的修补版 VLCKit 3.7.3。VLC 框架和对应源码材料单独提供，不包含在 Git 仓库中，准备方式见 [依赖说明](docs/GITHUB_ACTIONS.md#首次准备依赖) 和 [VLC 构建说明](Packaging/VLC/portable/README.md)。
+需要完整的 Xcode、Swift 6.1 或更新工具链，以及本项目使用的修补版 VLCKit 3.7.3。VLC 框架和对应源码材料单独提供，不包含在 Git 仓库中，准备方式见 [依赖说明](BUILDING.md#首次准备依赖) 和 [VLC 构建说明](Packaging/VLC/portable/README.md)。
 
 导入已校验的框架后，在项目根目录运行：
 
@@ -94,12 +96,12 @@ bash scripts/test.sh
 
 遇到问题或有功能建议，欢迎提交 [Issue](https://github.com/lvshp/audiobookshelf-Mac-audilse/issues)。请附上 macOS、Audisle 和服务器版本，以及复现步骤；播放问题请注明音频格式和在线／离线状态。日志中请去掉密码、令牌及私人服务器信息。
 
-欢迎提交修复、翻译和界面改进。语言资源的维护方式见 [本地化说明](docs/LOCALIZATION.md)，更多技术资料见 [文档目录](docs/README.md)。
+欢迎提交修复、翻译和界面改进。简体中文和英文的语言资源位于 `Sources/ShelfMac/Resources/`。
 
 ## 许可证
 
 项目原创代码采用 [Audisle Noncommercial License 1.0](LICENSE)，允许非商业使用、修改和分发；商业使用需要另行取得书面授权。
 
-第三方组件遵循各自的许可证，详见 [第三方声明](docs/THIRD_PARTY_NOTICES.md)。分发包含 VLC 的应用时，请同时提供 [对应源码与许可材料](docs/VLC_DISTRIBUTION.md)。
+第三方组件遵循各自的许可证，详见 [第三方声明](Packaging/THIRD_PARTY_NOTICES.md)。分发包含 VLC 的应用时，请同时提供 [对应源码与许可材料](Packaging/VLC_DISTRIBUTION.md)。
 
 感谢 [Audiobookshelf](https://github.com/advplyr/audiobookshelf)、[VideoLAN](https://www.videolan.org/)、[GRDB](https://github.com/groue/GRDB.swift)、[Socket.IO-Client-Swift](https://github.com/socketio/socket.io-client-swift) 和 [EPUB.js](https://github.com/futurepress/epub.js) 等项目。

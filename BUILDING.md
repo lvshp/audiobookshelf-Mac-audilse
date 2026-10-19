@@ -2,7 +2,7 @@
 
 工作流：`.github/workflows/build-macos.yml`。推送到 `main`、推送 `v*` 标签或手动 Run workflow 时执行；只有文档变更的分支推送会跳过。使用 GitHub 的 `macos-26` Apple Silicon runner，运行 Core/Playback 测试、构建 Release、生成并校验 arm64 DMG。默认 runner 的完整 Xcode 工具链必须支持 Swift tools 6.1 或以上。
 
-不需要 Apple Developer 证书或公证凭据。产物使用 ad-hoc 签名，存为 Actions artifact，保留30天；不会自动创建公开 Release。工作流仅申请仓库读取权限。
+不需要 Apple Developer 证书或公证凭据。产物使用 ad-hoc 签名，存为 Actions artifact，保留30天；v* 标签构建成功后自动创建 GitHub Release。构建任务仅申请仓库读取权限，标签发布任务单独申请 contents: write。
 
 ## 首次准备依赖
 
@@ -24,7 +24,7 @@ python3 scripts/ci-vlc-bundle.py create
    | Secret | `VLC_BUNDLE_URL` | 依赖归档的 HTTPS 下载链接 |
    | Variable | `VLC_BUNDLE_SHA256` | 脚本输出的64位小写 SHA-256 |
 
-3. 将项目提交、推送到 GitHub，进入 **Actions → Build Audisle for Apple Silicon → Run workflow**。当前仅配置本地文件；仓库尚未配置远程时不能代替真正的云端运行。
+3. 将项目提交、推送到 GitHub，进入 **Actions → Build Audisle for Apple Silicon → Run workflow**。手动运行选择版本标签时也会在构建成功后发布 Release。
 
 整个归档先校验 SHA-256 再解包；随后框架逐文件、架构切片及对应源码再次按仓库 lock 校验；补充源码/许可和采用后的构建配方按 ci-materials-lock.json 逐文件核对。URL 只用于下载自己生成的归档；不要为未知来源归档填写校验值。配置缺失或依赖不匹配会明确失败，不会生成缺少 VLC 的应用。
 

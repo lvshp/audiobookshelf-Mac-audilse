@@ -32,11 +32,15 @@ jobs:
         run: |
           set -euo pipefail
           test "$(uname -m)" = arm64
-          test -n "$VLC_BUNDLE_URL" || { echo 'Set the VLC_BUNDLE_URL repository secret. See docs/GITHUB_ACTIONS.md.' >&2; exit 1; }
+          test -n "$VLC_BUNDLE_URL" || { echo 'Set the VLC_BUNDLE_URL repository secret. See BUILDING.md.' >&2; exit 1; }
           [[ "$VLC_BUNDLE_URL" == https://* ]] || { echo 'VLC_BUNDLE_URL must use HTTPS.' >&2; exit 1; }
           [[ "$VLC_BUNDLE_SHA256" =~ ^[0-9a-f]{64}$ ]] || { echo 'Set VLC_BUNDLE_SHA256 to the dependency archive SHA-256.' >&2; exit 1; }
           xcodebuild -version
           swift --version
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Packaging/Info.plist)
+            test "$GITHUB_REF_NAME" = "v$VERSION" || { echo 'Tag must match the app version.' >&2; exit 1; }
+          fi
       - name: Download and verify patched VLC and source materials
         shell: bash
         run: |
@@ -71,3 +75,35 @@ jobs:
           if-no-files-found: error
           compression-level: 0
           retention-days: 30
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: Audisle-arm64-${{ github.run_number }}
+          path: release-assets
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > "$RUNNER_TEMP/release-notes.md" <<'NOTES'
+          Audisle 的 macOS 安装包，适用于 Apple Silicon（M 系列），需要 macOS 14 或更新版本。
+
+          下载 DMG 后将 Audisle 拖入 Applications。支持在线与离线收听、章节跳转、播客订阅、电子书阅读和服务器管理。
+
+          本版本包含 HLS 播放缓冲与章节跳转修复。安装包采用 ad-hoc 签名，未经过 Apple 公证。
+
+          原创代码仅限非商业使用。附件同时提供项目源码、VLC 对应源码材料、第三方声明及校验值。
+          NOTES
+          gh release create "$RELEASE_TAG" release-assets/* \
+            --verify-tag --title "Audisle $RELEASE_TAG" \
+            --notes-file "$RUNNER_TEMP/release-notes.md" --latest

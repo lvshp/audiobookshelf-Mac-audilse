@@ -44,7 +44,7 @@ for path in sorted((root / "Sources/ShelfMac/Resources").iterdir()):
     ref = add(relative, "PBXFileReference", lastKnownFileType="folder" if path.is_dir() else "file", path=quote(relative), sourceTree="SOURCE_ROOT")
     resource_refs.append(ref)
     resources.append(add("build:" + relative, "PBXBuildFile", fileRef=ref))
-for relative in ("Packaging/Licenses", "LICENSE", "docs/THIRD_PARTY_NOTICES.md", "docs/VLC_DISTRIBUTION.md"):
+for relative in ("Packaging/Licenses", "LICENSE", "Packaging/THIRD_PARTY_NOTICES.md", "Packaging/VLC_DISTRIBUTION.md"):
     path = root / relative
     if path.exists():
         ref = add(relative, "PBXFileReference", lastKnownFileType="folder" if path.is_dir() else "file", path=quote(relative), sourceTree="SOURCE_ROOT")
