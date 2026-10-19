@@ -44,13 +44,15 @@ Audilse 是使用 Swift、SwiftUI 和 AppKit 编写的原生 macOS 客户端，�
 | 芯片 | Apple Silicon（M 系列） |
 | 服务器 | Audiobookshelf 2.26+；功能适配基线为 2.37.1 |
 
-优先从 [Releases](https://github.com/lvshp/audiobookshelf-Mac-audilse/releases/latest) 下载 DMG。
+从 [Releases](https://github.com/lvshp/audiobookshelf-Mac-audilse/releases/latest) 下载 Apple Silicon 版 DMG，打开后将 **Audilse.app** 拖入 **Applications（应用程序）**。
 
-安装包也由 [GitHub Actions](https://github.com/lvshp/audiobookshelf-Mac-audilse/actions/workflows/build-macos.yml) 构建。打开一次成功的运行，在 **Artifacts** 中下载 `Audilse-arm64-…`，解压后打开 DMG，将 **Audilse.app** 拖入 **Applications**。
+安装包采用 ad-hoc 签名，未经过 Apple 公证。首次打开时：
 
-如果还没有成功的构建，仓库维护者需要先按 [自动打包说明](BUILDING.md) 配置 VLC 依赖。
+1. 在「应用程序」中双击 Audilse。如果 macOS 提示无法验证开发者或无法检查恶意软件，先关闭提示。
+2. 打开「系统设置 → 隐私与安全性」，向下找到 Audilse 的拦截提示，点击「仍要打开」。
+3. 按系统提示完成验证，再点击「打开」。之后即可正常双击启动。
 
-应用使用 ad-hoc 签名，尚未经过 Apple 公证。首次打开可能需要在 macOS「系统设置 → 隐私与安全性」中确认允许打开。
+操作说明：[Apple 官方帮助](https://support.apple.com/zh-cn/102445)。
 
 ## 连接服务器
 
@@ -92,6 +94,8 @@ bash scripts/test.sh
 
 也可以使用 Xcode 打开 `Audilse.xcodeproj`，选择 `AudilseApp` scheme。
 
+[GitHub Actions](https://github.com/lvshp/audiobookshelf-Mac-audilse/actions/workflows/build-macos.yml) 会运行测试并生成 DMG。构建产物位于成功运行的 **Artifacts** 中，仓库配置方法见 [自动打包说明](BUILDING.md)。
+
 ## 反馈与贡献
 
 遇到问题或有功能建议，欢迎提交 [Issue](https://github.com/lvshp/audiobookshelf-Mac-audilse/issues)。请附上 macOS、Audilse 和服务器版本，以及复现步骤；播放问题请注明音频格式和在线／离线状态。日志中请去掉密码、令牌及私人服务器信息。
@@ -100,7 +104,9 @@ bash scripts/test.sh
 
 ## 许可证
 
-项目原创代码采用 [Audilse Noncommercial License 1.0](LICENSE)，允许非商业使用、修改和分发；商业使用需要另行取得书面授权。
+项目原创部分采用 [PolyForm Noncommercial License 1.0.0](LICENSE)，允许按条款进行非商业使用、修改和分发。许可用途及非商业组织的适用范围见 [协议原文](https://polyformproject.org/licenses/noncommercial/1.0.0)。
+
+这是限制商业用途的源码可用许可证，不属于 OSI 认可的开源许可证。历史发布版本以其随附的 LICENSE 为准。
 
 第三方组件遵循各自的许可证，详见 [第三方声明](Packaging/THIRD_PARTY_NOTICES.md)。分发包含 VLC 的应用时，请同时提供 [对应源码与许可材料](Packaging/VLC_DISTRIBUTION.md)。
 
