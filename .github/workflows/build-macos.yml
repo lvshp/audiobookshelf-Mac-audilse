@@ -133,9 +133,18 @@ jobs:
 
           下载 DMG 后将 Audilse 拖入 Applications。支持在线与离线收听、章节跳转、播客订阅、电子书阅读和服务器管理。
 
-          本版本包含 HLS 播放缓冲与章节跳转修复。安装包采用 ad-hoc 签名，未经过 Apple 公证。
+          本版本包含 HLS 播放缓冲与章节跳转修复。
 
-          原创代码仅限非商业使用。附件同时提供项目源码、VLC 对应源码材料、第三方声明及校验值。
+          安装包采用 ad-hoc 签名，未经过 Apple 公证。
+
+          首次打开：
+
+          1. 打开 DMG，将 Audilse 拖入「应用程序」。
+          2. 在「应用程序」中双击 Audilse。如果 macOS 提示无法验证开发者或无法检查恶意软件，先关闭提示。
+          3. 打开「系统设置 → 隐私与安全性」，向下找到 Audilse 的拦截提示，点击「仍要打开」。
+          4. 按系统提示完成验证，再点击「打开」。之后即可正常双击启动。
+
+          操作说明：[Apple 官方帮助](https://support.apple.com/zh-cn/102445)。
           NOTES
           gh release create "$RELEASE_TAG" release-assets/* \
             --verify-tag --title "Audilse $RELEASE_TAG" \
