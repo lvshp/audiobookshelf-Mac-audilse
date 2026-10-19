@@ -55,7 +55,25 @@ jobs:
             --source build/ci-dependencies/VLCKit.xcframework --apply
           /usr/bin/python3 -I scripts/ci-vlc-bundle.py verify build/ci-dependencies/vlc-source-delivery
       - name: Run playback and core tests
-        run: bash scripts/test.sh
+        run: |
+          set -o pipefail
+          mkdir -p build/test-diagnostics
+          bash scripts/test.sh 2>&1 | tee build/test-diagnostics/tests.log
+      - name: Collect test crash reports
+        if: failure()
+        shell: bash
+        run: |
+          mkdir -p build/test-diagnostics
+          # ReportCrash writes asynchronously after the test helper exits.
+          sleep 5
+          find "$HOME/Library/Logs/DiagnosticReports" -type f \( -name '*swiftpm*' -o -name '*Audilse*' \) -exec cp {} build/test-diagnostics/ \; 2>/dev/null || true
+      - name: Upload test failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: Audilse-test-diagnostics-${{ github.run_number }}
+          path: build/test-diagnostics/
+          retention-days: 7
       - name: Build Release app
         run: bash scripts/build-app.sh
       - name: Package and verify DMG
