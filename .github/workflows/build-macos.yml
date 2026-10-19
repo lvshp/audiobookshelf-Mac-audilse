@@ -67,6 +67,19 @@ jobs:
           # ReportCrash writes asynchronously after the test helper exits.
           sleep 5
           find "$HOME/Library/Logs/DiagnosticReports" -type f \( -name '*swiftpm*' -o -name '*Audilse*' \) -exec cp {} build/test-diagnostics/ \; 2>/dev/null || true
+      - name: Capture test crash backtrace
+        if: failure()
+        timeout-minutes: 3
+        shell: bash
+        run: |
+          BIN_DIR="$(swift build --disable-sandbox --show-bin-path --cache-path .build/package-cache)"
+          TEST_BINARY="$BIN_DIR/AudilsePackageTests.xctest/Contents/MacOS/AudilsePackageTests"
+          HELPER="$(dirname "$(xcrun --find swift)")/../libexec/swift/pm/swiftpm-testing-helper"
+          if [[ -f "$TEST_BINARY" && -x "$HELPER" ]]; then
+            xcrun lldb --batch -o run -k 'thread backtrace all' \
+              -- "$HELPER" --test-bundle-path "$TEST_BINARY" --testing-library swift-testing \
+              > build/test-diagnostics/backtrace.log 2>&1
+          fi
       - name: Upload test failure diagnostics
         if: failure()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
