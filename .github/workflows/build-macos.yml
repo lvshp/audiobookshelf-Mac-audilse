@@ -76,7 +76,9 @@ jobs:
           TEST_BINARY="$BIN_DIR/AudilsePackageTests.xctest/Contents/MacOS/AudilsePackageTests"
           HELPER="$(dirname "$(xcrun --find swift)")/../libexec/swift/pm/swiftpm-testing-helper"
           if [[ -f "$TEST_BINARY" && -x "$HELPER" ]]; then
-            xcrun lldb --batch -o run -k 'thread backtrace all' \
+            xcrun lldb --batch \
+              -o "settings set target.env-vars DYLD_FRAMEWORK_PATH=$(xcode-select -p)/Platforms/MacOSX.platform/Developer/Library/Frameworks" \
+              -o run -k 'thread backtrace all' \
               -- "$HELPER" --test-bundle-path "$TEST_BINARY" --testing-library swift-testing \
               > build/test-diagnostics/backtrace.log 2>&1
           fi
