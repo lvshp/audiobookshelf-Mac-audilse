@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "release": "VLCKit 3.7.3",
+  "binary": {
+    "filename": "VLCKit-3.7.3-319ed2c0-79128878.tar.xz",
+    "url": "https://download.videolan.org/cocoapods/prod/VLCKit-3.7.3-319ed2c0-79128878.tar.xz",
+    "sha256": "019afdae4e2e2d0f3ac325fac8f7ba0af25dca70b9d157df7d60db88e0be8e5d",
+    "frameworkPath": "Vendor/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit",
+    "frameworkSHA256": "920dac24fa9fa31d03c3aae4b49bf605d2eec4fa6f35187c46b67242bca2f43a",
+    "observedLibVLCVersion": "3.0.23 Vetinari",
+    "observedLibVLCChangeset": "3.0.23-2-47-g4eb3701ba9"
+  },
+  "sources": [
+    {
+      "name": "vlckit",
+      "repository": "https://code.videolan.org/videolan/VLCKit.git",
+      "officialMirror": "https://github.com/videolan/vlckit",
+      "commit": "319ed2c0724e3d4c4d34889a62fef1ae269491bc",
+      "filename": "vlckit-319ed2c0724e3d4c4d34889a62fef1ae269491bc.tar.gz",
+      "url": "https://codeload.github.com/videolan/vlckit/tar.gz/319ed2c0724e3d4c4d34889a62fef1ae269491bc",
+      "sha256": "96717d00e81eba197c29136175c88ff40c15daecdc609e05466ac28ed0f55690"
+    },
+    {
+      "name": "vlc",
+      "repository": "https://code.videolan.org/videolan/vlc.git",
+      "officialMirror": "https://github.com/videolan/vlc",
+      "commit": "79128878ddb2c280bbb6c89c76a46b31a80ade1c",
+      "filename": "vlc-79128878ddb2c280bbb6c89c76a46b31a80ade1c.tar.gz",
+      "url": "https://codeload.github.com/videolan/vlc/tar.gz/79128878ddb2c280bbb6c89c76a46b31a80ade1c",
+      "sha256": "f6d93944a1d12213d31ee6c027b8a85c95b1f6f81f69d61dbf54d3076752db44"
+    }
+  ],
+  "upstreamPatchCount": 47,
+  "contribMirror": "https://download.videolan.org/contrib",
+  "completeCorrespondingSource": false,
+  "releaseBlockers": [
+    "The exact linked contrib set and its source/license closure must be established for both macOS architectures.",
+    "All selected contrib archives, patches and notices must accompany the distribution; the catalog is not a linked-component inventory.",
+    "Rebuilding the modified shared framework and running ShelfMac with it must be demonstrated for the eventual signing/distribution configuration.",
+    "Publish or accompany the binary with the complete source/build materials and appropriate notices; no public source offer or release has been made."
+  ],
+  "preparedTreeManifestSHA256": "a4056a48804719a92ecc6158e2bd46b1e4e559f54cbb0f9f49f90685ee674e1c"
+}

@@ -1,0 +1,916 @@
+{
+  "schemaVersion": 1,
+  "identity": "shelf-vlc-copy-drain-input1",
+  "runtime": {
+    "version": "3.0.23 Vetinari",
+    "changeset": "3.0.23-shelf-copy-drain-input1-0-g536397a"
+  },
+  "minimumOS": "14.0",
+  "binaryPath": "macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit",
+  "binarySHA256": "2b2a63528e3f26549c0cdc3e5a15843a9636c10c559d26376402a779e555d011",
+  "sliceSHA256": {
+    "arm64": "73e8a62bd44a9e25062bf40812aa18a7f2743eea764f49c3bd377892004a4b27",
+    "x86_64": "e476f1816f1abc2bcbccd5d9c84ba66cc2de182bd25e9e91a589435382410e0d"
+  },
+  "sourceMaterialSHA256": "74c0155c93ddf1bb7312048c25a56e9693f2e86f7c68289f3a829ff0f38e489d",
+  "sourceManifestSHA256": "e7cddc8892c05f90929fe01f84ca6e166f0db53b62f278276c1e6d629115c1f3",
+  "recipeSHA256": "975ce67dc44d9fc9366539e42d663a1fa458471c039f36dc880f01a3b7395a7a",
+  "source": {
+    "vlckit": "319ed2c0724e3d4c4d34889a62fef1ae269491bc",
+    "vlcBaseline": "79128878ddb2c280bbb6c89c76a46b31a80ade1c",
+    "patchedVLC": "536397a641dbea2945b52fda8aa51ac5051d6b88",
+    "upstreamPatchCount": 47,
+    "localPatch": "copy-drain.patch"
+  },
+  "testedEnvironment": {
+    "developerDir": "/Applications/Xcode.app/Contents/Developer",
+    "xcode": "Xcode 27.0\nBuild version 27A266a\n",
+    "sdkPath": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk",
+    "sdkVersion": "27.0",
+    "python": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+    "macOS": "27.0"
+  },
+  "validation": {
+    "ARM64": "native",
+    "x86_64": "Rosetta; not Intel hardware",
+    "sampleFrames": 96417,
+    "bitIdenticalRebuildClaim": false
+  },
+  "packageFiles": {
+    "Info.plist": {
+      "bytes": 815,
+      "sha256": "b1966832de9945c31ad6ee8cbf188a67f1b9a4539ce6ad63fe5437b328a0f3db",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Headers": {
+      "symlink": "Versions/Current/Headers"
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Modules": {
+      "symlink": "Versions/Current/Modules"
+    },
+    "macos-arm64_x86_64/VLCKit.framework/PrivateHeaders": {
+      "symlink": "Versions/Current/PrivateHeaders"
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Resources": {
+      "symlink": "Versions/Current/Resources"
+    },
+    "macos-arm64_x86_64/VLCKit.framework/VLCKit": {
+      "symlink": "Versions/Current/VLCKit"
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCAdjustFilter.h": {
+      "bytes": 2592,
+      "sha256": "a23a2136ed205112c35298fbde189a04f1b9caff90224bde445b980141f1c743",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCAudio.h": {
+      "bytes": 2359,
+      "sha256": "70ecc40b9dc4b62cc24045c6d1c181039880a53590861ea261dd4701c67591b7",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCAudioEqualizer.h": {
+      "bytes": 2617,
+      "sha256": "44e1b8f446d8258e3b906b6d3bf2ccb1a10a2357bf4af5cba0fe14a7d94e0a90",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCConsoleLogger.h": {
+      "bytes": 1713,
+      "sha256": "2717edc0141f07e2045020695e983f025cb2686972a1d6d26e30ab2beb964c46",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCDialogProvider.h": {
+      "bytes": 6509,
+      "sha256": "97f6ec94ecc92cb7da30d3b6b6b1b5280df65f72cc502efd36e077e0f698a605",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCEventsConfiguration.h": {
+      "bytes": 1527,
+      "sha256": "08f8b1639256aba629221d4ebd6b7db211bf4a7493e4bc79d02f0544e87eda64",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCFileLogger.h": {
+      "bytes": 2487,
+      "sha256": "1c8d0ba333496960735c4606f8900966bcc7fd5e68929d7d7ad27c2d42df6290",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCFilter.h": {
+      "bytes": 2724,
+      "sha256": "2e91e221a4f3de402e80de96345cb4951c345d66af0e0f1ec398208f7934f373",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCKit.h": {
+      "bytes": 2728,
+      "sha256": "31176163ce07900eba0a4e5af7511925752ce2be956dc2359ad93453a0697879",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCLibrary.h": {
+      "bytes": 6667,
+      "sha256": "f78400ade8116d734cb3a36ad7443ab7c20cd484993e4a83745f72d1f531b571",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCLogMessageFormatter.h": {
+      "bytes": 1592,
+      "sha256": "7f88c03c361039b5b5e4ce6b0524440e7590472dc7b29a25115708da4da984f1",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCLogging.h": {
+      "bytes": 5436,
+      "sha256": "18155169b2f38669e0a2805c881fb26bf7ac6a2f9abde444b831a4b61e5a9f80",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCMedia.h": {
+      "bytes": 28607,
+      "sha256": "6bdd355c97cce4342cc10d2a51519c20488e0c29f0559b46881ec6d902cf58f3",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCMediaDiscoverer.h": {
+      "bytes": 4025,
+      "sha256": "974a824195449e5ac11b68158e9b29acf329f5e203425aac102d4e9f6c4ca9ef",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCMediaLibrary.h": {
+      "bytes": 1655,
+      "sha256": "da3d87ec3f44bdb5615d771e2e04fd29bbbf63ac6358ac6676c837359169735c",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCMediaList.h": {
+      "bytes": 4562,
+      "sha256": "4559804a4c1732c1b14f5f09c9554d8dd90ead7ffc72f50ed8fffa76de8cbd91",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCMediaListPlayer.h": {
+      "bytes": 4466,
+      "sha256": "6a03a43d2662f8b632ef820ebf3382e031aa2d84029b6a5c5c7ab1d72c06b63c",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCMediaMetaData.h": {
+      "bytes": 3868,
+      "sha256": "8963e63bc0a59943ca11a20da9e5d5c6fc5536c834b49cbd3799d683ecfed8da",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCMediaPlayer.h": {
+      "bytes": 30472,
+      "sha256": "320ef15ca0e2eb45f659f23c52a6f2c2aae84069bd8fe6d6b50d477eabed32e6",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCMediaThumbnailer.h": {
+      "bytes": 4072,
+      "sha256": "e5c8725eed8008e047271c75232c03953f9b5490d4c0cb0dcdaaeae53eec3fb5",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCRendererDiscoverer.h": {
+      "bytes": 3630,
+      "sha256": "91d3c72103727b344dd584ee4d9debbe3b0db37e9460c331b342472ce87332f2",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCRendererItem.h": {
+      "bytes": 1997,
+      "sha256": "8cff88904b99a4f6149370beb78d383fbf0e262ba28c43900b5f48d44bcc67a9",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCStreamOutput.h": {
+      "bytes": 2856,
+      "sha256": "3c9fcd22fa475623eea8c0aaddddcb7cd6f93f20c2e60ff93fc5ab5ad7085487",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCStreamSession.h": {
+      "bytes": 2182,
+      "sha256": "1df6299585de9dcd241159d592ff591aa126b6199341049fd5612c67ca1c395d",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCTime.h": {
+      "bytes": 3876,
+      "sha256": "7549817a02f601c3886b6dd0f841ee4996de66ef716a08a49a1120b8f69c176e",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCTranscoder.h": {
+      "bytes": 2559,
+      "sha256": "4b2c1fb89836d28a01dec14044f8a72c67903946733d705c94acbb5937565cf5",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCVideoLayer.h": {
+      "bytes": 1672,
+      "sha256": "ef69e0c87c37c998cf70ae2cd13f47f9254bd96e172e931ecd698ec1a02fce51",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/VLCVideoView.h": {
+      "bytes": 1835,
+      "sha256": "a43e6d71f2d8f3c2bda45b0cb8ff1a9915d1596c9419b14e032c0b7433636169",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/vlc/deprecated.h": {
+      "bytes": 14048,
+      "sha256": "6f42a0fbd894a8ac61d846f787c72a527ef06cffaf93e21cb24f6d3e9a5cd1d0",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/vlc/libvlc.h": {
+      "bytes": 19716,
+      "sha256": "0b7c066b9ddd7bf951bd568fd5b42eedc4d2ebfd048043e56cfc14b8792e2626",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/vlc/libvlc_dialog.h": {
+      "bytes": 8010,
+      "sha256": "8f6523a2c2376d179758bcf6d2748fb06c64ec0efacd9b96577af226c747d3b4",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/vlc/libvlc_events.h": {
+      "bytes": 8857,
+      "sha256": "188e6f31d12330181a513eea27d1d3bcaa69be9a0da5b43c73c1206877065e90",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/vlc/libvlc_media.h": {
+      "bytes": 29736,
+      "sha256": "1f9346b40b6fb3299b752e788a92f31f38ae58e1852c92c2832db8c88e988c91",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/vlc/libvlc_media_discoverer.h": {
+      "bytes": 6058,
+      "sha256": "37bdc9d5aafc59e125971781758d6a4be2c425971e784c75f8969dc0277a96a3",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/vlc/libvlc_media_library.h": {
+      "bytes": 2912,
+      "sha256": "96fb70630e1ca2e2a5b34b290aaad8970d82c13b811ff93d0f5d089d84fa9fec",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/vlc/libvlc_media_list.h": {
+      "bytes": 6349,
+      "sha256": "65678a2ad56a64b08d4e6044ab79e30d0c77ce445aa232d7f4890e1c2c7adc7f",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/vlc/libvlc_media_list_player.h": {
+      "bytes": 7127,
+      "sha256": "c056c916e658608571d3b8941695dc09a82951f9a4b6f370d6f60c65df0f233b",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/vlc/libvlc_media_player.h": {
+      "bytes": 75765,
+      "sha256": "a68e90037a4a85bc893f2c01d87a27a475e0b7bbd35b337a27d8df7bc5187dff",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/vlc/libvlc_picture.h": {
+      "bytes": 4474,
+      "sha256": "6da9b8306e325e327fda361847edcc0996a7ab23b11dbe3fe54d891cc6e46fb7",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/vlc/libvlc_renderer_discoverer.h": {
+      "bytes": 7392,
+      "sha256": "db0820c27a7dac6b2237b5ab8d017496e187f20cb8d17d7d572e2625110cd096",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/vlc/libvlc_version.h": {
+      "bytes": 2148,
+      "sha256": "b1280c77139c416b488d15a5d9628033ce9c2c7a3325d620b3a365939ad38304",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/vlc/libvlc_vlm.h": {
+      "bytes": 12426,
+      "sha256": "6bc06315d6838e38525bf46999ee69349486bba8471dce6dbfffa9863e742fa0",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Headers/vlc/vlc.h": {
+      "bytes": 1975,
+      "sha256": "34020052c1cff7a9a859cb4283a9f9a05ccbbcdd0d46c783d35b2a07f58632bd",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Modules/module.modulemap": {
+      "bytes": 708,
+      "sha256": "e23b623fa82a108d7d09ab19b88cba1382b9486f58b37f67fa4499dae01d59d1",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/PrivateHeaders/VLCCustomDialogProvider.h": {
+      "bytes": 1704,
+      "sha256": "e065cf5f46c266c0cc98e7501140db1fd8d71368ff2bfb9cd19c14061a00d118",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/PrivateHeaders/VLCEmbeddedDialogProvider.h": {
+      "bytes": 1594,
+      "sha256": "3a583126ffae78158304d9aaa8f7b2c97ddbce9e65cc856397ad17909d96f762",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/PrivateHeaders/VLCEventsHandler.h": {
+      "bytes": 1784,
+      "sha256": "a384b03201995cf0121080706aba1b8ea98463858235906cf85248390384f16d",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/PrivateHeaders/VLCFilter+Internal.h": {
+      "bytes": 2577,
+      "sha256": "d8aef4dfd064d9f9eae1e61f1e73f82976513f65073de1c861098a9c2ae950ae",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/PrivateHeaders/VLCHelperCode.h": {
+      "bytes": 1194,
+      "sha256": "4ee7a5eb980abf3ddc73c3ee648cc59f18212aff3e73e0c7f216b0d135be55e7",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/PrivateHeaders/VLCLibVLCBridging.h": {
+      "bytes": 6119,
+      "sha256": "585fa569340348cb88fcd74fd410c6ee40e804f03d1a1409dece5630abae89f0",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/PrivateHeaders/VLCMediaPlayer+Internal.h": {
+      "bytes": 1382,
+      "sha256": "5b89a00be51a8c40cffeeadedb49c605b7bd33efc884743292fecc8b41eba6aa",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/PrivateHeaders/VLCVideoCommon.h": {
+      "bytes": 1468,
+      "sha256": "31639cbee83ff092eadd73ed3782fd0e20b31b407f7a8f74f9024d6becb75f83",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/PrivateHeaders/VLCiOSLegacyDialogProvider.h": {
+      "bytes": 1766,
+      "sha256": "55342cb01903a36312744a9ad89b1c782cf0094bb3d0f041201236d8b79c8c59",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/PrivateHeaders/vlc-plugins-MacOSX-arm64.h": {
+      "bytes": 51220,
+      "sha256": "53cc73ba01d8481ba12d91603a8b4bc5fabde7678cea14e1bb421d11fe1b8fa8",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/PrivateHeaders/vlc-plugins-MacOSX-x86_64.h": {
+      "bytes": 25634,
+      "sha256": "94024add7580983c216527969b8d6b5ec0b4ecf619e3333c57a34dc317ccb3c3",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/PrivateHeaders/vlc-plugins-MacOSX.h": {
+      "bytes": 195,
+      "sha256": "e9145e11220f3b9253471c4536f6f875d8e0a0b6c380d7fad7fd2584a037fcb1",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/Resources/Info.plist": {
+      "bytes": 1289,
+      "sha256": "f9978f0b4be8ab5af225ae847736cb474b04084673cdd1799b7b89a733eda4b1",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit": {
+      "bytes": 80135640,
+      "sha256": "2b2a63528e3f26549c0cdc3e5a15843a9636c10c559d26376402a779e555d011",
+      "mode": 493
+    },
+    "macos-arm64_x86_64/VLCKit.framework/Versions/Current": {
+      "symlink": "A"
+    },
+    "macos-arm64_x86_64/dSYMs/VLCKit.framework.dSYM/Contents/Info.plist": {
+      "bytes": 659,
+      "sha256": "435bde827b2e6f5a0041de1c5130ce8797644d058fdb54852c944f80b101b4ee",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/dSYMs/VLCKit.framework.dSYM/Contents/Resources/DWARF/VLCKit": {
+      "bytes": 301669032,
+      "sha256": "119fe1e4e66925792fb4fb7929831904bbf0f701944cffbdc2b1147f766d2031",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/dSYMs/VLCKit.framework.dSYM/Contents/Resources/Relocations/aarch64/VLCKit.yml": {
+      "bytes": 9938445,
+      "sha256": "c064c9d9893fb8c5973fe77186f7687ce3c09330db4aad1c8c15802659892530",
+      "mode": 420
+    },
+    "macos-arm64_x86_64/dSYMs/VLCKit.framework.dSYM/Contents/Resources/Relocations/x86_64/VLCKit.yml": {
+      "bytes": 9777063,
+      "sha256": "811b56e2fd7939e09d90e64f933a5ea3ff166fb0193142eb8cac2afa83d2c883",
+      "mode": 420
+    }
+  },
+  "configurationPolicy": {
+    "id": "shelfmac-audio-abs-no-gpl-candidates-no-sftp-cast-v1",
+    "recipeSHA256": "975ce67dc44d9fc9366539e42d663a1fa458471c039f36dc880f01a3b7395a7a",
+    "expectedPluginEntries": [
+      "vlc_entry__access_attachment",
+      "vlc_entry__access_concat",
+      "vlc_entry__access_dsm_libdsm",
+      "vlc_entry__access_ftp",
+      "vlc_entry__access_http",
+      "vlc_entry__access_http_access",
+      "vlc_entry__access_idummy",
+      "vlc_entry__access_imem_access",
+      "vlc_entry__access_libavio",
+      "vlc_entry__access_libfilesystem",
+      "vlc_entry__access_liblive555",
+      "vlc_entry__access_libnfs",
+      "vlc_entry__access_librist",
+      "vlc_entry__access_libsmb2",
+      "vlc_entry__access_mms_libaccess_mms",
+      "vlc_entry__access_output_dummy",
+      "vlc_entry__access_output_file",
+      "vlc_entry__access_output_http",
+      "vlc_entry__access_output_libaccess_output_rist",
+      "vlc_entry__access_output_libaccess_output_shout",
+      "vlc_entry__access_rtp_librtp",
+      "vlc_entry__access_satip",
+      "vlc_entry__access_sdp",
+      "vlc_entry__access_tcp",
+      "vlc_entry__access_timecode",
+      "vlc_entry__access_udp",
+      "vlc_entry__access_vdr",
+      "vlc_entry__audio_filter_channel_mixer_libsimple_channel_mixer",
+      "vlc_entry__audio_filter_channel_mixer_libspatialaudio",
+      "vlc_entry__audio_filter_channel_mixer_trivial",
+      "vlc_entry__audio_filter_chorus_flanger",
+      "vlc_entry__audio_filter_compressor",
+      "vlc_entry__audio_filter_converter_libaudio_format",
+      "vlc_entry__audio_filter_converter_tospdif",
+      "vlc_entry__audio_filter_equalizer",
+      "vlc_entry__audio_filter_gain",
+      "vlc_entry__audio_filter_karaoke",
+      "vlc_entry__audio_filter_libebur128",
+      "vlc_entry__audio_filter_libscaletempo_pitch",
+      "vlc_entry__audio_filter_normvol",
+      "vlc_entry__audio_filter_param_eq",
+      "vlc_entry__audio_filter_resampler_libsoxr",
+      "vlc_entry__audio_filter_resampler_ugly",
+      "vlc_entry__audio_filter_scaletempo",
+      "vlc_entry__audio_filter_spatializer_spatializer",
+      "vlc_entry__audio_filter_stereo_widen",
+      "vlc_entry__audio_mixer_libfloat_mixer",
+      "vlc_entry__audio_mixer_libinteger_mixer",
+      "vlc_entry__audio_output_adummy",
+      "vlc_entry__audio_output_amem",
+      "vlc_entry__audio_output_auhal",
+      "vlc_entry__audio_output_libafile",
+      "vlc_entry__codec_adpcm",
+      "vlc_entry__codec_aes3",
+      "vlc_entry__codec_araw",
+      "vlc_entry__codec_audiotoolbox_midi",
+      "vlc_entry__codec_avcodec_libavcodec",
+      "vlc_entry__codec_cc",
+      "vlc_entry__codec_cdg",
+      "vlc_entry__codec_cvdsub",
+      "vlc_entry__codec_ddummy",
+      "vlc_entry__codec_dvbsub",
+      "vlc_entry__codec_edummy",
+      "vlc_entry__codec_g711",
+      "vlc_entry__codec_libaom",
+      "vlc_entry__codec_libdav1d",
+      "vlc_entry__codec_libflac",
+      "vlc_entry__codec_liblibass",
+      "vlc_entry__codec_libmpg123",
+      "vlc_entry__codec_liboggspots",
+      "vlc_entry__codec_libopus",
+      "vlc_entry__codec_libspeex",
+      "vlc_entry__codec_libtheora",
+      "vlc_entry__codec_libvideotoolbox",
+      "vlc_entry__codec_libvorbis",
+      "vlc_entry__codec_libvpx",
+      "vlc_entry__codec_libzvbi",
+      "vlc_entry__codec_lpcm",
+      "vlc_entry__codec_png",
+      "vlc_entry__codec_rawvideo",
+      "vlc_entry__codec_rtpvideo",
+      "vlc_entry__codec_scte18",
+      "vlc_entry__codec_scte27",
+      "vlc_entry__codec_spdif",
+      "vlc_entry__codec_spudec_libspudec",
+      "vlc_entry__codec_stl",
+      "vlc_entry__codec_subsdec",
+      "vlc_entry__codec_substx3g",
+      "vlc_entry__codec_subsusf",
+      "vlc_entry__codec_svcdsub",
+      "vlc_entry__codec_telx",
+      "vlc_entry__codec_textst",
+      "vlc_entry__codec_ttml_ttml",
+      "vlc_entry__codec_uleaddvaudio",
+      "vlc_entry__codec_webvtt_libwebvtt",
+      "vlc_entry__demux_adaptive_libadaptive",
+      "vlc_entry__demux_aiff",
+      "vlc_entry__demux_asf_asf",
+      "vlc_entry__demux_au",
+      "vlc_entry__demux_avformat_libavformat",
+      "vlc_entry__demux_avi_avi",
+      "vlc_entry__demux_caf",
+      "vlc_entry__demux_demuxdump",
+      "vlc_entry__demux_directory",
+      "vlc_entry__demux_dmxmus",
+      "vlc_entry__demux_filter_noseek",
+      "vlc_entry__demux_image",
+      "vlc_entry__demux_libdemux_cdg",
+      "vlc_entry__demux_libdemux_stl",
+      "vlc_entry__demux_libdiracsys",
+      "vlc_entry__demux_libflacsys",
+      "vlc_entry__demux_libmod",
+      "vlc_entry__demux_libogg",
+      "vlc_entry__demux_mjpeg",
+      "vlc_entry__demux_mkv_libmkv",
+      "vlc_entry__demux_mp4_mp4",
+      "vlc_entry__demux_mpeg_es",
+      "vlc_entry__demux_mpeg_h26x",
+      "vlc_entry__demux_mpeg_libts",
+      "vlc_entry__demux_mpeg_mpgv",
+      "vlc_entry__demux_mpeg_ps",
+      "vlc_entry__demux_nsc",
+      "vlc_entry__demux_nsv",
+      "vlc_entry__demux_nuv",
+      "vlc_entry__demux_playlist_playlist",
+      "vlc_entry__demux_pva",
+      "vlc_entry__demux_rawaud",
+      "vlc_entry__demux_rawdv",
+      "vlc_entry__demux_rawvid",
+      "vlc_entry__demux_subtitle",
+      "vlc_entry__demux_tta",
+      "vlc_entry__demux_ty",
+      "vlc_entry__demux_vc1",
+      "vlc_entry__demux_vobsub",
+      "vlc_entry__demux_voc",
+      "vlc_entry__demux_wav",
+      "vlc_entry__demux_xa",
+      "vlc_entry__keystore_file",
+      "vlc_entry__keystore_libkeychain",
+      "vlc_entry__keystore_memory",
+      "vlc_entry__meta_engine_folder",
+      "vlc_entry__meta_engine_libtaglib",
+      "vlc_entry__misc_libsecuretransport",
+      "vlc_entry__misc_xml_libxml",
+      "vlc_entry__mux_asf",
+      "vlc_entry__mux_avi",
+      "vlc_entry__mux_dummy",
+      "vlc_entry__mux_libmux_ogg",
+      "vlc_entry__mux_mp4_mp4",
+      "vlc_entry__mux_mpeg_libmux_ts",
+      "vlc_entry__mux_mpeg_ps",
+      "vlc_entry__mux_mpjpeg",
+      "vlc_entry__mux_wav",
+      "vlc_entry__packetizer_a52",
+      "vlc_entry__packetizer_av1",
+      "vlc_entry__packetizer_copy",
+      "vlc_entry__packetizer_dirac",
+      "vlc_entry__packetizer_dts",
+      "vlc_entry__packetizer_flac",
+      "vlc_entry__packetizer_h264",
+      "vlc_entry__packetizer_hevc",
+      "vlc_entry__packetizer_libpacketizer_avparser",
+      "vlc_entry__packetizer_mlp",
+      "vlc_entry__packetizer_mpeg4audio",
+      "vlc_entry__packetizer_mpeg4video",
+      "vlc_entry__packetizer_mpegaudio",
+      "vlc_entry__packetizer_mpegvideo",
+      "vlc_entry__packetizer_vc1",
+      "vlc_entry__services_discovery_libbonjour",
+      "vlc_entry__services_discovery_libupnp",
+      "vlc_entry__spu_logo",
+      "vlc_entry__spu_subsdelay",
+      "vlc_entry__stream_extractor_libarchive",
+      "vlc_entry__stream_filter_adf",
+      "vlc_entry__stream_filter_cache_block",
+      "vlc_entry__stream_filter_cache_read",
+      "vlc_entry__stream_filter_decomp",
+      "vlc_entry__stream_filter_hds_libhds",
+      "vlc_entry__stream_filter_inflate",
+      "vlc_entry__stream_filter_prefetch",
+      "vlc_entry__stream_filter_record",
+      "vlc_entry__stream_filter_skiptags",
+      "vlc_entry__stream_out_autodel",
+      "vlc_entry__stream_out_bridge",
+      "vlc_entry__stream_out_cycle",
+      "vlc_entry__stream_out_delay",
+      "vlc_entry__stream_out_description",
+      "vlc_entry__stream_out_display",
+      "vlc_entry__stream_out_dummy",
+      "vlc_entry__stream_out_duplicate",
+      "vlc_entry__stream_out_es",
+      "vlc_entry__stream_out_gather",
+      "vlc_entry__stream_out_libstream_out_standard",
+      "vlc_entry__stream_out_record",
+      "vlc_entry__stream_out_setid",
+      "vlc_entry__stream_out_smem",
+      "vlc_entry__stream_out_transcode_libstream_out_transcode",
+      "vlc_entry__text_renderer_freetype_libfreetype",
+      "vlc_entry__text_renderer_nsspeechsynthesizer",
+      "vlc_entry__text_renderer_tdummy",
+      "vlc_entry__video_chroma_chain",
+      "vlc_entry__video_chroma_grey_yuv",
+      "vlc_entry__video_chroma_i420_rgb",
+      "vlc_entry__video_chroma_i422_i420",
+      "vlc_entry__video_chroma_libcvpx",
+      "vlc_entry__video_chroma_libi420_10_p010",
+      "vlc_entry__video_chroma_libi420_nv12",
+      "vlc_entry__video_chroma_libi420_yuy2",
+      "vlc_entry__video_chroma_libi422_yuy2",
+      "vlc_entry__video_chroma_libswscale",
+      "vlc_entry__video_chroma_rv32",
+      "vlc_entry__video_chroma_yuvp",
+      "vlc_entry__video_chroma_yuy2_i420",
+      "vlc_entry__video_chroma_yuy2_i422",
+      "vlc_entry__video_filter_adjust",
+      "vlc_entry__video_filter_blend",
+      "vlc_entry__video_filter_canvas",
+      "vlc_entry__video_filter_ci_filters",
+      "vlc_entry__video_filter_croppadd",
+      "vlc_entry__video_filter_edgedetection",
+      "vlc_entry__video_filter_fps",
+      "vlc_entry__video_filter_freeze",
+      "vlc_entry__video_filter_magnify",
+      "vlc_entry__video_filter_scale",
+      "vlc_entry__video_filter_transform",
+      "vlc_entry__video_output_caopengllayer",
+      "vlc_entry__video_output_flaschen",
+      "vlc_entry__video_output_macosx",
+      "vlc_entry__video_output_opengl_libglconv_cvpx",
+      "vlc_entry__video_output_vdummy",
+      "vlc_entry__video_output_vmem",
+      "vlc_entry__video_output_yuv"
+    ],
+    "excludedPluginEntries": [
+      "vlc_entry__access_libsftp",
+      "vlc_entry__audio_filter_channel_mixer_dolby",
+      "vlc_entry__audio_filter_channel_mixer_mono",
+      "vlc_entry__control_dummy",
+      "vlc_entry__logger_syslog",
+      "vlc_entry__misc_rtsp",
+      "vlc_entry__stream_out_chromecast_libdemux_chromecast",
+      "vlc_entry__stream_out_chromecast_libstream_out_chromecast",
+      "vlc_entry__stream_out_libstream_out_rtp",
+      "vlc_entry__video_filter_deinterlace_libdeinterlace",
+      "vlc_entry__video_filter_rotate"
+    ]
+  },
+  "candidateReview": {
+    "status": "GENERATED_NOT_ACTIVATED",
+    "requiresHumanSourceAndRuntimeReview": true,
+    "receiptSHA256": "7d248b0c0455c612da960d0028ff5edc4a257fe8e4ef04368d802c5b7b3bcd94",
+    "generatorSHA256": "aa354433ebf1c8464681692aaa1bfe0ebdef5a578478551f034f5b0ddf80e6d8",
+    "sourceFilesVerified": {
+      "arm64": 5139,
+      "x86_64": 5139
+    },
+    "actualArtifact": {
+      "path": "/Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework",
+      "binarySHA256": "2b2a63528e3f26549c0cdc3e5a15843a9636c10c559d26376402a779e555d011",
+      "bytes": 80135640,
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "UUID": "UUID: 7614BBBF-53F4-3840-AC4C-FE2695F2A47D (x86_64) /Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit\nUUID: CD85EB6D-2796-3CD0-9FCD-D36326D9DB23 (arm64) /Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit\n",
+      "dSYMUUID": "UUID: 7614BBBF-53F4-3840-AC4C-FE2695F2A47D (x86_64) /Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/dSYMs/VLCKit.framework.dSYM/Contents/Resources/DWARF/VLCKit\nUUID: CD85EB6D-2796-3CD0-9FCD-D36326D9DB23 (arm64) /Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/dSYMs/VLCKit.framework.dSYM/Contents/Resources/DWARF/VLCKit\n",
+      "minimumOS": "14.0"
+    },
+    "actualRuntimeRuns": [
+      {
+        "architecture": "arm64",
+        "loadedPath": "/Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit",
+        "version": "3.0.23 Vetinari",
+        "changeset": "3.0.23-shelf-copy-drain-input1-0-g536397a",
+        "translated": false,
+        "frames": 96417,
+        "byteExact": true,
+        "pcmSHA256": "bb83e7e4245fc76ec2f552d44e444530787cd1dab50f6a6b9894cec0396ab778",
+        "captureLog": "LOADED_PATH /Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit\nVERSION 3.0.23 Vetinari\nCHANGESET 3.0.23-shelf-copy-drain-input1-0-g536397a\nTRANSLATED 0\nRESULT state=6 frames=96417 nonzero=192824 bad=0\n"
+      },
+      {
+        "architecture": "x86_64",
+        "loadedPath": "/Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit",
+        "version": "3.0.23 Vetinari",
+        "changeset": "3.0.23-shelf-copy-drain-input1-0-g536397a",
+        "translated": true,
+        "frames": 96417,
+        "byteExact": true,
+        "pcmSHA256": "bb83e7e4245fc76ec2f552d44e444530787cd1dab50f6a6b9894cec0396ab778",
+        "captureLog": "LOADED_PATH /Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit\nVERSION 3.0.23 Vetinari\nCHANGESET 3.0.23-shelf-copy-drain-input1-0-g536397a\nTRANSLATED 1\nRESULT state=6 frames=96417 nonzero=192824 bad=0\n"
+      }
+    ],
+    "validationStages": [
+      {
+        "name": "candidate-file",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/readonly.sb",
+          "/usr/bin/file",
+          "/Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit"
+        ],
+        "cwd": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3",
+        "log": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/logs/candidate-file.log",
+        "startedUTC": "2026-10-15T12:19:00.558505+00:00",
+        "pid": 29343,
+        "exit": 0,
+        "finishedUTC": "2026-10-15T12:19:00.571731+00:00"
+      },
+      {
+        "name": "candidate-load",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/readonly.sb",
+          "/usr/bin/otool",
+          "-l",
+          "/Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit"
+        ],
+        "cwd": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3",
+        "log": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/logs/candidate-load.log",
+        "startedUTC": "2026-10-15T12:19:00.572115+00:00",
+        "pid": 29344,
+        "exit": 0,
+        "finishedUTC": "2026-10-15T12:19:00.596912+00:00"
+      },
+      {
+        "name": "candidate-deps",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/readonly.sb",
+          "/usr/bin/otool",
+          "-L",
+          "/Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit"
+        ],
+        "cwd": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3",
+        "log": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/logs/candidate-deps.log",
+        "startedUTC": "2026-10-15T12:19:00.597305+00:00",
+        "pid": 29346,
+        "exit": 0,
+        "finishedUTC": "2026-10-15T12:19:00.622366+00:00"
+      },
+      {
+        "name": "candidate-uuid",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/readonly.sb",
+          "/usr/bin/dwarfdump",
+          "--uuid",
+          "/Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit"
+        ],
+        "cwd": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3",
+        "log": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/logs/candidate-uuid.log",
+        "startedUTC": "2026-10-15T12:19:00.622895+00:00",
+        "pid": 29348,
+        "exit": 0,
+        "finishedUTC": "2026-10-15T12:19:00.648072+00:00"
+      },
+      {
+        "name": "candidate-dsym-uuid",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/readonly.sb",
+          "/usr/bin/dwarfdump",
+          "--uuid",
+          "/Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/dSYMs/VLCKit.framework.dSYM"
+        ],
+        "cwd": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3",
+        "log": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/logs/candidate-dsym-uuid.log",
+        "startedUTC": "2026-10-15T12:19:00.648590+00:00",
+        "pid": 29349,
+        "exit": 0,
+        "finishedUTC": "2026-10-15T12:19:00.673969+00:00"
+      },
+      {
+        "name": "candidate-archs",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/readonly.sb",
+          "/usr/bin/lipo",
+          "-archs",
+          "/Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit"
+        ],
+        "cwd": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3",
+        "log": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/logs/candidate-archs.log",
+        "startedUTC": "2026-10-15T12:19:00.674468+00:00",
+        "pid": 29350,
+        "exit": 0,
+        "finishedUTC": "2026-10-15T12:19:00.699841+00:00"
+      },
+      {
+        "name": "thin-arm64",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/readonly.sb",
+          "/usr/bin/lipo",
+          "/Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit",
+          "-thin",
+          "arm64",
+          "-output",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/thin-arm64"
+        ],
+        "cwd": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3",
+        "log": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/logs/thin-arm64.log",
+        "startedUTC": "2026-10-15T12:19:00.793467+00:00",
+        "pid": 29351,
+        "exit": 0,
+        "finishedUTC": "2026-10-15T12:19:00.843002+00:00"
+      },
+      {
+        "name": "arm64-compile",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/readonly.sb",
+          "/usr/bin/xcrun",
+          "clang",
+          "-target",
+          "arm64-apple-macos14.0",
+          "-I",
+          "/private/tmp/shelf-vlc-exclusion-work-20261015/jobs/arm64/vlckit/libvlc/vlc/include",
+          "-F",
+          "/Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64",
+          "-framework",
+          "VLCKit",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/capture.c",
+          "-o",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/arm64/bin/capture"
+        ],
+        "cwd": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3",
+        "log": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/logs/arm64-compile.log",
+        "startedUTC": "2026-10-15T12:19:00.863058+00:00",
+        "pid": 29352,
+        "exit": 0,
+        "finishedUTC": "2026-10-15T12:19:01.014521+00:00"
+      },
+      {
+        "name": "arm64-capture",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/readonly.sb",
+          "/usr/bin/arch",
+          "-arm64",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/arm64/bin/capture",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/tail.wav",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/arm64/tail.pcm"
+        ],
+        "cwd": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3",
+        "log": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/logs/arm64-capture.log",
+        "startedUTC": "2026-10-15T12:19:01.015226+00:00",
+        "pid": 29355,
+        "exit": 0,
+        "finishedUTC": "2026-10-15T12:19:02.981129+00:00"
+      },
+      {
+        "name": "thin-x86_64",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/readonly.sb",
+          "/usr/bin/lipo",
+          "/Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit",
+          "-thin",
+          "x86_64",
+          "-output",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/thin-x86_64"
+        ],
+        "cwd": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3",
+        "log": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/logs/thin-x86_64.log",
+        "startedUTC": "2026-10-15T12:19:02.983955+00:00",
+        "pid": 29369,
+        "exit": 0,
+        "finishedUTC": "2026-10-15T12:19:03.078619+00:00"
+      },
+      {
+        "name": "x86_64-compile",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/readonly.sb",
+          "/usr/bin/xcrun",
+          "clang",
+          "-target",
+          "x86_64-apple-macos14.0",
+          "-I",
+          "/private/tmp/shelf-vlc-exclusion-work-20261015/jobs/x86_64/vlckit/libvlc/vlc/include",
+          "-F",
+          "/Users/lvsp/macos/audiobookshelf/build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework/macos-arm64_x86_64",
+          "-framework",
+          "VLCKit",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/capture.c",
+          "-o",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/x86_64/bin/capture"
+        ],
+        "cwd": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3",
+        "log": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/logs/x86_64-compile.log",
+        "startedUTC": "2026-10-15T12:19:03.104877+00:00",
+        "pid": 29370,
+        "exit": 0,
+        "finishedUTC": "2026-10-15T12:19:03.196724+00:00"
+      },
+      {
+        "name": "x86_64-capture",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/readonly.sb",
+          "/usr/bin/arch",
+          "-x86_64",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/x86_64/bin/capture",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/tail.wav",
+          "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/x86_64/tail.pcm"
+        ],
+        "cwd": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3",
+        "log": "/private/var/folders/gl/jw8mfdpd6zn35hw4xzyy387r0000gn/T/shelf-vlc-candidate-_yzxf6o3/logs/x86_64-capture.log",
+        "startedUTC": "2026-10-15T12:19:03.197363+00:00",
+        "pid": 29373,
+        "exit": 0,
+        "finishedUTC": "2026-10-15T12:19:08.482169+00:00"
+      }
+    ],
+    "limitation": "Receipt/source consistency and actual output checks are not cryptographic proof that a binary was compiled from those sources. No project lock, Vendor, or runtime expectation was changed.",
+    "metadataCorrection": {
+      "field": "recipeSHA256",
+      "previous": "ed8ec33b18b60d254228d2be8b9b84d3adf58f9c6caf92bf4b536471b8710a88",
+      "corrected": "975ce67dc44d9fc9366539e42d663a1fa458471c039f36dc880f01a3b7395a7a",
+      "reason": "original generator copied historical seed top-level recipe hash; actual run and configuration policy use new recipe",
+      "originalCandidateSHA256": "3567335b8aad26df1da5bdb2da80f2d20a85a71d5345545922a402cab841a150",
+      "fixedGeneratorSHA256": "820fd2ba64a064f595358588863368092e647603681a98eb1882974461a191be",
+      "runtimeValidationReused": true
+    }
+  }
+}

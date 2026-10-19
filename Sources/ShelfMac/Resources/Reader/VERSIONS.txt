@@ -1,0 +1,4 @@
+epubjs 0.3.93 — https://github.com/futurepress/epub.js — BSD-2-Clause
+jszip 3.10.1 — https://github.com/Stuk/jszip — MIT option
+foliate-js 78914aef4466eb960965702401634c2cb348e9b1 — https://github.com/johnfactotum/foliate-js — MIT
+foliate-mobi.js adapts the official standalone mobi.js ESM exports into a local IIFE; parsing code is unchanged.

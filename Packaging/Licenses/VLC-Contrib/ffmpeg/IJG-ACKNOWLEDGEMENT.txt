@@ -1,0 +1,7 @@
+This software is based in part on the work of the Independent JPEG Group.
+
+The FFmpeg 4.4.5 sources libavcodec/jfdctfst.c, libavcodec/jfdctint_template.c,
+and libavcodec/jrevdct.c used in the retained arm64 and x86_64 build trees
+are unchanged from the retained FFmpeg 4.4.5 source archive. Upstream
+adaptations already present in those sources remain documented in the
+original files. Their complete original header notices accompany this file.

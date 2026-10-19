@@ -1,0 +1,3 @@
+# Preserve upstream license and bundled reader bytes exactly as delivered.
+Packaging/Licenses/** -text
+Sources/ShelfMac/Resources/Reader/** -text

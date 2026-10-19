@@ -1,0 +1,5 @@
+This software is based in part on the work of the FreeType Team.
+ShelfMac uses FreeType 2.13.1 under the FreeType Project License (FTL).
+The complete FTL and applicable separate notices accompany this acknowledgement.
+FreeType is provided as is, without warranty; see FTL.TXT for the full terms.
+https://www.freetype.org/

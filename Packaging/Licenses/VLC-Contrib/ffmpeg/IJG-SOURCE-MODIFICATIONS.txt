@@ -1,0 +1,73 @@
+IJG-derived files in FFmpeg 4.4.5: source and modification notice
+
+This software is based in part on the work of the Independent JPEG Group.
+
+Scope
+-----
+The relevant files are FFmpeg 4.4.5 libavcodec/jfdctfst.c,
+libavcodec/jfdctint_template.c and libavcodec/jrevdct.c. Their complete
+original copyright/permission headers remain in the distributed FFmpeg
+sources and in the previously retained per-file notices. This document
+supplements those notices; it does not replace or alter them.
+
+Historical source material supplied alongside this notice
+-------------------------------------------------------
+IJG-6a-README.txt is an unaltered complete copy of jpeg-6a/README from
+https://www.ijg.org/files/jpegsrc.v6a.tar.gz. It identifies itself as
+release 6a of 7-Feb-96. The archive's jfdctfst.c copyright is 1994-1996
+Thomas G. Lane and its jfdctint.c copyright is 1991-1996 Thomas G. Lane,
+matching the respective retained FFmpeg file notices.
+
+IJG-4-README.txt is an unaltered complete copy of README from the historical
+jpegsrc.v4.tar.Z retained at
+https://ftp.funet.fi/pub/sci/graphics/packages/jpeg/jpegsrc.v4.tar.Z.
+It identifies itself as release 4 of 10-Dec-92. Its jrevdct.c copyright is
+1991, 1992 Thomas G. Lane, matching the retained FFmpeg jrevdct.c notice.
+This archive was obtained from a historical mirror, not from the current
+IJG host. No upstream archive signature is claimed.
+
+These are identified historical comparison releases, supported by their
+own README, file names, copyright notices and source text. They are not
+asserted to prove the unique original FFmpeg import release or revision.
+Historical statements in these complete README files are preserved as
+source text, not newly asserted current factual or patent advice.
+
+Changes already present in the fixed FFmpeg source
+-------------------------------------------------
+All three FFmpeg files differ from the corresponding historical files.
+The accompanying source-evidence/diffs files record the full additions,
+deletions and changes, including comments and integration declarations.
+
+* jfdctfst.c compared with IJG 6a jfdctfst.c: the short reference to README
+  is expanded into a permission/no-warranty header; JPEG-specific includes
+  and configuration wrappers are replaced with FFmpeg includes/macros;
+  integer types and entry points are adapted (including ff_fdct_ifast and
+  an inline row transform), with arithmetic/loop adaptations shown in the
+  complete diff.
+* jfdctint_template.c compared with IJG 6a jfdctint.c: the source is adapted
+  into a FFmpeg bit-depth template, includes/macros/types are changed,
+  row processing is split into an inline function, and scaling/rounding
+  choices (including PASS1_BITS/OUT_SHIFT) and multiplication expressions
+  are changed. The README reference is expanded into the full header.
+* jrevdct.c compared with IJG release 4 jrevdct.c: includes and integer/
+  block definitions are adapted to FFmpeg, constants and arithmetic paths
+  are changed, and additional sparse-block processing and output routines
+  are present. Its own retained introductory comment explicitly describes
+  modifications for sparse DCT matrices. The full diff, not this summary,
+  specifies the complete textual changes against that comparison source.
+
+ShelfMac build comparison
+------------------------
+The three files in both retained arm64 and x86_64 exclusion-candidate
+build trees are byte-for-byte identical to the corresponding files in the
+fixed ffmpeg-4.4.5.tar.xz within SourceMaterials.tar. Thus this project's
+retained build trees contain no additional changes to these three files
+relative to that fixed FFmpeg release. This statement does not assert that
+FFmpeg is unmodified IJG code, or that unrelated FFmpeg files/recipes are
+unchanged. Byte hashes and exact locations are recorded in
+IJGSourceEvidence.json; the full historical-to-FFmpeg diffs are provided
+with the source evidence.
+
+No license text in either historical README or the three source notices
+has been edited. This notice describes recorded source changes; it is not
+a legal opinion or a claim that every component's license review is done.

@@ -1,0 +1,34 @@
+# VLC两份头文件来源补证独立交叉审查
+
+结论：通过，未发现阻断本次限定来源补证的缺陷。现有材料足以将transcode.h及revmodel.hpp两项从“授权来源未定位”改为“官方模块范围授权及历史来源已定位，随对应源码交付”。这是具体工程材料项的收敛，不是逐贡献者签字真实性认证或整个框架的法律保证；原头没有独立授权块这一事实保持不变。
+
+## 核对证据
+
+- EvidenceManifest.json中29份原件的长度/SHA256全部匹配。只校验本目录材料，不重跑旧全量清单。
+- 四份fixed-official文本与本地保留Git中官方固定79128878对应文件逐字一致；两架构实际排除候选构建树的四份文件（8次）与actual-patched文本逐字一致，hash匹配FixedSourceComparison。
+- 四份fixed-to-patched diff及Freeverb原头到VLC头diff均由保留文本精确重算匹配；源码字节本身未改写。revmodel.hpp/spatializer.cpp无本地差异，transcode.h仅两个venc字段差异。
+- 原上游0020-transcode-add-support-for-mutliple-venc-parameters.patch与SourceMaterials.tar的prepared/vlckit/libvlc/patches同成员逐字一致，其transcode.h hunk恰好添加上述两个字段。这里原patch的From身份是ba4f8b9f08685eaeabb43d704dc26035f0fdab66；Applicability所述e7eebdb8…是本地补丁序列应用后的提交身份，retained-upstream-transcode-header.patch明确记录ShelfMac构建committer。两者不能混称同一个官方commit，本报告补充该身份区分；没有发现代码差异被隐瞒。
+
+## transcode.h的范围依据
+
+2009拆分提交25fd8c34…确实新增transcode.h，其内容开始于includes，未含独立授权块；同提交Modules.am把transcode.c/transcode.h及audio/video/spu/osd声明为同一stream_out_transcode目标。材料有真实新增diff与目标关联，不是只凭相邻文件推定。
+
+2013提交2416d7d1…完整说明以相应贡献者授权将stream_out/mux几乎全部模块改为LGPL2.1-or-later，明确duplicate与rtp例外；transcode未在例外中，audio/osd/spu/transcode/video五源的授权块实际改为LGPL。结合内部头拆分与模块目标归属，Applicability作模块范围解释有明确上游根据。它没有声称该提交给头新增了未出现的许可块，也没有把例外模块自动归为LGPL。
+
+## revmodel.hpp的范围依据
+
+固定Freeverb重刊的readme明确Components包含源组件并将代码称为public domain；同一重刊的revmodel.hpp自身直接写public domain。FreeverbSourceProvenance保留固定cfcea555…URL与hash，Applicability正确称其为Jezar文本的第三方重刊，不把sinshu冒称原作者或原作者站点。
+
+与VLC头的diff包含实质声明/成员差异及署名变更，故不能用原Freeverb public domain包办VLC适配贡献。官方c701929d…明确Biodun Osunkunle GSoC spatializer导入，同时新增头和实现；固定头历史保存的后续清理未被误当原作者代码原样复制。
+
+2012提交fef27058…明确按230余贡献者授权重授播放模块，包括audio filters，并列出排除模块（含mono/headphone/dolby等），没有spatializer；返回files中确有带Biodun署名的spatializer.cpp实际LGPL头变更。报告已披露API仅首300文件，没有冒称审完大提交每个文件。提交自己的“依赖GPL库不自动使成品为LGPL”提醒也应继续保留在原证据中，不能由此证明整框架授权。
+
+因此“原Freeverb宽许可来源＋VLC适配所属模块明确重授权”有证据支持，区别于从相邻revmodel.cpp一句public domain推定头文件。以当前spatializer模块LGPL2.1-or-later范围加原作者来源说明交付是本次材料记录的限定解释，不重新宣称所有VLC适配贡献为public domain。
+
+## 交付与停止点
+
+随源码材料保留Applicability、原提交/历史JSON、固定/实际源码、原Freeverb重刊及精确diff，并继续提供对应LGPL文本及署名。两具体“来源未定位”待办可关闭；完整framework许可判断仍依最终适用表与实际依赖范围，不能由两个模块结论替代。
+
+本次没有发现必须为这两个头立刻排除模块并重新构建的证据。transcode为PCM桥实际需要，spatializer是否保留属于明确功能/配置决策；既已有来源补证，不因缺重复文件头无限重建或额外要求逐人签名档案。
+
+本轮仅新增此IndependentReview.md。未修改Packaging/Vendor/源文件/原证据，未运行build、nm、播放、尾帧或旧全量检查，也未重新获取网络来源。

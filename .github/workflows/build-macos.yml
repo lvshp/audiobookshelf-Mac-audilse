@@ -1,0 +1,73 @@
+name: Build Audisle for Apple Silicon
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    tags: ['v*']
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: macos-package-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    runs-on: macos-26
+    timeout-minutes: 60
+    env:
+      VLC_BUNDLE_URL: ${{ secrets.VLC_BUNDLE_URL }}
+      VLC_BUNDLE_SHA256: ${{ vars.VLC_BUNDLE_SHA256 }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check runner and dependency configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(uname -m)" = arm64
+          test -n "$VLC_BUNDLE_URL" || { echo 'Set the VLC_BUNDLE_URL repository secret. See docs/GITHUB_ACTIONS.md.' >&2; exit 1; }
+          [[ "$VLC_BUNDLE_URL" == https://* ]] || { echo 'VLC_BUNDLE_URL must use HTTPS.' >&2; exit 1; }
+          [[ "$VLC_BUNDLE_SHA256" =~ ^[0-9a-f]{64}$ ]] || { echo 'Set VLC_BUNDLE_SHA256 to the dependency archive SHA-256.' >&2; exit 1; }
+          xcodebuild -version
+          swift --version
+      - name: Download and verify patched VLC and source materials
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/ci-inputs build/ci-dependencies
+          curl --fail --location --silent --show-error --retry 3 --max-time 900 \
+            --proto '=https' --proto-redir '=https' \
+            "$VLC_BUNDLE_URL" -o build/ci-inputs/Audisle-vlc-dependencies.tar.gz
+          printf '%s  %s\n' "$VLC_BUNDLE_SHA256" build/ci-inputs/Audisle-vlc-dependencies.tar.gz | shasum -a 256 -c -
+          tar -xzf build/ci-inputs/Audisle-vlc-dependencies.tar.gz -C build/ci-dependencies
+          /usr/bin/python3 -I scripts/import-patched-vlc.py \
+            --source build/ci-dependencies/VLCKit.xcframework --apply
+          /usr/bin/python3 -I scripts/ci-vlc-bundle.py verify build/ci-dependencies/vlc-source-delivery
+      - name: Run playback and core tests
+        run: bash scripts/test.sh
+      - name: Build Release app
+        run: bash scripts/build-app.sh
+      - name: Package and verify DMG
+        run: bash scripts/package-dmg.sh build/Audisle.app build/ci-output
+      - name: Include project source and dependency materials
+        shell: bash
+        run: |
+          set -euo pipefail
+          git archive --format=tar.gz --output=build/ci-output/Audisle-source.tar.gz HEAD
+          cp build/ci-inputs/Audisle-vlc-dependencies.tar.gz build/ci-output/
+          (cd build/ci-output && shasum -a 256 Audisle-source.tar.gz Audisle-vlc-dependencies.tar.gz > SOURCE-SHA256SUMS.txt)
+      - name: Upload build and corresponding VLC materials
+        uses: actions/upload-artifact@v4
+        with:
+          name: Audisle-arm64-${{ github.run_number }}
+          path: build/ci-output/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
