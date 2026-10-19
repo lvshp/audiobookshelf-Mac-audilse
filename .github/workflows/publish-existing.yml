@@ -87,5 +87,29 @@ jobs:
 
           操作说明：[Apple 官方帮助](https://support.apple.com/zh-cn/102445)。
           NOTES
-          gh release create "$RELEASE_TAG" ./* --verify-tag \
-            --title "Audilse ${RELEASE_TAG#v}" --notes-file "$RUNNER_TEMP/release-notes.md" --latest
+          RELEASE_ENDPOINT="repos/$GH_REPO/releases/tags/$RELEASE_TAG"
+          if gh api --include "$RELEASE_ENDPOINT" > "$RUNNER_TEMP/release-response.txt"; then
+            # Upload everything first. A failed upload must retain the old DMG.
+            # Updating assets does not edit the existing release title or body.
+            gh release upload "$RELEASE_TAG" ./* --clobber
+            RELEASE_ID=$(gh api "$RELEASE_ENDPOINT" --jq .id)
+            [[ "$RELEASE_ID" =~ ^[0-9]+$ ]]
+            gh api --paginate "repos/$GH_REPO/releases/$RELEASE_ID/assets" \
+              --jq '.[].name' > "$RUNNER_TEMP/release-asset-names.txt"
+            PREFIX="Audilse-${RELEASE_TAG#v}-build"
+            while IFS= read -r ASSET; do
+              [[ "$ASSET" == "$PREFIX"* ]] || continue
+              SUFFIX="${ASSET#"$PREFIX"}"
+              [[ "$SUFFIX" =~ ^[0-9]+-arm64\.dmg(\.sha256)?$ ]] || continue
+              [[ "$ASSET" != "$DMG" && "$ASSET" != "$DMG.sha256" ]] || continue
+              gh release delete-asset "$RELEASE_TAG" "$ASSET" --yes
+            done < "$RUNNER_TEMP/release-asset-names.txt"
+          else
+            STATUS=$(awk 'NR == 1 {print $2}' "$RUNNER_TEMP/release-response.txt")
+            if [[ "$STATUS" != 404 ]]; then
+              echo "Release lookup failed (HTTP ${STATUS:-unavailable}); refusing to create or replace it." >&2
+              exit 1
+            fi
+            gh release create "$RELEASE_TAG" ./* --verify-tag \
+              --title "Audilse ${RELEASE_TAG#v}" --notes-file "$RUNNER_TEMP/release-notes.md" --latest
+          fi

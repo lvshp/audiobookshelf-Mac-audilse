@@ -91,6 +91,8 @@ jobs:
           retention-days: 7
       - name: Build Release app
         run: bash scripts/build-app.sh
+      - name: Verify app resources outside the checkout
+        run: bash scripts/verify-app-resources.sh build/Audilse.app
       - name: Package and verify DMG
         run: bash scripts/package-dmg.sh build/Audilse.app build/ci-output
       - name: Include project source and dependency materials

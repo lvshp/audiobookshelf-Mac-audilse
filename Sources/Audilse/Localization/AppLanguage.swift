@@ -49,10 +49,7 @@ protocol ClientLocalizedError: Error {
 enum L10n {
     private static let bundles: [AppLanguage: Bundle] = {
         var result: [AppLanguage: Bundle] = [:]
-        var candidates = [Bundle.main]
-        #if SWIFT_PACKAGE
-        candidates.append(Bundle.module)
-        #endif
+        let candidates = [AppResources.bundle, Bundle.main]
         for language in AppLanguage.allCases {
             for base in candidates {
                 if let resource = base.resourceURL?.appendingPathComponent(language.rawValue + ".lproj"),
@@ -70,7 +67,10 @@ enum L10n {
     }
 
     static func tr(_ key: String) -> String {
-        let language = AppLanguageStore.shared.selection
+        tr(key, language: AppLanguageStore.shared.selection)
+    }
+
+    static func tr(_ key: String, language: AppLanguage) -> String {
         return bundles[language]?.localizedString(forKey: key, value: key, table: "Localizable") ?? key
     }
 

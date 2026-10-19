@@ -1,7 +1,25 @@
 import SwiftUI
 import AppKit
+import Darwin
 
 @main
+@MainActor
+enum AudilseLauncher {
+    static func main() {
+        if CommandLine.arguments.contains("--verify-resources") {
+            do {
+                try AppResources.verifyPackagedResources()
+                print("APP_RESOURCES_OK: bundled localizations and reader assets")
+                exit(0)
+            } catch {
+                FileHandle.standardError.write(Data("Resource verification failed: \(error.localizedDescription)\n".utf8))
+                exit(1)
+            }
+        }
+        AudilseApp.main()
+    }
+}
+
 struct AudilseApp: App {
     @State private var store = AppStore()
     @Environment(\.openWindow) private var openWindow

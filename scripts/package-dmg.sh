@@ -12,12 +12,26 @@ test "$(lipo -archs "$APP_PATH/Contents/MacOS/Audilse")" = arm64
 codesign --verify --deep --strict "$APP_PATH"
 mkdir -p "$OUTPUT_DIR" "$PROJECT_DIR/build"
 STAGE=$(mktemp -d "$PROJECT_DIR/build/dmg-stage.XXXXXX")
-trap 'rm -rf "$STAGE"' EXIT
+MOUNT=$(mktemp -d /private/tmp/audilse-dmg-check.XXXXXX)
+MOUNTED=0
+cleanup() {
+  if [[ "$MOUNTED" = 1 ]]; then
+    hdiutil detach "$MOUNT" -quiet || { echo "Could not detach verification volume: $MOUNT" >&2; return 1; }
+  fi
+  rm -rf "$STAGE"
+  rmdir "$MOUNT"
+}
+trap cleanup EXIT
 ditto "$APP_PATH" "$STAGE/Audilse.app"
 ln -s /Applications "$STAGE/Applications"
 DMG="$OUTPUT_DIR/Audilse-${VERSION}-build${BUILD}-arm64.dmg"
 hdiutil create -volname Audilse -srcfolder "$STAGE" -ov -format UDZO "$DMG"
 hdiutil verify "$DMG"
+hdiutil attach "$DMG" -readonly -nobrowse -mountpoint "$MOUNT" -quiet
+MOUNTED=1
+bash scripts/verify-app-resources.sh "$MOUNT/Audilse.app"
+hdiutil detach "$MOUNT" -quiet
+MOUNTED=0
 shasum -a 256 "$DMG" > "$DMG.sha256"
 cp LICENSE "$OUTPUT_DIR/LICENSE.txt"
 cp Packaging/VLC_DISTRIBUTION.md Packaging/THIRD_PARTY_NOTICES.md "$OUTPUT_DIR/"

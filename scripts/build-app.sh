@@ -17,9 +17,8 @@ ditto Packaging/Licenses "$APP_PATH/Contents/Resources/Licenses"
 cp LICENSE "$APP_PATH/Contents/Resources/Audilse-LICENSE.txt"
 cp Packaging/THIRD_PARTY_NOTICES.md "$APP_PATH/Contents/Resources/THIRD_PARTY_NOTICES.md"
 cp Packaging/VLC_DISTRIBUTION.md "$APP_PATH/Contents/Resources/VLC_DISTRIBUTION.md"
-if [[ -d "$BIN_DIR/Audilse_Audilse.bundle" ]]; then
-  ditto "$BIN_DIR/Audilse_Audilse.bundle" "$APP_PATH/Contents/Resources/Audilse_Audilse.bundle"
-fi
+test -d "$BIN_DIR/Audilse_Audilse.bundle" || { echo 'Required SwiftPM resource bundle is missing.' >&2; exit 1; }
+ditto "$BIN_DIR/Audilse_Audilse.bundle" "$APP_PATH/Contents/Resources/Audilse_Audilse.bundle"
 for LANGUAGE in en zh-Hans; do
   ditto "Sources/Audilse/Resources/$LANGUAGE.lproj" "$APP_PATH/Contents/Resources/$LANGUAGE.lproj"
 done

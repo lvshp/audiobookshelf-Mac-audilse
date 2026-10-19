@@ -14,12 +14,7 @@ struct LocalTextReader: NSViewRepresentable {
         view.navigationDelegate = context.coordinator
         view.setValue(false, forKey: "drawsBackground")
         model.webView = view
-        #if SWIFT_PACKAGE
-        let readerURL = Bundle.module.url(forResource: "reader", withExtension: "html")
-        #else
-        let readerURL = Bundle.main.url(forResource: "reader", withExtension: "html", subdirectory: "Reader")
-        #endif
-        if let url = readerURL {
+        if let url = AppResources.readerURL {
             view.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
         } else { model.error = L10n.tr("本地阅读组件未正确打包。"); model.isLoading = false }
         return view
