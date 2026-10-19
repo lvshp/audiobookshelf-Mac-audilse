@@ -6,22 +6,22 @@ CONFIGURATION="${CONFIGURATION:-release}"
 export CLANG_MODULE_CACHE_PATH="$PROJECT_DIR/.build/clang-cache"
 export SWIFTPM_MODULECACHE_OVERRIDE="$PROJECT_DIR/.build/swift-cache"
 bash scripts/prepare-vlc.sh
-swift build --disable-sandbox -c "$CONFIGURATION" --product ShelfMac --cache-path .build/package-cache
+swift build --disable-sandbox -c "$CONFIGURATION" --product Audilse --cache-path .build/package-cache
 BIN_DIR="$(swift build --disable-sandbox -c "$CONFIGURATION" --show-bin-path --cache-path .build/package-cache)"
 # A separate output lets packaging finish without replacing a running app.
-APP_PATH="${SHELFMAC_APP_PATH:-$PROJECT_DIR/build/Audisle.app}"
+APP_PATH="${AUDILSE_APP_PATH:-$PROJECT_DIR/build/Audilse.app}"
 mkdir -p "$APP_PATH/Contents/MacOS" "$APP_PATH/Contents/Resources" "$APP_PATH/Contents/Frameworks"
-cp "$BIN_DIR/ShelfMac" "$APP_PATH/Contents/MacOS/ShelfMac"
+cp "$BIN_DIR/Audilse" "$APP_PATH/Contents/MacOS/Audilse"
 cp Packaging/Info.plist "$APP_PATH/Contents/Info.plist"
 ditto Packaging/Licenses "$APP_PATH/Contents/Resources/Licenses"
-cp LICENSE "$APP_PATH/Contents/Resources/Audisle-LICENSE.txt"
+cp LICENSE "$APP_PATH/Contents/Resources/Audilse-LICENSE.txt"
 cp Packaging/THIRD_PARTY_NOTICES.md "$APP_PATH/Contents/Resources/THIRD_PARTY_NOTICES.md"
 cp Packaging/VLC_DISTRIBUTION.md "$APP_PATH/Contents/Resources/VLC_DISTRIBUTION.md"
-if [[ -d "$BIN_DIR/ShelfMac_ShelfMac.bundle" ]]; then
-  ditto "$BIN_DIR/ShelfMac_ShelfMac.bundle" "$APP_PATH/Contents/Resources/ShelfMac_ShelfMac.bundle"
+if [[ -d "$BIN_DIR/Audilse_Audilse.bundle" ]]; then
+  ditto "$BIN_DIR/Audilse_Audilse.bundle" "$APP_PATH/Contents/Resources/Audilse_Audilse.bundle"
 fi
 for LANGUAGE in en zh-Hans; do
-  ditto "Sources/ShelfMac/Resources/$LANGUAGE.lproj" "$APP_PATH/Contents/Resources/$LANGUAGE.lproj"
+  ditto "Sources/Audilse/Resources/$LANGUAGE.lproj" "$APP_PATH/Contents/Resources/$LANGUAGE.lproj"
 done
 if [[ -f Packaging/AppIcon.icns ]]; then
   cp Packaging/AppIcon.icns "$APP_PATH/Contents/Resources/AppIcon.icns"

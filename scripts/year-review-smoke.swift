@@ -3,7 +3,7 @@ import CryptoKit
 import Foundation
 import ImageIO
 import Observation
-import ShelfCore
+import AudilseCore
 import SwiftUI
 
 // Compiles the actual product renderer, poster and authenticated cover model.

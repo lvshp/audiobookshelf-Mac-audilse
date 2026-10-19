@@ -56,7 +56,7 @@ deletions and changes, including comments and integration declarations.
   modifications for sparse DCT matrices. The full diff, not this summary,
   specifies the complete textual changes against that comparison source.
 
-ShelfMac build comparison
+Audilse build comparison
 ------------------------
 The three files in both retained arm64 and x86_64 exclusion-candidate
 build trees are byte-for-byte identical to the corresponding files in the

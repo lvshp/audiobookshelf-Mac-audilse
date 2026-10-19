@@ -1,10 +1,10 @@
-// Compile against the built ShelfPlayback and ShelfCore libraries. This uses
+// Compile against the built AudilsePlayback and AudilseCore libraries. This uses
 // only temporary generated audio; it never contacts or writes an ABS server.
 import Foundation
 import AppKit
 import AVFoundation
-import ShelfCore
-import ShelfPlayback
+import AudilseCore
+import AudilsePlayback
 
 private actor SmokeJournal {
     private var values: [LocalPlaybackSession] = []

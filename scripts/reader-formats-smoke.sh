@@ -4,19 +4,19 @@ reader_project="$(cd "$(dirname "$0")/.." && pwd)"
 reader_prebuilt="${READER_SMOKE_PREBUILT:-$reader_project/.build/debug}"
 reader_work="${READER_FORMAT_WORKDIR:-$(mktemp -d "${TMPDIR:-/tmp}/shelf-reader-formats.XXXXXX")}"
 mkdir -p "$reader_work/dependencies"
-if [[ ! -f "$reader_prebuilt/libShelfCore.a" ]]; then
-  echo "A matching Debug ShelfCore archive is required; this script does not run a shared build." >&2
+if [[ ! -f "$reader_prebuilt/libAudilseCore.a" ]]; then
+  echo "A matching Debug AudilseCore archive is required; this script does not run a shared build." >&2
   exit 2
 fi
-for reader_file in libShelfCore.a ShelfCore.swiftmodule GRDB.swiftmodule SocketIO.swiftmodule Starscream.swiftmodule; do
+for reader_file in libAudilseCore.a AudilseCore.swiftmodule GRDB.swiftmodule SocketIO.swiftmodule Starscream.swiftmodule; do
   cp -R "$reader_prebuilt/$reader_file" "$reader_work/dependencies/"
 done
 swiftc -parse-as-library -swift-version 6 -disable-sandbox \
   -module-cache-path "$reader_work/module-cache" \
   -I "$reader_work/dependencies" \
   -I "$reader_project/.build/checkouts/GRDB.swift/Sources/GRDBSQLite" \
-  "$reader_project/scripts/reader-formats-smoke.swift" "$reader_project/Sources/ShelfMac/Reading/ReaderModel.swift" \
-  "$reader_project/Sources/ShelfMac/Localization/AppLanguage.swift" "$reader_work/dependencies/libShelfCore.a" \
+  "$reader_project/scripts/reader-formats-smoke.swift" "$reader_project/Sources/Audilse/Reading/ReaderModel.swift" \
+  "$reader_project/Sources/Audilse/Localization/AppLanguage.swift" "$reader_work/dependencies/libAudilseCore.a" \
   -lsqlite3 -o "$reader_work/ReaderFormatsSmoke"
 echo "Isolated reader executable: $reader_work/ReaderFormatsSmoke"
 if [[ "${1:-}" == --compile-only ]]; then exit 0; fi

@@ -5,13 +5,13 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Audisle</string>
+	<string>Audilse</string>
 	<key>CFBundleExecutable</key>
-	<string>ShelfMac</string>
+	<string>Audilse</string>
 	<key>CFBundleIdentifier</key>
-	<string>app.shelfmac.client</string>
+	<string>app.audilse.client</string>
 	<key>CFBundleName</key>
-	<string>Audisle</string>
+	<string>Audilse</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -27,7 +27,7 @@
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2026 ShelfMac contributors</string>
+	<string>Copyright © 2026 Audilse contributors</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Connect to your Audiobookshelf server on your local network.</string>
 	<key>NSAppTransportSecurity</key>
@@ -63,10 +63,10 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>app.shelfmac.client.oauth</string>
+			<string>app.audilse.client.oauth</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>shelfmac</string>
+				<string>audilse</string>
 			</array>
 		</dict>
 	</array>

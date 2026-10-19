@@ -1,5 +1,5 @@
 import Foundation
-import ShelfCore
+import AudilseCore
 
 // Opt-in integration smoke for three disposable loopback ABS release instances.
 // Credentials are read from private temporary fixture manifests, never arguments or output.
@@ -66,7 +66,7 @@ private final class UploadEvidence: @unchecked Sendable {
         }
         try await step("library-pagination-details") {
             let libraries = try await client.libraries()
-            try require(libraries.contains { $0.id == fixture.libraryID && $0.name == "ShelfMac Compatibility Fixtures" }, "fixture library")
+            try require(libraries.contains { $0.id == fixture.libraryID && $0.name == "Audilse Compatibility Fixtures" }, "fixture library")
             let managed = try await client.managedLibrary(id: fixture.libraryID)
             let mediaRoot = directory.appendingPathComponent("media").resolvingSymlinksInPath().path
             try require(managed.folders.count == 1 && URL(fileURLWithPath: managed.folders[0].fullPath).resolvingSymlinksInPath().path == mediaRoot, "isolated media directory")
@@ -312,7 +312,7 @@ private final class UploadEvidence: @unchecked Sendable {
                 let absURL = folder.appendingPathComponent("metadata.abs")
                 // Legacy .abs is no longer parsed by these releases. Seed its real indexed
                 // filename to exercise the explicit legacy cleanup route with actual bytes.
-                try Data(";ABMETADATA\ntitle=ShelfMac synthetic cleanup fixture\n".utf8).write(to: absURL)
+                try Data(";ABMETADATA\ntitle=Audilse synthetic cleanup fixture\n".utf8).write(to: absURL)
                 let opfURL = folder.appendingPathComponent("metadata.opf")
                 try Data("<?xml version=\"1.0\"?><package xmlns=\"http://www.idpf.org/2007/opf\" version=\"2.0\"><metadata xmlns:dc=\"http://purl.org/dc/elements/1.1/\"><dc:title>Compat Sample</dc:title><dc:creator>Compat Author</dc:creator></metadata></package>".utf8).write(to: opfURL)
                 _ = try await client.scanItem(id: book.id)

@@ -1,9 +1,9 @@
 import Foundation
-import ShelfCore
+import AudilseCore
 
 @main @MainActor struct SettingsSmoke {
     static func main() throws {
-        let domain = "ShelfMac.SettingsSmoke." + UUID().uuidString
+        let domain = "Audilse.SettingsSmoke." + UUID().uuidString
         let defaults = UserDefaults(suiteName: domain)!
         defer { defaults.removePersistentDomain(forName: domain) }
         let account = AccountPartition(serverID: UUID(), userID: "fixture")

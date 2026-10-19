@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="Packaging/AppIcon.png" width="128" alt="Audisle icon">
+  <img src="Packaging/AppIcon.png" width="128" alt="Audilse icon">
 </p>
 
-<h1 align="center">Audisle</h1>
+<h1 align="center">Audilse</h1>
 
 <p align="center">在 Mac 上收听你的 Audiobookshelf 书库。</p>
 
@@ -19,7 +19,7 @@
   <a href="https://github.com/lvshp/audiobookshelf-Mac-audilse/issues">反馈问题</a>
 </p>
 
-Audisle 是使用 Swift、SwiftUI 和 AppKit 编写的原生 macOS 客户端，连接你自己的 [Audiobookshelf](https://github.com/advplyr/audiobookshelf) 服务器，支持有声书、播客和电子书。
+Audilse 是使用 Swift、SwiftUI 和 AppKit 编写的原生 macOS 客户端，连接你自己的 [Audiobookshelf](https://github.com/advplyr/audiobookshelf) 服务器，支持有声书、播客和电子书。
 
 这是一个独立客户端项目，与 Audiobookshelf 官方没有隶属关系。使用前需要已有的 Audiobookshelf 服务器和账号。
 
@@ -46,7 +46,7 @@ Audisle 是使用 Swift、SwiftUI 和 AppKit 编写的原生 macOS 客户端，�
 
 优先从 [Releases](https://github.com/lvshp/audiobookshelf-Mac-audilse/releases/latest) 下载 DMG。
 
-安装包也由 [GitHub Actions](https://github.com/lvshp/audiobookshelf-Mac-audilse/actions/workflows/build-macos.yml) 构建。打开一次成功的运行，在 **Artifacts** 中下载 `Audisle-arm64-…`，解压后打开 DMG，将 **Audisle.app** 拖入 **Applications**。
+安装包也由 [GitHub Actions](https://github.com/lvshp/audiobookshelf-Mac-audilse/actions/workflows/build-macos.yml) 构建。打开一次成功的运行，在 **Artifacts** 中下载 `Audilse-arm64-…`，解压后打开 DMG，将 **Audilse.app** 拖入 **Applications**。
 
 如果还没有成功的构建，仓库维护者需要先按 [自动打包说明](BUILDING.md) 配置 VLC 依赖。
 
@@ -54,7 +54,7 @@ Audisle 是使用 Swift、SwiftUI 和 AppKit 编写的原生 macOS 客户端，�
 
 ## 连接服务器
 
-1. 打开 Audisle，选择 **连接服务器**。
+1. 打开 Audilse，选择 **连接服务器**。
 2. 输入服务器地址，例如 `https://books.example.com`。如果使用子路径，请包含完整路径，例如 `https://example.com/audiobookshelf`。
 3. 使用服务器账号登录，选择书库即可开始收听。
 
@@ -78,10 +78,10 @@ Audisle 是使用 Swift、SwiftUI 和 AppKit 编写的原生 macOS 客户端，�
 bash scripts/build-app.sh
 ```
 
-应用生成在 `build/Audisle.app`。生成 DMG：
+应用生成在 `build/Audilse.app`。生成 DMG：
 
 ```bash
-bash scripts/package-dmg.sh build/Audisle.app build/delivery
+bash scripts/package-dmg.sh build/Audilse.app build/delivery
 ```
 
 运行测试：
@@ -90,17 +90,17 @@ bash scripts/package-dmg.sh build/Audisle.app build/delivery
 bash scripts/test.sh
 ```
 
-也可以使用 Xcode 打开 `ShelfMac.xcodeproj`，选择 `ShelfMacApp` scheme。工程和模块仍使用内部名称 ShelfMac。
+也可以使用 Xcode 打开 `Audilse.xcodeproj`，选择 `AudilseApp` scheme。
 
 ## 反馈与贡献
 
-遇到问题或有功能建议，欢迎提交 [Issue](https://github.com/lvshp/audiobookshelf-Mac-audilse/issues)。请附上 macOS、Audisle 和服务器版本，以及复现步骤；播放问题请注明音频格式和在线／离线状态。日志中请去掉密码、令牌及私人服务器信息。
+遇到问题或有功能建议，欢迎提交 [Issue](https://github.com/lvshp/audiobookshelf-Mac-audilse/issues)。请附上 macOS、Audilse 和服务器版本，以及复现步骤；播放问题请注明音频格式和在线／离线状态。日志中请去掉密码、令牌及私人服务器信息。
 
-欢迎提交修复、翻译和界面改进。简体中文和英文的语言资源位于 `Sources/ShelfMac/Resources/`。
+欢迎提交修复、翻译和界面改进。简体中文和英文的语言资源位于 `Sources/Audilse/Resources/`。
 
 ## 许可证
 
-项目原创代码采用 [Audisle Noncommercial License 1.0](LICENSE)，允许非商业使用、修改和分发；商业使用需要另行取得书面授权。
+项目原创代码采用 [Audilse Noncommercial License 1.0](LICENSE)，允许非商业使用、修改和分发；商业使用需要另行取得书面授权。
 
 第三方组件遵循各自的许可证，详见 [第三方声明](Packaging/THIRD_PARTY_NOTICES.md)。分发包含 VLC 的应用时，请同时提供 [对应源码与许可材料](Packaging/VLC_DISTRIBUTION.md)。
 

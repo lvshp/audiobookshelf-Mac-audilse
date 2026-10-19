@@ -173,7 +173,7 @@ final class Migrator: SyntaxRewriter {
             FileHandle.standardError.write(Data("Usage: localize-sources inventory|migrate PROJECT_ROOT [INVENTORY_JSON]\n".utf8)); exit(2)
         }
         let mode = arguments[1], root = URL(fileURLWithPath: arguments[2]).standardizedFileURL
-        let sourceRoot = root.appendingPathComponent("Sources/ShelfMac")
+        let sourceRoot = root.appendingPathComponent("Sources/Audilse")
         let paths = (FileManager.default.enumerator(at: sourceRoot, includingPropertiesForKeys: nil)?.allObjects as? [URL] ?? []).filter { $0.pathExtension == "swift" }.sorted { $0.path < $1.path }
         var entries: [String: [Occurrence]] = [:], files = 0, failures: [String] = []
         var updates: [(url: URL, original: String, replacement: String)] = []

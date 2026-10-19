@@ -28,9 +28,9 @@ ROOT = Path('/private/tmp/shelf-podcast-fixtures')
 ABS_ROOT = Path('/private/tmp/shelf-compat-servers/v2.37.1')
 ABS_BASE = 'http://127.0.0.1:13371/compat'
 RSS_BASE = 'http://127.0.0.1:13373/podcast-fixture/v1'
-LIBRARY_NAME = 'ShelfMac Podcast Fixtures'
-SHOW_TITLE = 'ShelfMac Podcast Demo'
-IDENTITY = 'ShelfMacPodcastFixturesV1'
+LIBRARY_NAME = 'Audilse Podcast Fixtures'
+SHOW_TITLE = 'Audilse Podcast Demo'
+IDENTITY = 'AudilsePodcastFixturesV1'
 EPISODE_TITLES = [
     'Fixture Episode 01 - First Chapter',
     'Fixture Episode 02 - Returning Home',
@@ -105,17 +105,17 @@ def feed():
     items = []
     for number in range(6, 0, -1):
         title = EPISODE_TITLES[number - 1]
-        items.append(f'''<item><title>{escape(title)}</title><guid isPermaLink="false">urn:shelfmac:podcast-fixture:episode:{number:02}</guid>
+        items.append(f'''<item><title>{escape(title)}</title><guid isPermaLink="false">urn:audilse:podcast-fixture:episode:{number:02}</guid>
 <description><![CDATA[<p>Synthetic forty-second episode {number}. Safe fixture for editing and RSS matching.</p>]]></description>
-<itunes:subtitle>ShelfMac local acceptance episode {number}</itunes:subtitle><itunes:author>ShelfMac Fixture Lab</itunes:author>
+<itunes:subtitle>Audilse local acceptance episode {number}</itunes:subtitle><itunes:author>Audilse Fixture Lab</itunes:author>
 <pubDate>Mon, 12 Oct 2026 {number:02}:00:00 +0000</pubDate><itunes:duration>00:00:40</itunes:duration>
 <itunes:episode>{number}</itunes:episode><itunes:season>1</itunes:season><itunes:episodeType>full</itunes:episodeType><itunes:explicit>no</itunes:explicit>
 <enclosure url="{RSS_BASE}/audio/episode-{number:02}.mp3" length="{size}" type="audio/mpeg"/></item>''')
     return (f'''<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom"><channel>
 <title>{SHOW_TITLE}</title><link>{RSS_BASE}/feed.xml</link><language>en</language>
-<description>Six synthetic forty-second episodes for ShelfMac native podcast acceptance.</description>
+<description>Six synthetic forty-second episodes for Audilse native podcast acceptance.</description>
 <atom:link href="{RSS_BASE}/feed.xml" rel="self" type="application/rss+xml"/>
-<itunes:author>ShelfMac Fixture Lab</itunes:author><itunes:explicit>no</itunes:explicit><itunes:type>episodic</itunes:type>
+<itunes:author>Audilse Fixture Lab</itunes:author><itunes:explicit>no</itunes:explicit><itunes:type>episodic</itunes:type>
 <itunes:category text="Technology"/><itunes:image href="{RSS_BASE}/cover.png"/>
 {''.join(items)}</channel></rss>''').encode()
 
@@ -252,7 +252,7 @@ def prepare():
     show = request(ABS_BASE + '/api/items/' + show['id'] + '?expanded=1', token=token)
     assert show['libraryId'] == library['id'] and show['media']['metadata']['title'] == SHOW_TITLE and show['media']['metadata']['feedUrl'] == RSS_BASE + '/feed.xml'
     existing_guids = {episode.get('guid') for episode in show['media'].get('episodes', [])}
-    expected_guids = {f'urn:shelfmac:podcast-fixture:episode:{number:02}' for number in (1, 2)}
+    expected_guids = {f'urn:audilse:podcast-fixture:episode:{number:02}' for number in (1, 2)}
     queue = request(ABS_BASE + '/api/libraries/' + library['id'] + '/episode-downloads', token=token)
     active = queue.get('queue', []) + ([queue['currentDownload']] if queue.get('currentDownload') else [])
     if not existing_guids.issubset(expected_guids) or any(download.get('libraryItemId') == show['id'] for download in active):
@@ -275,7 +275,7 @@ def prepare():
     recent = request(ABS_BASE + '/api/libraries/' + library['id'] + '/recent-episodes?limit=50&page=0', token=token)
     assert expected_guids.issubset({episode.get('guid') for episode in recent['episodes']})
     matched = request(ABS_BASE + '/api/podcasts/' + show['id'] + '/search-episode?title=Fixture%20Episode%2001%20-%20First%20Chapter', token=token)
-    assert any(match['episode'].get('guid') == 'urn:shelfmac:podcast-fixture:episode:01' for match in matched['episodes'])
+    assert any(match['episode'].get('guid') == 'urn:audilse:podcast-fixture:episode:01' for match in matched['episodes'])
     print('PASS latest episodes and RSS matching release routes')
     save(ROOT / 'manifest.json', {'fixture': IDENTITY, 'server': ABS_BASE, 'rssURL': RSS_BASE + '/feed.xml', 'libraryID': library['id'], 'libraryName': LIBRARY_NAME, 'folderID': folder_id, 'folderPath': str(directory), 'itemID': show['id'], 'showTitle': SHOW_TITLE, 'initialEpisodes': [{'id': episode['id'], 'title': episode['title']} for episode in found]})
     status(token)
@@ -289,7 +289,7 @@ def status(token=None):
     assert show['libraryId'] == manifest['libraryID'] and show['mediaType'] == 'podcast'
     episodes = show['media'].get('episodes', [])
     guids = {episode.get('guid') for episode in episodes}
-    remaining = [number for number in range(1, 7) if f'urn:shelfmac:podcast-fixture:episode:{number:02}' not in guids]
+    remaining = [number for number in range(1, 7) if f'urn:audilse:podcast-fixture:episode:{number:02}' not in guids]
     queue = request(ABS_BASE + '/api/libraries/' + manifest['libraryID'] + '/episode-downloads', token=token)
     active = queue.get('queue', []) + ([queue['currentDownload']] if queue.get('currentDownload') else [])
     print('LIBRARY', manifest['libraryName'])

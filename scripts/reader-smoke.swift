@@ -17,7 +17,7 @@ import Foundation
         web = WKWebView(frame: NSRect(x: 0, y: 0, width: 1000, height: 700), configuration: configuration)
         web.navigationDelegate = self
         window = NSWindow(contentRect: web.frame, styleMask: [.titled, .closable], backing: .buffered, defer: false)
-        window.title = "ShelfMac Reader Verification"
+        window.title = "Audilse Reader Verification"
         window.contentView = web
         window.orderFront(nil)
         let url = URL(fileURLWithPath: CommandLine.arguments[1])

@@ -1,20 +1,20 @@
 # VLCKit 对应源码与交付材料
 
-更新：2026-10-16。本说明适用于ShelfMac当前源码采用的插件排除配置；它记录材料与交付状态，不声明全部功能或法律合规已经完成。正式Developer ID签名、Apple公证及公开发布按用户要求不纳入；对应源码与许可原文可随本地项目交付，不要求另建公开托管站点。
+更新：2026-10-16。本说明适用于Audilse当前源码采用的插件排除配置；它记录材料与交付状态，不声明全部功能或法律合规已经完成。正式Developer ID签名、Apple公证及公开发布按用户要求不纳入；对应源码与许可原文可随本地项目交付，不要求另建公开托管站点。
 
 ## 当前版本与通知状态
 
 | 对象 | 当前事实 |
 | --- | --- |
 | 项目Vendor及正式框架锁 | 已配对采用新配置；未签名原始框架SHA-256为`2b2a63528e3f26549c0cdc3e5a15843a9636c10c559d26376402a779e555d011` |
-| 固定源码 | VLCKit提交`319ed2c0724e3d4c4d34889a62fef1ae269491bc`；VLC基线`79128878ddb2c280bbb6c89c76a46b31a80ade1c`，保留47个上游补丁及ShelfMac copy-drain修改 |
+| 固定源码 | VLCKit提交`319ed2c0724e3d4c4d34889a62fef1ae269491bc`；VLC基线`79128878ddb2c280bbb6c89c76a46b31a80ade1c`，保留47个上游补丁及Audilse copy-drain修改 |
 | 运行时身份 | `3.0.23 Vetinari` / `3.0.23-shelf-copy-drain-input1-0-g536397a`；配置变体另由recipe/policy/包哈希区分，不靠不变的changeset冒充不同源码版本 |
 | 新实际输入 | 两架构各232插件、295静态输入路径；60个contrib库来自44来源包，构建选包45项（存在同源别名） |
 | 通知源 | `Packaging/Licenses/VLC-Contrib/`现有123份，含已独审整合的最终12补件和3份IJG材料 |
 | 当前原路径应用 | 已采用排除配置框架、123份VLC-Contrib通知及独立3份VLC-Modules材料；当前包身份、部署与核验记录见当前交付检查点（本地记录：`CURRENT_CHECKPOINT.md`） |
 | 历史新框架暂存输入 | `9fe17df361592d742f7a33c7b30f3544893e631aee7d71f3de1e96df79183cda`，含108份contrib通知，当时未部署；本9fe输入副本仍为108份，保留为资源更新前检查点 |
 
-历史资源更新产物c915为`build/staging-vlc-notices/ShelfMac.app`：从9fe输入复制，仅更新许可与两文档，含123份contrib和3份VLC-Modules材料，不重新编译。当时原路径73c应用未因此替换，c915也未单独部署；这些是该次资源更新的历史状态，不代表当前部署状态。资源与临时签名/字节差异记录见随项目`build/release-evidence/vlc-notices-resource-20261015/ResourceUpdate.json`。
+历史资源更新产物c915为`build/staging-vlc-notices/Audilse.app`：从9fe输入复制，仅更新许可与两文档，含123份contrib和3份VLC-Modules材料，不重新编译。当时原路径73c应用未因此替换，c915也未单独部署；这些是该次资源更新的历史状态，不代表当前部署状态。资源与临时签名/字节差异记录见随项目`build/release-evidence/vlc-notices-resource-20261015/ResourceUpdate.json`。
 
 签名会改变Mach-O字节；包内签后加载证据与未签名框架hash分别保存。最新包身份与部署状态统一以随项目的当前交付检查点（本地记录：`CURRENT_CHECKPOINT.md`）及其release-evidence为准；本说明记录当前材料配置，不随每次应用重签重复写入动态包哈希，也不把通知源数量当作已部署资源数量。
 
@@ -31,7 +31,7 @@ VLCKit的LGPL正文不是全部静态依赖的统一许可。44来源包逐项�
 
 ## 本地源码获取与重建入口
 
-收到ShelfMac完整项目材料的用户，可直接从项目根读取以下目录；无需账号、开发机`/private/tmp`路径或额外公开下载承诺：
+收到Audilse完整项目材料的用户，可直接从项目根读取以下目录；无需账号、开发机`/private/tmp`路径或额外公开下载承诺：
 
 1. `build/vlc-source-delivery/SourceMaterials.tar`及`SourceMaterialManifest.json`：固定原始/准备源码、上游及本项目补丁、62份依赖归档、来源清单与历史配置。原tar保持不变，不因排除部分组件删除历史来源。
 2. `Packaging/VLC/portable/`、`Packaging/VLC/source-lock.json`、`Packaging/VLC/patched-lock.json`及相关`scripts/`：当前配方、身份与重建/校验/导入流程。操作说明见源码目录`Packaging/VLC/portable/README.md`；应使用独立新工作目录。
@@ -46,7 +46,7 @@ SourceMaterials.tar的历史固定SHA-256为`74c0155c93ddf1bb7312048c25a56e9693f
 
 应用`Contents/Resources/`应包含本说明、`THIRD_PARTY_NOTICES.md`、项目LICENSE和完整`Licenses/`（含最终123份VLC-Contrib原文，以及独立的3份VLC-Modules来源材料）；Reader许可随相应Reader资源保留。独立应用副本中的源码路径是“随项目材料的位置说明”，不伪称tar在app内部。
 
-随应用提供的本地项目交付目录应包括ShelfMac源码/构建脚本与上述完整`build/vlc-source-delivery/`，尤其当前采用配方/锁、各实际源码归档、修改记录和适用表。只发app加一段“上游可下载”不能替代本项目选择的本地源码交付方式。
+随应用提供的本地项目交付目录应包括Audilse源码/构建脚本与上述完整`build/vlc-source-delivery/`，尤其当前采用配方/锁、各实际源码归档、修改记录和适用表。只发app加一段“上游可下载”不能替代本项目选择的本地源码交付方式。
 
 当前应用已采用上述123份通知与3份模块材料；具体包内核验以当前交付检查点所链接记录为准。历史c915资源交付采用当时已审两文档与模块材料，复用9fe暂存应用的可执行内容和框架，仅更新资源并临时重签。该次123份通知、3份模块材料、两文档及签名前后可执行/框架变化由ResourceUpdate.json记录；外层签名若改变主二进制字节，应与重新编译区分。旧73c与108份通知的9fe输入保留其历史状态。该次资源交付未重复已通过构建、尾帧或播放，也不声明完整ABS目标完成。
 

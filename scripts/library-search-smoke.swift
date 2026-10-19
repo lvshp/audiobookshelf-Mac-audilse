@@ -2,7 +2,7 @@
 // Every URLSession request is intercepted; fixtures never reach the network or use real credentials.
 import Foundation
 import GRDB
-import ShelfCore
+import AudilseCore
 
 enum ShelfRoute: Hashable { case home, library(String), search, downloads }
 @MainActor final class AppStore {

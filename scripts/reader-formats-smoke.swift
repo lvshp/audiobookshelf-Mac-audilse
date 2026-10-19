@@ -2,7 +2,7 @@ import AppKit
 import Darwin
 import Foundation
 import PDFKit
-import ShelfCore
+import AudilseCore
 
 // Isolated parser/cache/journal smoke. Only --live wrapper phases contact the
 // disposable loopback release instance; no Keychain or production profile is used.
@@ -16,7 +16,7 @@ private struct Manifest: Codable {
     let libraryID: String
     let userID: String
     let serverID: UUID
-    let items: [String: ShelfCore.LibraryItem]
+    let items: [String: AudilseCore.LibraryItem]
     var partition: AccountPartition { .init(serverID: serverID, userID: userID) }
 }
 private struct Auth: Decodable {
@@ -53,7 +53,7 @@ private func expectedPosition(_ format: EbookFormat) -> (String, Double) {
         try require(document.pageCount == 3, "PDF page count")
         for index in 0..<3 {
             guard let page = document.page(at: index) else { throw Failure(message: "PDF page missing") }
-            try require(page.string?.contains("ShelfMac PDF page \(index + 1)") == true, "PDF page order/text")
+            try require(page.string?.contains("Audilse PDF page \(index + 1)") == true, "PDF page order/text")
             let thumbnail = page.thumbnail(of: NSSize(width: 150, height: 200), for: .mediaBox)
             try require(thumbnail.size.width > 0 && thumbnail.tiffRepresentation != nil, "PDF native render")
         }
@@ -96,14 +96,14 @@ private func expectedPosition(_ format: EbookFormat) -> (String, Double) {
     let user = try await client.login(username: auth.username, password: auth.password).user
     try require(user.id == manifest.userID && user.isAdmin, "Actual fixture identity")
     let library = try await client.managedLibrary(id: manifest.libraryID)
-    try require(library.name == "ShelfMac Compatibility Fixtures", "Disposable library name")
+    try require(library.name == "Audilse Compatibility Fixtures", "Disposable library name")
     try require(library.folders.count == 1, "Disposable library folder count")
     let mediaRoot = URL(fileURLWithPath: "/private/tmp/shelf-compat-servers/v2.37.1/media").resolvingSymlinksInPath()
     try require(URL(fileURLWithPath: library.folders[0].fullPath).resolvingSymlinksInPath() == mediaRoot, "Disposable library folder path")
     for format in formats {
         guard let item = manifest.items[format.rawValue] else { throw Failure(message: "Missing fixture format") }
         let actual = try await client.item(id: item.id)
-        try require(actual.libraryId == library.id && actual.title == "ShelfMac Reading \(format.rawValue.uppercased())" && actual.media.ebookFile?.metadata.filename == item.media.ebookFile?.metadata.filename && actual.media.duration > 35, "Synthetic write target")
+        try require(actual.libraryId == library.id && actual.title == "Audilse Reading \(format.rawValue.uppercased())" && actual.media.ebookFile?.metadata.filename == item.media.ebookFile?.metadata.filename && actual.media.duration > 35, "Synthetic write target")
     }
     return client
 }

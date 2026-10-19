@@ -20,7 +20,7 @@ def epub(path):
     with ZipFile(path, 'w') as archive:
         archive.writestr('mimetype', 'application/epub+zip', compress_type=ZIP_STORED)
         archive.writestr('META-INF/container.xml', '<?xml version="1.0"?><container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container"><rootfiles><rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/></rootfiles></container>', compress_type=ZIP_DEFLATED)
-        archive.writestr('OEBPS/content.opf', '<?xml version="1.0"?><package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="bookid">shelfmac-reader-fixture</dc:identifier><dc:title>ShelfMac Reading EPUB</dc:title><dc:language>en</dc:language></metadata><manifest><item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/><item id="chapter" href="chapter.xhtml" media-type="application/xhtml+xml"/></manifest><spine><itemref idref="chapter"/></spine></package>', compress_type=ZIP_DEFLATED)
+        archive.writestr('OEBPS/content.opf', '<?xml version="1.0"?><package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="bookid">audilse-reader-fixture</dc:identifier><dc:title>Audilse Reading EPUB</dc:title><dc:language>en</dc:language></metadata><manifest><item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/><item id="chapter" href="chapter.xhtml" media-type="application/xhtml+xml"/></manifest><spine><itemref idref="chapter"/></spine></package>', compress_type=ZIP_DEFLATED)
         archive.writestr('OEBPS/nav.xhtml', '<?xml version="1.0"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Contents</title></head><body><nav epub:type="toc"><ol><li><a href="chapter.xhtml">Test Chapter</a></li></ol></nav></body></html>', compress_type=ZIP_DEFLATED)
         archive.writestr('OEBPS/chapter.xhtml', '<?xml version="1.0"?><html xmlns="http://www.w3.org/1999/xhtml"><head><title>Chapter</title></head><body><h1>Reader Verification</h1>' + paragraphs() + '</body></html>', compress_type=ZIP_DEFLATED)
 
@@ -88,7 +88,7 @@ def azw3(path):
     body = ('<h1>KF8 Verification</h1>' + paragraphs()).encode()
     skeleton = prefix + suffix
     raw = skeleton + body
-    title = b'ShelfMac Reading AZW3'
+    title = b'Audilse Reading AZW3'
     record = bytearray(292 + len(title))
     struct.pack_into('>H', record, 0, 1)
     struct.pack_into('>I', record, 4, len(raw))
@@ -155,7 +155,7 @@ def pdf(path):
     for page in range(1, 4):
         content_id = 5 + (page - 1) * 2
         objects.append(f'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 600 800] /Resources << /Font << /F1 3 0 R >> >> /Contents {content_id} 0 R >>'.encode())
-        content = f'BT /F1 24 Tf 50 720 Td (ShelfMac PDF page {page}) Tj 0 -48 Td (The needle is on page {page}.) Tj ET'.encode()
+        content = f'BT /F1 24 Tf 50 720 Td (Audilse PDF page {page}) Tj 0 -48 Td (The needle is on page {page}.) Tj ET'.encode()
         objects.append(b'<< /Length ' + str(len(content)).encode() + b' >>\nstream\n' + content + b'\nendstream')
     output = bytearray(b'%PDF-1.4\n%\xe2\xe3\xcf\xd3\n')
     offsets = [0]

@@ -15,14 +15,14 @@ if [[ ! -d "$offline_vlc/VLCKit.framework" ]]; then
   exit 1
 fi
 if [[ -z "$offline_prebuilt" ]]; then
-  swift build --product ShelfPlayback --disable-sandbox --cache-path .build/package-cache
+  swift build --product AudilsePlayback --disable-sandbox --cache-path .build/package-cache
   offline_prebuilt="$(swift build --show-bin-path --disable-sandbox --cache-path .build/package-cache)"
 fi
 swiftc -parse-as-library -swift-version 6 -disable-sandbox \
   -module-cache-path "$offline_work/module-cache" \
   -I "$offline_prebuilt" -I "$offline_project/.build/checkouts/GRDB.swift/Sources/GRDBSQLite" \
   -F "$offline_vlc" -framework VLCKit \
-  "$offline_project/scripts/offline-live-smoke.swift" "$offline_prebuilt/libShelfPlayback.a" \
+  "$offline_project/scripts/offline-live-smoke.swift" "$offline_prebuilt/libAudilsePlayback.a" \
   -lsqlite3 -o "$offline_work/OfflineLiveSmoke"
 if [[ -d "$offline_prebuilt/GRDB_GRDB.bundle" ]]; then cp -R "$offline_prebuilt/GRDB_GRDB.bundle" "$offline_work/"; fi
 echo "Acceptance work directory (retained): $offline_work"

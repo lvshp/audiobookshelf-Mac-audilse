@@ -1,4 +1,4 @@
-name: Build Audisle for Apple Silicon
+name: Build Audilse for Apple Silicon
 
 on:
   workflow_dispatch:
@@ -48,9 +48,9 @@ jobs:
           mkdir -p build/ci-inputs build/ci-dependencies
           curl --fail --location --silent --show-error --retry 3 --max-time 900 \
             --proto '=https' --proto-redir '=https' \
-            "$VLC_BUNDLE_URL" -o build/ci-inputs/Audisle-vlc-dependencies.tar.gz
-          printf '%s  %s\n' "$VLC_BUNDLE_SHA256" build/ci-inputs/Audisle-vlc-dependencies.tar.gz | shasum -a 256 -c -
-          tar -xzf build/ci-inputs/Audisle-vlc-dependencies.tar.gz -C build/ci-dependencies
+            "$VLC_BUNDLE_URL" -o build/ci-inputs/Audilse-vlc-dependencies.tar.gz
+          printf '%s  %s\n' "$VLC_BUNDLE_SHA256" build/ci-inputs/Audilse-vlc-dependencies.tar.gz | shasum -a 256 -c -
+          tar -xzf build/ci-inputs/Audilse-vlc-dependencies.tar.gz -C build/ci-dependencies
           /usr/bin/python3 -I scripts/import-patched-vlc.py \
             --source build/ci-dependencies/VLCKit.xcframework --apply
           /usr/bin/python3 -I scripts/ci-vlc-bundle.py verify build/ci-dependencies/vlc-source-delivery
@@ -59,18 +59,18 @@ jobs:
       - name: Build Release app
         run: bash scripts/build-app.sh
       - name: Package and verify DMG
-        run: bash scripts/package-dmg.sh build/Audisle.app build/ci-output
+        run: bash scripts/package-dmg.sh build/Audilse.app build/ci-output
       - name: Include project source and dependency materials
         shell: bash
         run: |
           set -euo pipefail
-          git archive --format=tar.gz --output=build/ci-output/Audisle-source.tar.gz HEAD
-          cp build/ci-inputs/Audisle-vlc-dependencies.tar.gz build/ci-output/
-          (cd build/ci-output && shasum -a 256 Audisle-source.tar.gz Audisle-vlc-dependencies.tar.gz > SOURCE-SHA256SUMS.txt)
+          git archive --format=tar.gz --output=build/ci-output/Audilse-source.tar.gz HEAD
+          cp build/ci-inputs/Audilse-vlc-dependencies.tar.gz build/ci-output/
+          (cd build/ci-output && shasum -a 256 Audilse-source.tar.gz Audilse-vlc-dependencies.tar.gz > SOURCE-SHA256SUMS.txt)
       - name: Upload build and corresponding VLC materials
         uses: actions/upload-artifact@v4
         with:
-          name: Audisle-arm64-${{ github.run_number }}
+          name: Audilse-arm64-${{ github.run_number }}
           path: build/ci-output/
           if-no-files-found: error
           compression-level: 0
@@ -85,7 +85,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: Audisle-arm64-${{ github.run_number }}
+          name: Audilse-arm64-${{ github.run_number }}
           path: release-assets
       - name: Publish GitHub Release
         env:
@@ -96,14 +96,14 @@ jobs:
         run: |
           set -euo pipefail
           cat > "$RUNNER_TEMP/release-notes.md" <<'NOTES'
-          Audisle 的 macOS 安装包，适用于 Apple Silicon（M 系列），需要 macOS 14 或更新版本。
+          Audilse 的 macOS 安装包，适用于 Apple Silicon（M 系列），需要 macOS 14 或更新版本。
 
-          下载 DMG 后将 Audisle 拖入 Applications。支持在线与离线收听、章节跳转、播客订阅、电子书阅读和服务器管理。
+          下载 DMG 后将 Audilse 拖入 Applications。支持在线与离线收听、章节跳转、播客订阅、电子书阅读和服务器管理。
 
           本版本包含 HLS 播放缓冲与章节跳转修复。安装包采用 ad-hoc 签名，未经过 Apple 公证。
 
           原创代码仅限非商业使用。附件同时提供项目源码、VLC 对应源码材料、第三方声明及校验值。
           NOTES
           gh release create "$RELEASE_TAG" release-assets/* \
-            --verify-tag --title "Audisle $RELEASE_TAG" \
+            --verify-tag --title "Audilse $RELEASE_TAG" \
             --notes-file "$RUNNER_TEMP/release-notes.md" --latest

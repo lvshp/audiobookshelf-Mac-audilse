@@ -1,8 +1,8 @@
-// Compiles with the real LibraryBrowserModel.swift and a matching ShelfCore archive.
+// Compiles with the real LibraryBrowserModel.swift and a matching AudilseCore archive.
 // The AppStore below only supplies dependencies; no production model logic is copied.
 // Every HTTP request is intercepted. SQLite and preferences use isolated fixture storage.
 import Foundation
-import ShelfCore
+import AudilseCore
 
 @MainActor final class AppStore {
     var profile: ServerProfile?
@@ -95,7 +95,7 @@ private func search(_ ids: [String]) -> String { "{\"book\":[" + ids.map { "{\"l
     @MainActor static func percentageChecks(store: AppStore, library: Library, database: ShelfDatabase, defaults: UserDefaults) async throws {
         let partition = AccountPartition(serverID: UUID(), userID: "percentage-fixture")
         let preferencesStore = LibraryBrowserPreferencesStore(defaults: defaults)
-        let key = "ShelfMac.LibraryBrowser." + partition.directoryName + "." + library.id
+        let key = "Audilse.LibraryBrowser." + partition.directoryName + "." + library.id
         let legacy = LibraryBrowserPreferences(options: .init(sort: .progress, descending: true, collapseSeries: true))
         var legacyObject = try JSONSerialization.jsonObject(with: JSONEncoder().encode(legacy)) as! [String: Any]
         legacyObject.removeValue(forKey: "sortByProgressPercentage")
@@ -243,7 +243,7 @@ private func search(_ ids: [String]) -> String { "{\"book\":[" + ids.map { "{\"l
         let libraryB = Library(id: "B", name: "B", mediaType: "podcast")
         let a = AccountPartition(serverID: UUID(), userID: "fixture-user")
         let b = AccountPartition(serverID: a.serverID, userID: "other-user")
-        let suite = "ShelfMac.LibraryFixture." + UUID().uuidString
+        let suite = "Audilse.LibraryFixture." + UUID().uuidString
         let defaults = UserDefaults(suiteName: suite)!
         defer { defaults.removePersistentDomain(forName: suite) }
         let preferencesStore = LibraryBrowserPreferencesStore(defaults: defaults)

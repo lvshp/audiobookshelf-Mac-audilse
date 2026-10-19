@@ -7,7 +7,7 @@ if /usr/bin/python3 -I "$PROJECT_DIR/scripts/verify-patched-vlc.py" --package "$
   exit 0
 fi
 cat >&2 <<'INSTRUCTIONS'
-ShelfMac requires the verified copy-drain VLCKit candidate. The existing framework is missing or does not match; no official-binary download fallback is permitted.
+Audilse requires the verified copy-drain VLCKit candidate. The existing framework is missing or does not match; no official-binary download fallback is permitted.
 From the project root, verify and import the delivered candidate:
   /usr/bin/python3 -I scripts/import-patched-vlc.py --source build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework
   /usr/bin/python3 -I scripts/import-patched-vlc.py --source build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework --apply

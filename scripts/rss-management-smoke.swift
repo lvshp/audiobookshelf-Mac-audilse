@@ -1,7 +1,7 @@
 // Compiles the actual RSSManagementModel and PersonalAccountScope. Identity-only AppStore is supplied here.
 // Every request is intercepted; only synthetic MemoryTokenStore credentials are used.
 import Foundation
-import ShelfCore
+import AudilseCore
 
 @MainActor final class AppStore {
     var partition: AccountPartition?

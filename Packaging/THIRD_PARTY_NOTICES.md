@@ -1,13 +1,13 @@
 # Third-party components
 
-Updated 2026-10-19. Audisle's Noncommercial License covers only original project material for which its licensors hold the necessary rights. It does not restrict or replace any third-party license. Each dependency retains its own copyright and license. This document accompanies the exact license texts; it does not replace them or declare all product acceptance complete.
+Updated 2026-10-19. Audilse's Noncommercial License covers only original project material for which its licensors hold the necessary rights. It does not restrict or replace any third-party license. Each dependency retains its own copyright and license. This document accompanies the exact license texts; it does not replace them or declare all product acceptance complete.
 
 | Component | Fixed version or source | License basis |
 | --- | --- | --- |
 | GRDB.swift | 7.11.1 | MIT |
 | Socket.IO-Client-Swift | 16.1.1 | MIT |
 | Starscream | 4.0.8 | Apache-2.0 |
-| VLCKit / libVLC | VLCKit commit `319ed2c0724e3d4c4d34889a62fef1ae269491bc`; VLC base `79128878ddb2c280bbb6c89c76a46b31a80ade1c`, 47 upstream patches and ShelfMac copy-drain modification | LGPL-2.1-or-later for the covered library/module scope; bundled components have separate grants |
+| VLCKit / libVLC | VLCKit commit `319ed2c0724e3d4c4d34889a62fef1ae269491bc`; VLC base `79128878ddb2c280bbb6c89c76a46b31a80ade1c`, 47 upstream patches and Audilse copy-drain modification | LGPL-2.1-or-later for the covered library/module scope; bundled components have separate grants |
 | EPUB.js | 0.3.93 | BSD-2-Clause |
 | JSZip | 3.10.1 | MIT option selected |
 | foliate-js MOBI parser | `78914aef4466eb960965702401634c2cb348e9b1` | MIT; local IIFE export adaptation recorded in Reader/VERSIONS.txt |
@@ -36,8 +36,8 @@ The independent scope review for VLC `audio_filter/spatializer/revmodel.hpp` and
 
 In the app, dependency license texts are under `Contents/Resources/Licenses`; Reader license texts remain beside their bundled Reader resources. This document and `VLC_DISTRIBUTION.md` are placed together under `Contents/Resources`. Historical resource-only staging checks are recorded in `build/release-evidence/vlc-notices-resource-20261015/ResourceUpdate.json`. Those checks describe that development snapshot, not the current application's version or executable identity.
 
-In the accompanying local project, use `Packaging/Licenses`, `Sources/ShelfMac/Resources/Reader`, and **`build/vlc-source-delivery/`**. That delivery directory contains `SourceMaterials.tar`, its manifest, the new framework archive and adopted recipe/lock, actual configuration/link evidence, all reviewed notice batches, IJG original README/source diffs, FreeType change documentation and the source-applicability table. It must accompany the delivery and must not be replaced with a reference to a developer's temporary directory. Public source hosting is not required by this project's selected local delivery method.
+In the accompanying local project, use `Packaging/Licenses`, `Sources/Audilse/Resources/Reader`, and **`build/vlc-source-delivery/`**. That delivery directory contains `SourceMaterials.tar`, its manifest, the new framework archive and adopted recipe/lock, actual configuration/link evidence, all reviewed notice batches, IJG original README/source diffs, FreeType change documentation and the source-applicability table. It must accompany the delivery and must not be replaced with a reference to a developer's temporary directory. Public source hosting is not required by this project's selected local delivery method.
 
 See [VLC distribution materials](VLC_DISTRIBUTION.md) for exact source identities, local rebuild/replacement procedure and the final resource-delivery checks. Historical `candidate/`, recipe seed locks, older counts and early `INCOMPLETE` reports remain historical evidence; use the adopted recipe/lock for the current framework. No additional restriction is imposed on modification or reverse engineering for debugging library modifications.
 
-ShelfMac uses macOS system frameworks and system libarchive directly. Separately, bundled VLC includes static libarchive 3.8.0, whose notices are covered by the VLC source mapping. Audiobookshelf is a separate server; its server source and branding assets are not bundled. Formal Developer ID signing, notarization and public-release operations are outside the requested scope; this does not remove source and notice delivery requirements.
+Audilse uses macOS system frameworks and system libarchive directly. Separately, bundled VLC includes static libarchive 3.8.0, whose notices are covered by the VLC source mapping. Audiobookshelf is a separate server; its server source and branding assets are not bundled. Formal Developer ID signing, notarization and public-release operations are outside the requested scope; this does not remove source and notice delivery requirements.

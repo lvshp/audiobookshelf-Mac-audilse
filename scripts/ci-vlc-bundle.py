@@ -44,7 +44,7 @@ def main():
     framework = ROOT / 'Vendor/VLCKit.xcframework'
     subprocess.run(['/usr/bin/python3', '-I', str(ROOT / 'scripts/verify-patched-vlc.py'),
                     '--package', str(framework), '--lock', str(LOCK)], check=True)
-    output = ROOT / 'build/ci-inputs/Audisle-vlc-dependencies.tar.gz'
+    output = ROOT / 'build/ci-inputs/Audilse-vlc-dependencies.tar.gz'
     output.parent.mkdir(parents=True, exist_ok=True)
     if output.exists():
         raise RuntimeError('Bundle already exists; move it aside before creating another: ' + str(output))

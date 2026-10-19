@@ -36,7 +36,7 @@
   "releaseBlockers": [
     "The exact linked contrib set and its source/license closure must be established for both macOS architectures.",
     "All selected contrib archives, patches and notices must accompany the distribution; the catalog is not a linked-component inventory.",
-    "Rebuilding the modified shared framework and running ShelfMac with it must be demonstrated for the eventual signing/distribution configuration.",
+    "Rebuilding the modified shared framework and running Audilse with it must be demonstrated for the eventual signing/distribution configuration.",
     "Publish or accompany the binary with the complete source/build materials and appropriate notices; no public source offer or release has been made."
   ],
   "preparedTreeManifestSHA256": "a4056a48804719a92ecc6158e2bd46b1e4e559f54cbb0f9f49f90685ee674e1c"

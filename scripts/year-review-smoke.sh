@@ -4,7 +4,7 @@ year_review_project="$(cd "$(dirname "$0")/.." && pwd)"
 year_review_prebuilt="${YEAR_REVIEW_SMOKE_PREBUILT:-$year_review_project/.build/debug}"
 year_review_work="${YEAR_REVIEW_SMOKE_WORKDIR:-$(mktemp -d "${TMPDIR:-/tmp}/shelf-year-review-smoke.XXXXXX")}"
 mkdir -p "$year_review_work/dependencies" "$year_review_work/images" "$year_review_work/sources"
-for year_review_file in libShelfCore.a ShelfCore.swiftmodule GRDB.swiftmodule SocketIO.swiftmodule Starscream.swiftmodule; do
+for year_review_file in libAudilseCore.a AudilseCore.swiftmodule GRDB.swiftmodule SocketIO.swiftmodule Starscream.swiftmodule; do
   if [[ ! -e "$year_review_prebuilt/$year_review_file" ]]; then
     echo "Matching prebuilt Debug Core modules and archive are required; this script does not run a shared build." >&2
     exit 2
@@ -12,16 +12,16 @@ for year_review_file in libShelfCore.a ShelfCore.swiftmodule GRDB.swiftmodule So
   cp -R "$year_review_prebuilt/$year_review_file" "$year_review_work/dependencies/"
 done
 for year_review_language in en zh-Hans; do
-  cp -R "$year_review_project/Sources/ShelfMac/Resources/$year_review_language.lproj" "$year_review_work/"
+  cp -R "$year_review_project/Sources/Audilse/Resources/$year_review_language.lproj" "$year_review_work/"
 done
 year_review_sources=(
-  Sources/ShelfMac/Localization/AppLanguage.swift
-  Sources/ShelfMac/Design/Theme.swift
-  Sources/ShelfMac/Features/YearReviewGallery.swift
-  Sources/ShelfMac/Features/PersonalYearReviewView.swift
-  Sources/ShelfMac/ServerAdmin/ServerStatisticsModel.swift
-  Sources/ShelfMac/ServerAdmin/ServerStatisticsView.swift
-  Sources/ShelfMac/ServerAdmin/ServerStatisticsReviewView.swift
+  Sources/Audilse/Localization/AppLanguage.swift
+  Sources/Audilse/Design/Theme.swift
+  Sources/Audilse/Features/YearReviewGallery.swift
+  Sources/Audilse/Features/PersonalYearReviewView.swift
+  Sources/Audilse/ServerAdmin/ServerStatisticsModel.swift
+  Sources/Audilse/ServerAdmin/ServerStatisticsView.swift
+  Sources/Audilse/ServerAdmin/ServerStatisticsReviewView.swift
   scripts/year-review-smoke.swift
 )
 for year_review_source in "${year_review_sources[@]}"; do
@@ -51,7 +51,7 @@ swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete \
   "$year_review_work/sources/ServerStatisticsView.swift" \
   "$year_review_work/sources/ServerStatisticsReviewView.swift" \
   "$year_review_work/sources/year-review-smoke.swift" \
-  "$year_review_work/dependencies/libShelfCore.a" -lsqlite3 \
+  "$year_review_work/dependencies/libAudilseCore.a" -lsqlite3 \
   -o "$year_review_work/YearReviewSmoke"
 "$year_review_work/YearReviewSmoke" "$year_review_work/images" "$@"
 python3 - "$year_review_project" "$year_review_work/SourceHashes.json" <<'PY'

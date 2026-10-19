@@ -372,7 +372,7 @@
     }
   },
   "configurationPolicy": {
-    "id": "shelfmac-audio-abs-no-gpl-candidates-no-sftp-cast-v1",
+    "id": "audilse-audio-abs-no-gpl-candidates-no-sftp-cast-v1",
     "recipeSHA256": "975ce67dc44d9fc9366539e42d663a1fa458471c039f36dc880f01a3b7395a7a",
     "expectedPluginEntries": [
       "vlc_entry__access_attachment",

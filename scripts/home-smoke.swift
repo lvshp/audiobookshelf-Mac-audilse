@@ -2,7 +2,7 @@
 // All HTTP is intercepted, tokens are synthetic, and SQLite uses isolated temporary files.
 import Foundation
 import GRDB
-import ShelfCore
+import AudilseCore
 
 @MainActor final class AppStore {
     var partition: AccountPartition?

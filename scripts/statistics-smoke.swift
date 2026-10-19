@@ -1,6 +1,6 @@
 import Foundation
 import Observation
-import ShelfCore
+import AudilseCore
 
 // Uses the actual FeatureBrowserModel with an account-only AppStore harness.
 // Every HTTP request is intercepted by URLProtocol; this executable has no live-server phase.

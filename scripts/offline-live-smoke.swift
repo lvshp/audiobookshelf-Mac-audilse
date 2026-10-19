@@ -4,8 +4,8 @@ import Foundation
 import AppKit
 import AVFoundation
 import Darwin
-import ShelfCore
-import ShelfPlayback
+import AudilseCore
+import AudilsePlayback
 
 private struct LiveCredentials: Codable, Sendable {
     var address: String
@@ -16,7 +16,7 @@ private struct LiveCredentials: Codable, Sendable {
 private struct LiveManifest: Codable, Sendable {
     var profile: ServerProfile
     var partition: AccountPartition
-    var item: ShelfCore.LibraryItem
+    var item: AudilseCore.LibraryItem
     var baseline: MediaProgress
     var originalBytes: Int64
     var downloadProcessID: Int32?
@@ -145,7 +145,7 @@ private actor GuardedLiveRemote: OfflineSyncRemote {
         let profile = await client.profile
         let partition = AccountPartition(serverID: profile.id, userID: user.id)
         let libraries = try await client.libraries()
-        var candidates: [(item: ShelfCore.LibraryItem, progress: MediaProgress, bytes: Int64)] = []
+        var candidates: [(item: AudilseCore.LibraryItem, progress: MediaProgress, bytes: Int64)] = []
         for library in libraries {
             var page = 0
             while true {
@@ -162,7 +162,7 @@ private actor GuardedLiveRemote: OfflineSyncRemote {
                 page += 1
             }
         }
-        var selected: (item: ShelfCore.LibraryItem, progress: MediaProgress, bytes: Int64)?
+        var selected: (item: AudilseCore.LibraryItem, progress: MediaProgress, bytes: Int64)?
         for candidate in candidates.sorted(by: { $0.bytes < $1.bytes }) {
             if try await originalsMatchMetadata(item: candidate.item, client: client) { selected = candidate; break }
         }
@@ -258,7 +258,7 @@ private actor GuardedLiveRemote: OfflineSyncRemote {
         try await client.logout()
     }
 
-    private static func originalsMatchMetadata(item: ShelfCore.LibraryItem, client: ABSClient) async throws -> Bool {
+    private static func originalsMatchMetadata(item: AudilseCore.LibraryItem, client: ABSClient) async throws -> Bool {
         let profile = await client.profile
         let configuration = URLSessionConfiguration.ephemeral
         configuration.timeoutIntervalForRequest = 15
@@ -308,12 +308,12 @@ private actor GuardedLiveRemote: OfflineSyncRemote {
         try await manager.restore(partition: manifest.partition)
         let original = try await manager.readyTracks(partition: manifest.partition, itemID: manifest.item.id)
         try require(original.allSatisfy { $0.url.isFileURL }, "An offline track referenced the network")
-        guard let item = try await database.load(ShelfCore.LibraryItem.self, key: "item.\(manifest.item.id)", partition: manifest.partition),
+        guard let item = try await database.load(AudilseCore.LibraryItem.self, key: "item.\(manifest.item.id)", partition: manifest.partition),
               let resume = try await database.loadResume(itemID: manifest.item.id, partition: manifest.partition) else { throw LiveFailure(message: "Restart lost the cached book or its resume checkpoint") }
         try require(abs(resume.currentTime - manifest.baseline.currentTime) < 0.01, "The restored checkpoint reset or changed the server position")
         let controller = PlaybackController(persist: { snapshot in
             var local = snapshot
-            local.deviceInfo = .init(deviceId: manifest.profile.id.uuidString, clientName: "ShelfMac Offline Acceptance")
+            local.deviceInfo = .init(deviceId: manifest.profile.id.uuidString, clientName: "Audilse Offline Acceptance")
             try await database.enqueue(local, partition: manifest.partition, baseline: manifest.baseline)
         }, checkpoint: { try await database.saveResume($0, partition: manifest.partition) })
         do {

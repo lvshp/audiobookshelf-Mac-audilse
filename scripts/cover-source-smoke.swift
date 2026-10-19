@@ -1,7 +1,7 @@
 // Compiles the production CoverSource with an in-memory AppStore identity fixture.
 // No SwiftUI scheduling, network requests, credentials, user defaults or database access.
 import Foundation
-import ShelfCore
+import AudilseCore
 
 @MainActor final class AppStore {
     var partition: AccountPartition?

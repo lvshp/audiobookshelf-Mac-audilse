@@ -13,7 +13,7 @@ def main():
     args=p.parse_args();root=args.test_root.resolve()
     if root.exists():raise RuntimeError('Test root must be new')
     root.mkdir();rows=[]
-    protected=[PROJECT/'Packaging/VLC/patched-lock.json',PROJECT/'Sources/ShelfPlayback/NativePCMCompatibilityEngine.swift',PROJECT/'Vendor/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit']
+    protected=[PROJECT/'Packaging/VLC/patched-lock.json',PROJECT/'Sources/AudilsePlayback/NativePCMCompatibilityEngine.swift',PROJECT/'Vendor/VLCKit.xcframework/macos-arm64_x86_64/VLCKit.framework/Versions/A/VLCKit']
     before={str(f):sha(f) for f in protected}
     generator=PROJECT/'scripts/create-patched-vlc-lock.py'
     def invoke(name,package=args.package,receipt=args.receipt,output=None,success=False):

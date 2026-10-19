@@ -7,7 +7,7 @@
 - EvidenceManifest.json中29份原件的长度/SHA256全部匹配。只校验本目录材料，不重跑旧全量清单。
 - 四份fixed-official文本与本地保留Git中官方固定79128878对应文件逐字一致；两架构实际排除候选构建树的四份文件（8次）与actual-patched文本逐字一致，hash匹配FixedSourceComparison。
 - 四份fixed-to-patched diff及Freeverb原头到VLC头diff均由保留文本精确重算匹配；源码字节本身未改写。revmodel.hpp/spatializer.cpp无本地差异，transcode.h仅两个venc字段差异。
-- 原上游0020-transcode-add-support-for-mutliple-venc-parameters.patch与SourceMaterials.tar的prepared/vlckit/libvlc/patches同成员逐字一致，其transcode.h hunk恰好添加上述两个字段。这里原patch的From身份是ba4f8b9f08685eaeabb43d704dc26035f0fdab66；Applicability所述e7eebdb8…是本地补丁序列应用后的提交身份，retained-upstream-transcode-header.patch明确记录ShelfMac构建committer。两者不能混称同一个官方commit，本报告补充该身份区分；没有发现代码差异被隐瞒。
+- 原上游0020-transcode-add-support-for-mutliple-venc-parameters.patch与SourceMaterials.tar的prepared/vlckit/libvlc/patches同成员逐字一致，其transcode.h hunk恰好添加上述两个字段。这里原patch的From身份是ba4f8b9f08685eaeabb43d704dc26035f0fdab66；Applicability所述e7eebdb8…是本地补丁序列应用后的提交身份，retained-upstream-transcode-header.patch明确记录Audilse构建committer。两者不能混称同一个官方commit，本报告补充该身份区分；没有发现代码差异被隐瞒。
 
 ## transcode.h的范围依据
 

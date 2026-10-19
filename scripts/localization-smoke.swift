@@ -1,7 +1,7 @@
 import Foundation
 import Observation
-import ShelfCore
-import ShelfPlayback
+import AudilseCore
+import AudilsePlayback
 
 private final class Counter: @unchecked Sendable {
     private let lock = NSLock()
@@ -12,7 +12,7 @@ private final class Counter: @unchecked Sendable {
 
 @main struct LocalizationSmoke {
     static func main() async throws {
-        let domain = "ShelfMac.LocalizationSmoke." + UUID().uuidString
+        let domain = "Audilse.LocalizationSmoke." + UUID().uuidString
         let defaults = UserDefaults(suiteName: domain)!
         defer { defaults.removePersistentDomain(forName: domain) }
         let store = AppLanguageStore(defaults: defaults)

@@ -50,7 +50,7 @@ def seed(output):
     assert user['id'] == auth['userID'] and user['type'] == 'root'
     token = user.get('accessToken') or user.get('token')
     library = request('/api/libraries/' + auth['libraryID'])
-    assert library['name'] == 'ShelfMac Compatibility Fixtures'
+    assert library['name'] == 'Audilse Compatibility Fixtures'
     assert len(library['folders']) == 1 and Path(library['folders'][0]['fullPath']).resolve() == (ROOT / 'media').resolve()
     generator_path = Path(__file__).with_name('reader-fixtures.py')
     spec = importlib.util.spec_from_file_location('reader_fixtures', generator_path)
@@ -63,11 +63,11 @@ def seed(output):
         audio = next((ROOT / 'media/Compat Author/Compat Series/1 - Compat Sample').glob('*.mp3'))
     formats = ['pdf', 'cbz', 'cbr', 'azw3', 'mobi', 'epub']
     for fmt in formats:
-        folder = ROOT / 'media/Reader Fixtures' / ('ShelfMac Reading ' + fmt.upper())
+        folder = ROOT / 'media/Reader Fixtures' / ('Audilse Reading ' + fmt.upper())
         folder.mkdir(parents=True, exist_ok=True)
         assert folder.resolve().is_relative_to((ROOT / 'media/Reader Fixtures').resolve())
         shutil.copyfile(audio, folder / 'synthetic-audio.mp3')
-        shutil.copyfile(generated / ('fixture.' + fmt), folder / ('ShelfMac Reading ' + fmt.upper() + '.' + fmt))
+        shutil.copyfile(generated / ('fixture.' + fmt), folder / ('Audilse Reading ' + fmt.upper() + '.' + fmt))
     request('/api/libraries/' + auth['libraryID'] + '/scan', 'POST')
     found = {}
     for _ in range(60):
@@ -75,7 +75,7 @@ def seed(output):
         for item in items:
             path = Path(item.get('path', '')).resolve()
             for fmt in formats:
-                expected = ROOT / 'media/Reader Fixtures' / ('ShelfMac Reading ' + fmt.upper())
+                expected = ROOT / 'media/Reader Fixtures' / ('Audilse Reading ' + fmt.upper())
                 if path == expected.resolve():
                     expanded = request('/api/items/' + item['id'] + '?expanded=1')
                     ebook = expanded.get('media', {}).get('ebookFile')
@@ -89,7 +89,7 @@ def seed(output):
         time.sleep(0.25)
     assert set(found) == set(formats), 'Reader fixture scan did not find all formats'
     for fmt, item in found.items():
-        title = 'ShelfMac Reading ' + fmt.upper()
+        title = 'Audilse Reading ' + fmt.upper()
         request('/api/items/' + item['id'] + '/media', 'PATCH', {'metadata': {'title': title}})
         found[fmt] = request('/api/items/' + item['id'] + '?expanded=1')
         assert found[fmt]['media']['metadata']['title'] == title
