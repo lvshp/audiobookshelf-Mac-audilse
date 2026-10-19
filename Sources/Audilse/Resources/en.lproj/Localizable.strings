@@ -1858,3 +1858,52 @@
 "查看任务" = "View tasks";
 
 "活动会话" = "Active session";
+
+"通用" = "General";
+"GitHub 项目主页" = "GitHub project";
+"检查更新" = "Check for Updates";
+"正在检查更新…" = "Checking for updates…";
+"可用更新" = "Available update";
+"在 GitHub 查看" = "View on GitHub";
+"正在安装更新…" = "Installing update…";
+"正在下载更新…" = "Downloading update…";
+"取消下载" = "Cancel Download";
+"下载并安装更新" = "Download and Install Update";
+"安装完成后，Audilse 将退出并重新打开。" = "Audilse will quit and reopen after installation.";
+"更新说明" = "Release notes";
+
+"开发版本" = "Development build";
+
+"当前已是最新版本。" = "You are up to date.";
+
+"检查更新失败：%1$@" = "Could not check for updates: %1$@";
+
+"已取消下载。" = "Download cancelled.";
+
+"更新未能安装：%1$@" = "Could not install the update: %1$@";
+
+"未能保存当前状态，更新已取消。请处理保存错误后重试。" = "The current state could not be saved. The update was cancelled. Resolve the save error and try again.";
+
+"暂时无法停止更新助手，请保持应用打开并稍后重试。" = "The update helper could not be stopped. Keep the app open and try again shortly.";
+
+"更新版本信息无效。" = "The update version is invalid.";
+
+"发布信息不是受支持的 Audilse 正式版本。" = "The release is not a supported stable Audilse release.";
+
+"更新下载地址未通过校验。" = "The update download URL could not be verified.";
+
+"发布版本缺少 Apple 芯片安装包或校验文件。" = "The release is missing its Apple Silicon installer or checksum.";
+
+"更新服务器返回了无效响应。" = "The update server returned an invalid response.";
+
+"更新文件超过允许的大小。" = "The update exceeds the allowed download size.";
+
+"更新校验文件无效。" = "The update checksum file is invalid.";
+
+"安装包 SHA-256 校验失败，请重新下载。" = "The installer failed its SHA-256 check. Please download it again.";
+
+"应用所在目录不可写。请将 Audilse 放入应用程序目录，或从 GitHub 手动下载安装。" = "The app location is not writable. Move Audilse to Applications, or install it manually from GitHub.";
+
+"安装包中的应用身份或版本与更新信息不一致。" = "The application identity or version does not match the update.";
+
+"安装准备失败。原应用未被替换，可从 GitHub 手动下载安装。" = "The update could not be prepared. The original app was not replaced. You can install it manually from GitHub.";

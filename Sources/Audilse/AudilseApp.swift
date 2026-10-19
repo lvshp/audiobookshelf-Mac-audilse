@@ -104,10 +104,12 @@ final class ShelfAppDelegate: NSObject, NSApplicationDelegate {
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { false }
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         guard !isTerminating else { return .terminateLater }
+        guard AppUpdateController.shared.beginInstallationExit() else { return .terminateCancel }
         guard let store else { return .terminateNow }
         isTerminating = true
         Task {
             let mayTerminate = await store.shutdown()
+            if !mayTerminate, AppUpdateController.shared.isInstalling { AppUpdateController.shared.cancelPreparedInstallation() }
             if !mayTerminate { isTerminating = false }
             sender.reply(toApplicationShouldTerminate: mayTerminate)
         }

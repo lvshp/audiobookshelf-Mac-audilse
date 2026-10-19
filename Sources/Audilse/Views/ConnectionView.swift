@@ -195,6 +195,17 @@ struct PreferencesView: View {
     @Bindable var store: AppStore
     @State private var showPersonalSettings = false
     var body: some View {
+        TabView {
+            generalSettings
+                .tabItem { Label(L10n.tr("通用"), systemImage: "gearshape") }
+            AboutView()
+                .tabItem { Label(L10n.tr("关于"), systemImage: "info.circle") }
+        }
+        .padding(12)
+        .sheet(isPresented: $showPersonalSettings) { PersonalSettingsView(store: store) }
+    }
+
+    private var generalSettings: some View {
         Form {
             Section(L10n.tr("语言")) {
                 AppLanguagePicker()
@@ -209,12 +220,6 @@ struct PreferencesView: View {
                 Button(L10n.tr("播放偏好、阅读器与密码…")) { showPersonalSettings = true }
                     .disabled(store.partition == nil || store.user?.isActive != true || store.isConnecting)
             }
-            Section(L10n.tr("关于")) {
-                LabeledContent("Audilse", value: L10n.tr("1.0.0 · 原生 macOS 客户端"))
-                Text(L10n.tr("所有内容来自你连接的 Audiobookshelf 服务器。离线内容保存在此 Mac。"))
-                    .font(.caption).foregroundStyle(.secondary)
-            }
         }.formStyle(.grouped).padding(.vertical, 12)
-        .sheet(isPresented: $showPersonalSettings) { PersonalSettingsView(store: store) }
     }
 }
