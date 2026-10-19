@@ -22,6 +22,8 @@ The entry validates all 6018 material entries, safe paths/symlinks, the two orig
 
 Every external stage has a private cwd, a clean environment, the unchanged real HOME, private TMPDIR and explicit cache directories, recorded PID, log and real exit code. Build commands run under deny-network and deny-repository policies; --protect paths are also read/write denied. Old artifacts/evidence can therefore be protected even during proof of a different-path build. No formal signing or notarization is performed.
 
+The macOS configuration explicitly disables `pipe2` detection. SDK 27 exposes this function as a weak import, but it is unavailable on earlier supported systems; VLC uses its existing `pipe` and close-on-exec fallback instead. Each produced architecture is checked for unresolved `_pipe2` imports in addition to its minimum-OS load command.
+
 Each generated framework must have the expected architecture, macOS14 load commands, system-only dynamic dependencies and a matching dSYM. The public libVLC version/changeset must exactly match the fixed patched identity. A fresh synthetic 96417-frame WAV must round-trip byte-for-byte through the actual rebuilt framework, with no padding. A target architecture must be executable on the build host for this validation; Rosetta is explicitly recorded, never labeled Intel hardware.
 
 For universal output the two same-platform binaries and their DWARF are combined before a single -create-xcframework call. Original per-architecture private generated headers are preserved behind an architecture wrapper. Thin hashes and packaged dSYM are checked, and each final packaged slice is actually decoded again. Compiler/toolchain/path differences can change binary bytes: this recipe promises checked source identity and validated output, not bit-identical binaries on arbitrary Xcode installations.
@@ -43,7 +45,7 @@ The source materials and candidate are delivered outside tracked source under `b
 From the project root, the current reviewed candidate can be checked without changing Vendor:
 
 ```sh
-/usr/bin/python3 -I scripts/import-patched-vlc.py --source build/vlc-source-delivery/exclusion-candidate-20261015/VLCKit.xcframework
+/usr/bin/python3 -I scripts/import-patched-vlc.py --source build/vlc-source-delivery/macos14-compat-20261019/VLCKit.xcframework
 ```
 
 Adding `--apply` stages and validates a copy, renames the existing Vendor framework to a unique backup, then renames the staged candidate into place. A failed final rename restores the backup when the destination is still absent. Each rename is atomic; the pair is not a single filesystem transaction. Do not run an import concurrently with a build. The old backup remains available for recovery. `scripts/prepare-vlc.sh` only verifies the current Vendor; it never downloads or silently accepts the historical official binary.

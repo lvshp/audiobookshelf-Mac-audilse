@@ -18,9 +18,9 @@ Sources: [GRDB](https://github.com/groue/GRDB.swift/tree/v7.11.1), [Socket.IO](h
 
 The adopted framework is the plugin-exclusion variant, with 232 registered plugins and 295 static input paths per architecture. Its 60 contrib libraries map to 44 source packages. The previously identified eight GPL-source plugin targets, SFTP/libssh2 and Chromecast plugins are excluded from this new artifact; historical source/notices do not imply those inputs are still linked.
 
-The source checkout contains **123 reviewed contrib notice files** under `Packaging/Licenses/VLC-Contrib/`, plus three separate VLC-Modules files. The build script copies the full notice directory into the application. Earlier development packages `73c345b7` and `9fe17df3` contained smaller notice sets; they are historical snapshots, not the current delivery. See [VLC distribution materials](VLC_DISTRIBUTION.md) for the adopted configuration and delivery record.
+The source checkout contains **123 reviewed contrib notice files** under `Packaging/Licenses/VLC-Contrib/`, plus three separate VLC-Modules files. The build script copies the full notice directory into the application. See [VLC distribution materials](VLC_DISTRIBUTION.md) for the adopted configuration and delivery record.
 
-The current 44-source applicability table is `build/vlc-source-delivery/license-audit/final-applicability-candidate/FinalApplicability.json`. It binds actual new input paths to fixed archives, original notices, selected embedded sources and review evidence. It does not classify all libraries under a single license or require unused tools/test data to be treated as runtime inputs.
+The historical 44-source applicability table is `build/vlc-source-delivery/license-audit/final-applicability-candidate/FinalApplicability.json`. It binds the reviewed plugin-exclusion build inputs to fixed archives, original notices, selected embedded sources and review evidence. Its reuse for the current compatibility build, including artifact identities and configuration differences, is recorded in `build/vlc-source-delivery/macos14-compat-20261019/CompatibilityReuse.json`. It does not classify all libraries under a single license or require unused tools/test data to be treated as runtime inputs.
 
 Specific retained choices and credits include:
 
@@ -34,7 +34,7 @@ The independent scope review for VLC `audio_filter/spatializer/revmodel.hpp` and
 
 ## Where the materials are provided
 
-In the app, dependency license texts are under `Contents/Resources/Licenses`; Reader license texts remain beside their bundled Reader resources. This document and `VLC_DISTRIBUTION.md` are placed together under `Contents/Resources`. Historical resource-only staging checks are recorded in `build/release-evidence/vlc-notices-resource-20261015/ResourceUpdate.json`. Those checks describe that development snapshot, not the current application's version or executable identity.
+In the app, dependency license texts are under `Contents/Resources/Licenses`; Reader license texts remain beside their bundled Reader resources. This document and `VLC_DISTRIBUTION.md` are placed together under `Contents/Resources`.
 
 In the accompanying local project, use `Packaging/Licenses`, `Sources/Audilse/Resources/Reader`, and **`build/vlc-source-delivery/`**. That delivery directory contains `SourceMaterials.tar`, its manifest, the new framework archive and adopted recipe/lock, actual configuration/link evidence, all reviewed notice batches, IJG original README/source diffs, FreeType change documentation and the source-applicability table. It must accompany the delivery and must not be replaced with a reference to a developer's temporary directory. Public source hosting is not required by this project's selected local delivery method.
 

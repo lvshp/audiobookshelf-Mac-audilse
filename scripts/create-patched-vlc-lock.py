@@ -6,7 +6,7 @@ from types import SimpleNamespace
 
 PROJECT = Path(__file__).resolve().parent.parent
 PORTABLE = PROJECT / 'Packaging/VLC/portable'
-RECIPE_SHA = '535285c24f93123181ed51e0142f62a5ec6c4432b0d3b20a60b5248fb4a2d637'
+RECIPE_SHA = '197a9627824da239d7264034f2fbee5a56000882067755ad7b3b4c8a0d19c889'
 CAPTURE_SHA = '80056257ece6678aeb104d008ca995b38c0c9a5a851629ae820dc64a78372066'
 
 def sha(path):

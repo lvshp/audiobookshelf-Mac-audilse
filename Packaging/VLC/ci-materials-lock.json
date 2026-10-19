@@ -142,6 +142,24 @@
     "license-audit/vlc-header-provenance/transcode-pre2014-history.json": "37ed9adce97462be4c28d91bd929caacdef72e31e4948d0107da18270f9d0b77",
     "license-audit/vlc-header-provenance/transcode-split.json": "1a91dd042ef7dd2c15bf53f69855ea7159e81856bf1da98290346dd2f3bee468",
     "license-audit/vlc-header-provenance/transcode.c.fixed-to-patched.diff": "2bee63a0ae824ff061d94b46b18886e51bc3c4a4d3fd314cb0f62b3bd5fe7e71",
-    "license-audit/vlc-header-provenance/transcode.h.fixed-to-patched.diff": "00c1861d2e52f1ed91a184d420e6da92abf603d6421f45031e6078bb32a00f09"
+    "license-audit/vlc-header-provenance/transcode.h.fixed-to-patched.diff": "00c1861d2e52f1ed91a184d420e6da92abf603d6421f45031e6078bb32a00f09",
+    "macos14-compat-20261019/AdoptedRecipeManifest.json": "91c90ad395c1be3f839b3779252ed9001aa1a2503396d9c36a306b14d060f4ff",
+    "macos14-compat-20261019/CompatibilityReuse.json": "4c7b994b4e930b73c61f635ad7350660991993de491629e7ba7343aabcdcf87b",
+    "macos14-compat-20261019/ReviewedCandidate.json": "4dde7710f9670682a5818c05481e40194e6b7db736f33248065c9a65f9a6c512",
+    "macos14-compat-20261019/BuildReceipt.json": "ffff2a205d24bd7fd8ec3e4d92a185b745088041d0f06b2a96ae763327819fd9",
+    "macos14-compat-20261019/adopted-recipe/scripts/verify-patched-vlc.py": "4abe6c03cd6f3686167807a7ed02959098c6d7c9ea536c077ce49b3381a6aa9b",
+    "macos14-compat-20261019/adopted-recipe/scripts/create-patched-vlc-lock.py": "94dbdb4f04fd3b7b2408ecfbbd553cd31a3bddd276ffe6f7bcbb08201efa0abf",
+    "macos14-compat-20261019/adopted-recipe/scripts/import-patched-vlc.py": "c16921b326dae3178acb887eb25368a84c5e7a77a1fe4d86e4bef347218298a5",
+    "macos14-compat-20261019/adopted-recipe/Packaging/VLC/patched-lock.json": "4dde7710f9670682a5818c05481e40194e6b7db736f33248065c9a65f9a6c512",
+    "macos14-compat-20261019/adopted-recipe/Packaging/VLC/portable/direct-tail.c": "80056257ece6678aeb104d008ca995b38c0c9a5a851629ae820dc64a78372066",
+    "macos14-compat-20261019/adopted-recipe/Packaging/VLC/portable/README.md": "212dc98eed6a9d0ab33cc66c3e7ff3b06e266573b1f88dc10cde33b16e8d7214",
+    "macos14-compat-20261019/adopted-recipe/Packaging/VLC/portable/build-vlc.py": "197a9627824da239d7264034f2fbee5a56000882067755ad7b3b4c8a0d19c889",
+    "macos14-compat-20261019/adopted-recipe/Packaging/VLC/portable/test-boundaries.py": "98612fc5b6a8e0a07b2e1c64acead5ec843c8ccadc16007f5e86d5cbdefca6b4",
+    "macos14-compat-20261019/configuration/arm64/config.h": "377fd552ff9e26411fa1427005bc615e27ac93480f5055accf5d9e3002e1604f",
+    "macos14-compat-20261019/configuration/arm64/Driver.diff": "b7a69101c83a77b662e6446e80c23ffbe5119b2a099b4376c8151fc4dc60587a",
+    "macos14-compat-20261019/configuration/arm64/ContribSelected.json": "9bfc98508856e7a03fd2f18826547c117dbc1ae4d64d26317d1ab7b712989a5d",
+    "macos14-compat-20261019/configuration/x86_64/config.h": "7cc8e7427ca9ed45c90e3ce4e00b952b916507f1f497b9bfb178412b1c116b18",
+    "macos14-compat-20261019/configuration/x86_64/Driver.diff": "f33cef9737880441114bd598053be9ed3281fca4371233d63656beb193c6ec90",
+    "macos14-compat-20261019/configuration/x86_64/ContribSelected.json": "9bfc98508856e7a03fd2f18826547c117dbc1ae4d64d26317d1ab7b712989a5d"
   }
 }

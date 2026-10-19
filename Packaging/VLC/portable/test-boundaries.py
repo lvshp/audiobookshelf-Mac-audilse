@@ -3,6 +3,20 @@ import argparse,importlib.util,json,os,runpy,subprocess,sys,tempfile
 E=Path(__file__).resolve().parent
 spec=importlib.util.spec_from_file_location('portable_build',E/'build-vlc.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 checks=[]
+driver='before\n    export ac_cv_func_fork=no\n    ${VLCROOT}/configure \\\n'
+patched=m.macos_compatibility_driver(driver)
+if patched.count('export ac_cv_func_pipe2=no')!=1 or patched.index('export ac_cv_func_pipe2=no')>patched.index('${VLCROOT}/configure'):raise RuntimeError('pipe2 fallback not selected before configure')
+for text in ['missing anchor',driver+driver,patched]:
+ try:m.macos_compatibility_driver(text)
+ except RuntimeError:pass
+ else:raise RuntimeError('unexpected configure driver accepted')
+checks.append('pipe2 fallback selected before configure; missing/duplicate/already-patched anchors rejected')
+for symbols in ['                 (undefined) weak external _pipe2 (from libSystem)\n','                 (undefined) external _pipe2\n']:
+ try:m.validate_macos_symbols(symbols)
+ except RuntimeError:pass
+ else:raise RuntimeError('unavailable pipe2 import accepted')
+m.validate_macos_symbols('                 (undefined) external _pipe (from libSystem)\n                 (undefined) weak external _getentropy (from libSystem)\n')
+checks.append('weak/strong pipe2 imports rejected; available pipe and getentropy accepted')
 for name in ['/etc/passwd','../escape','a/../../escape','./a','a//b']:
  try:m.safe_name(name)
  except RuntimeError:checks.append('rejected name '+name)
