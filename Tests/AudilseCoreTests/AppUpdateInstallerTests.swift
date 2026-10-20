@@ -79,7 +79,9 @@ private struct UpdateInstallerFixture {
     let fixture = try UpdateInstallerFixture(); defer { fixture.cleanup() }
     let prepared = PreparedAppUpdate(stagingDirectory: fixture.staging, destination: fixture.target)
     let installation = try prepared.start(parentPID: ProcessInfo.processInfo.processIdentifier)
+    #expect(installation.isRunning)
     #expect(installation.cancel())
+    #expect(!installation.isRunning)
     #expect(try String(contentsOf: fixture.target.appendingPathComponent("identity"), encoding: .utf8) == "old")
     prepared.discard()
     #expect(!FileManager.default.fileExists(atPath: fixture.staging.path))

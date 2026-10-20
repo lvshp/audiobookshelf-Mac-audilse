@@ -6,6 +6,11 @@ public final class AppUpdateInstallation: @unchecked Sendable {
     private let lock = NSLock()
     init(process: Process) { self.process = process }
 
+    public var isRunning: Bool {
+        lock.lock(); defer { lock.unlock() }
+        return process.isRunning
+    }
+
     /// False means the helper did not stop in time; retain staging in that case.
     @discardableResult public func cancel() -> Bool {
         lock.lock(); defer { lock.unlock() }
@@ -60,7 +65,7 @@ public enum AppInstallationError: Error, LocalizedError, Sendable {
 public actor AppUpdateInstaller {
     public init() {}
 
-    public func prepare(dmg: URL, release: AppUpdateRelease, installedApp: URL) async throws -> PreparedAppUpdate {
+    public func prepare(dmg: URL, release: AppUpdateRelease, installedApp: URL, progress: @escaping @Sendable (AppUpdateProgress) -> Void = { _ in }) async throws -> PreparedAppUpdate {
         let fm = FileManager.default
         let destination = installedApp.resolvingSymlinksInPath().standardizedFileURL
         let parent = destination.deletingLastPathComponent()
@@ -79,8 +84,10 @@ public actor AppUpdateInstaller {
         }
         try fm.createDirectory(at: mount, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
         // An attach can mount successfully before its process is cancelled.
+        progress(.mounting)
         mounted = true
         _ = try Self.runCommand("/usr/bin/hdiutil", ["attach", dmg.path, "-readonly", "-nobrowse", "-mountpoint", mount.path, "-quiet"])
+        progress(.verifyingApplication)
         let source = mount.appendingPathComponent("Audilse.app", isDirectory: true)
         guard source.resolvingSymlinksInPath().path.hasPrefix(mount.resolvingSymlinksInPath().path + "/"),
               let bundle = Bundle(url: source), bundle.bundleIdentifier == "app.audilse.client",
@@ -94,10 +101,13 @@ public actor AppUpdateInstaller {
         let archs = try Self.runCommand("/usr/bin/lipo", ["-archs", executable.path])
         guard archs.trimmingCharacters(in: .whitespacesAndNewlines) == "arm64" else { throw AppInstallationError.invalidApplication }
         try Task.checkCancellation()
+        progress(.copyingApplication)
         let staged = root.appendingPathComponent("Audilse.app", isDirectory: true)
         _ = try Self.runCommand("/usr/bin/ditto", [source.path, staged.path])
+        progress(.verifyingStagedApplication)
         _ = try Self.runCommand("/usr/bin/codesign", ["--verify", "--deep", "--strict", staged.path])
         _ = try Self.runCommand(staged.appendingPathComponent("Contents/MacOS/Audilse").path, ["--verify-resources"])
+        progress(.unmounting)
         _ = try Self.runCommand("/usr/bin/hdiutil", ["detach", mount.path, "-quiet"])
         mounted = false
         try Self.helperScript.write(to: root.appendingPathComponent("install.sh"), atomically: true, encoding: .utf8)

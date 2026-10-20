@@ -100,20 +100,30 @@ final class ShelfAppDelegate: NSObject, NSApplicationDelegate {
     weak var store: AppStore?
     var reopenMainWindow: (() -> Void)?
     private var isTerminating = false
+    private var terminationApproved = false
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { false }
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
-        guard !isTerminating else { return .terminateLater }
+        if terminationApproved { return .terminateNow }
+        guard !isTerminating else { return .terminateCancel }
         guard AppUpdateController.shared.beginInstallationExit() else { return .terminateCancel }
         guard let store else { return .terminateNow }
         isTerminating = true
         Task {
             let mayTerminate = await store.shutdown()
-            if !mayTerminate, AppUpdateController.shared.isInstalling { AppUpdateController.shared.cancelPreparedInstallation() }
-            if !mayTerminate { isTerminating = false }
-            sender.reply(toApplicationShouldTerminate: mayTerminate)
+            let updater = AppUpdateController.shared
+            if mayTerminate && updater.canFinishInstallationExit() {
+                terminationApproved = true
+                sender.terminate(nil)
+            } else {
+                if updater.isInstalling { updater.cancelPreparedInstallation() }
+                isTerminating = false
+            }
         }
-        return .terminateLater
+        // Never enter AppKit's nested termination loop from a MainActor task:
+        // it can prevent the asynchronous shutdown above from being scheduled.
+        // Cancel this request, save asynchronously, then approve a fresh request.
+        return .terminateCancel
     }
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         reopenMainWindow?()

@@ -6,6 +6,10 @@ struct AboutView: View {
 
     private var isBusy: Bool { updates.isChecking || updates.isDownloading || updates.isInstalling || updates.isCancellingInstallation }
 
+    private func bytes(_ count: Int64) -> String {
+        ByteCountFormatter.string(fromByteCount: count, countStyle: .file)
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -48,12 +52,35 @@ struct AboutView: View {
                             Link(L10n.tr("在 GitHub 查看"), destination: release.pageURL)
                         }
                         if updates.isDownloading || updates.isInstalling {
-                            HStack {
-                                ProgressView().controlSize(.small)
-                                Text(L10n.tr(updates.isInstalling ? "正在安装更新…" : "正在下载更新…"))
-                                Spacer()
-                                if updates.isDownloading && !updates.isInstalling {
-                                    Button(L10n.tr("取消下载")) { updates.cancelDownload() }
+                            VStack(alignment: .leading, spacing: 8) {
+                                HStack {
+                                    Text(updates.progressTitle)
+                                    Spacer()
+                                    if updates.canCancelTransfer {
+                                        Button(L10n.tr("取消更新")) { updates.cancelDownload() }
+                                    }
+                                }
+                                if case let .downloading(received, total) = updates.progress {
+                                    if let total, total > 0 {
+                                        ProgressView(value: min(Double(received) / Double(total), 1))
+                                        Text("\(min(100, Int(Double(received) / Double(total) * 100)))% · " + bytes(received) + " / " + bytes(total))
+                                            .font(.caption.monospacedDigit()).foregroundStyle(.secondary)
+                                    } else {
+                                        ProgressView().controlSize(.small)
+                                        Text(L10n.format("已下载 %1$@", bytes(received))).font(.caption).foregroundStyle(.secondary)
+                                    }
+                                } else {
+                                    HStack {
+                                        ProgressView().controlSize(.small)
+                                        Text(L10n.tr(updates.isSavingForRestart ? "下载和校验已完成" : "此步骤的耗时取决于磁盘与系统检查，请稍候。"))
+                                            .font(.caption).foregroundStyle(.secondary)
+                                    }
+                                }
+                                if let started = updates.startedAt {
+                                    TimelineView(.periodic(from: .now, by: 1)) { context in
+                                        Text(L10n.format("已用时 %1$@ 秒", String(max(0, Int(context.date.timeIntervalSince(started))))))
+                                            .font(.caption.monospacedDigit()).foregroundStyle(.secondary)
+                                    }
                                 }
                             }
                         } else {

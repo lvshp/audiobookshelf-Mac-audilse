@@ -48,13 +48,40 @@ public struct AppUpdateRelease: Sendable {
     }
 }
 
+public enum AppUpdateProgress: Sendable, Equatable {
+    case fetchingChecksum
+    case downloading(received: Int64, total: Int64?)
+    case verifyingDownload
+    case mounting
+    case verifyingApplication
+    case copyingApplication
+    case verifyingStagedApplication
+    case unmounting
+    public var step: Int {
+        switch self {
+        case .fetchingChecksum: 0
+        case .downloading: 1
+        case .verifyingDownload: 2
+        case .mounting: 3
+        case .verifyingApplication: 4
+        case .copyingApplication: 5
+        case .verifyingStagedApplication: 6
+        case .unmounting: 7
+        }
+    }
+}
+
 private final class UpdateDownloadDelegate: NSObject, URLSessionDownloadDelegate, @unchecked Sendable {
     let limit: Int64
-    init(limit: Int64) { self.limit = limit }
+    let progress: @Sendable (Int64, Int64?) -> Void
+    init(limit: Int64, progress: @escaping @Sendable (Int64, Int64?) -> Void) {
+        self.limit = limit; self.progress = progress
+    }
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {}
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64,
                     totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        if totalBytesWritten > limit || totalBytesExpectedToWrite > limit { downloadTask.cancel() }
+        if totalBytesWritten > limit || totalBytesExpectedToWrite > limit { downloadTask.cancel(); return }
+        progress(totalBytesWritten, totalBytesExpectedToWrite > 0 ? totalBytesExpectedToWrite : nil)
     }
     func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse,
                     newRequest request: URLRequest, completionHandler: @escaping @Sendable (URLRequest?) -> Void) {
@@ -132,18 +159,23 @@ public actor GitHubUpdateClient {
         try validateURL(release.pageURL, path: "/\(repository)/releases/tag/\(tag)")
     }
 
-    public func download(_ release: AppUpdateRelease) async throws -> URL {
+    public func download(_ release: AppUpdateRelease, progress: @escaping @Sendable (AppUpdateProgress) -> Void = { _ in }) async throws -> URL {
         try Self.validateRelease(release)
         try Task.checkCancellation()
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent("Audilse-update-" + UUID().uuidString, isDirectory: true)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
         var succeeded = false
         defer { if !succeeded { try? FileManager.default.removeItem(at: directory) } }
+        progress(.fetchingChecksum)
         let checksumFile = try await fetch(release.checksumURL, limit: 4096)
         defer { try? FileManager.default.removeItem(at: checksumFile) }
         let expected = try Self.parseChecksum(Data(contentsOf: checksumFile))
-        let downloaded = try await fetch(release.dmgURL, limit: Self.maximumDMG)
+        progress(.downloading(received: 0, total: nil))
+        let downloaded = try await fetch(release.dmgURL, limit: Self.maximumDMG) { received, total in
+            progress(.downloading(received: received, total: total))
+        }
         defer { try? FileManager.default.removeItem(at: downloaded) }
+        progress(.verifyingDownload)
         let actual = try Self.checksum(downloaded)
         guard actual == expected else { throw AppUpdateError.checksumMismatch }
         try Task.checkCancellation()
@@ -170,16 +202,17 @@ public actor GitHubUpdateClient {
         }
         return hash.finalize().map { String(format: "%02x", $0) }.joined()
     }
-    private func fetch(_ url: URL, limit: Int64) async throws -> URL {
+    private func fetch(_ url: URL, limit: Int64, progress: @escaping @Sendable (Int64, Int64?) -> Void = { _, _ in }) async throws -> URL {
         var request = URLRequest(url: url)
         request.timeoutInterval = 120
         request.setValue("Audilse-Updater/1.0", forHTTPHeaderField: "User-Agent")
-        let (location, response) = try await session.download(for: request, delegate: UpdateDownloadDelegate(limit: limit))
+        let (location, response) = try await session.download(for: request, delegate: UpdateDownloadDelegate(limit: limit, progress: progress))
         do {
             try Task.checkCancellation()
             guard let http = response as? HTTPURLResponse, http.statusCode == 200 else { throw AppUpdateError.invalidResponse }
             let size = try location.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0
             guard size > 0, size <= limit, response.expectedContentLength <= limit else { throw AppUpdateError.tooLarge }
+            progress(Int64(size), response.expectedContentLength > 0 ? response.expectedContentLength : nil)
             return location
         } catch {
             try? FileManager.default.removeItem(at: location)

@@ -17,6 +17,35 @@ final class AppUpdateController {
     var availableRelease: AppUpdateRelease?
     var statusMessage: String?
     var errorMessage: String?
+    private(set) var progress: AppUpdateProgress?
+    private(set) var startedAt: Date?
+    private(set) var isSavingForRestart = false
+    private var operationID: UUID?
+    var canCancelTransfer: Bool { downloadTask != nil && !isSavingForRestart && !isCancellingInstallation }
+
+    var progressTitle: String {
+        if isSavingForRestart { return L10n.tr("正在保存播放与阅读状态，准备重启…") }
+        switch progress {
+        case .fetchingChecksum: return L10n.tr("正在获取校验信息…")
+        case .downloading: return L10n.tr("正在下载安装包…")
+        case .verifyingDownload: return L10n.tr("正在校验下载文件…")
+        case .mounting: return L10n.tr("正在打开安装包…")
+        case .verifyingApplication: return L10n.tr("正在验证应用签名与版本…")
+        case .copyingApplication: return L10n.tr("正在复制新版本…")
+        case .verifyingStagedApplication: return L10n.tr("正在验证新版本资源…")
+        case .unmounting: return L10n.tr("正在完成安装准备…")
+        case nil: return L10n.tr("正在准备更新…")
+        }
+    }
+
+    private func acceptProgress(_ value: AppUpdateProgress, operation: UUID) {
+        guard operationID == operation, !isSavingForRestart,
+              value.step >= (progress?.step ?? 0) else { return }
+        if case let .downloading(received, _) = value,
+           case let .downloading(previous, _) = progress, received < previous { return }
+        progress = value
+    }
+
 
     private var installedVersion: AppUpdateVersion? {
         guard let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
@@ -47,24 +76,30 @@ final class AppUpdateController {
         guard let release = availableRelease, let current = installedVersion, release.version > current,
               !isChecking, !isDownloading, !isInstalling, !isCancellingInstallation, installation == nil else { return }
         errorMessage = nil; statusMessage = nil; isDownloading = true
+        startedAt = Date(); progress = .fetchingChecksum; isSavingForRestart = false
+        let operation = UUID(); operationID = operation
+        let report: @Sendable (AppUpdateProgress) -> Void = { [weak self] value in
+            Task { @MainActor in self?.acceptProgress(value, operation: operation) }
+        }
         let task = Task { @MainActor in
             var downloaded: URL?
             defer {
                 if let downloaded { try? FileManager.default.removeItem(at: downloaded.deletingLastPathComponent()) }
-                isDownloading = false; downloadTask = nil
+                isDownloading = false; downloadTask = nil; operationID = nil
             }
             do {
-                let dmg = try await client.download(release); downloaded = dmg
+                let dmg = try await client.download(release, progress: report); downloaded = dmg
                 try Task.checkCancellation()
                 isDownloading = false; isInstalling = true
-                prepared = try await installer.prepare(dmg: dmg, release: release, installedApp: Bundle.main.bundleURL)
+                prepared = try await installer.prepare(dmg: dmg, release: release, installedApp: Bundle.main.bundleURL, progress: report)
                 try Task.checkCancellation()
+                isSavingForRestart = true
                 NSApp.terminate(nil)
             } catch {
                 if let prepared { Task.detached { prepared.discard() } }
                 prepared = nil
-                isInstalling = false
-                if Task.isCancelled { statusMessage = L10n.tr("已取消下载。") }
+                isInstalling = false; isSavingForRestart = false
+                if Task.isCancelled { statusMessage = L10n.tr("已取消更新，原应用未被替换。") }
                 else { errorMessage = L10n.format("更新未能安装：%1$@", message(for: error)) }
             }
         }
@@ -72,7 +107,19 @@ final class AppUpdateController {
         await task.value
     }
 
-    func cancelDownload() { downloadTask?.cancel() }
+    func cancelDownload() {
+        guard canCancelTransfer else { return }
+        downloadTask?.cancel()
+    }
+
+    func canFinishInstallationExit() -> Bool {
+        guard prepared != nil else { return true }
+        guard installation?.isRunning == true else {
+            errorMessage = L10n.tr("更新助手已停止，未能安装更新。请重新打开应用后重试，或手动安装。")
+            return false
+        }
+        return true
+    }
 
     /// Start the waiting helper before changing application state. It only
     /// replaces the bundle after this process actually exits.
@@ -84,11 +131,12 @@ final class AppUpdateController {
         }
         guard let prepared else { return true }
         do {
+            isSavingForRestart = true
             installation = try prepared.start(parentPID: ProcessInfo.processInfo.processIdentifier)
             return true
         } catch {
             Task.detached { prepared.discard() }
-            self.prepared = nil; isInstalling = false
+            self.prepared = nil; isInstalling = false; isSavingForRestart = false
             errorMessage = L10n.format("更新未能安装：%1$@", message(for: error))
             return false
         }
@@ -111,7 +159,8 @@ final class AppUpdateController {
             if let pending { Task.detached { pending.discard() } }
             installation = nil
             prepared = nil; isInstalling = false
-            errorMessage = L10n.tr("未能保存当前状态，更新已取消。请处理保存错误后重试。")
+            isSavingForRestart = false
+            if errorMessage == nil { errorMessage = L10n.tr("未能保存当前状态，更新已取消。请处理保存错误后重试。") }
         }
     }
 

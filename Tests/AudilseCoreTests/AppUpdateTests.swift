@@ -105,7 +105,11 @@ private final class AppUpdateProtocol: URLProtocol, @unchecked Sendable {
     await #expect(throws: AppUpdateError.checksumMismatch) { try await client.download(release) }
     #expect(try updateDirectories() == originalDirectories)
     let valid = try GitHubUpdateClient.parseRelease(updateWire([updateAsset(6), updateAsset(6, checksum: true)]))
-    let file = try await client.download(valid)
+    let events = UpdateProgressRecorder()
+    let file = try await client.download(valid) { events.append($0) }
+    #expect(events.values.first == .fetchingChecksum)
+    #expect(events.values.contains(.downloading(received: 3, total: 3)))
+    #expect(events.values.last == .verifyingDownload)
     #expect(try Data(contentsOf: file) == Data("abc".utf8))
     #expect(file.deletingLastPathComponent().lastPathComponent.hasPrefix("Audilse-update-"))
     try FileManager.default.removeItem(at: file.deletingLastPathComponent())
@@ -129,4 +133,11 @@ private final class AppUpdateProtocol: URLProtocol, @unchecked Sendable {
     #expect(release.version.version == "1.0.1")
     #expect(release.version.build == 1)
     #expect(release.notes == "Expanded player and search focus fixes.")
+}
+
+private final class UpdateProgressRecorder: @unchecked Sendable {
+    private let lock = NSLock()
+    private var recorded: [AppUpdateProgress] = []
+    func append(_ value: AppUpdateProgress) { lock.lock(); defer { lock.unlock() }; recorded.append(value) }
+    var values: [AppUpdateProgress] { lock.lock(); defer { lock.unlock() }; return recorded }
 }
