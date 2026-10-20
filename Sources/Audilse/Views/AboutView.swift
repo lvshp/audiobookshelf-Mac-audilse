@@ -43,7 +43,7 @@ struct AboutView: View {
                     VStack(alignment: .leading, spacing: 12) {
                         Text(L10n.tr("可用更新")).font(.headline)
                         HStack {
-                            Text("\(release.version.version) (\(release.version.build))")
+                            Text(release.version.version)
                             Spacer()
                             Link(L10n.tr("在 GitHub 查看"), destination: release.pageURL)
                         }

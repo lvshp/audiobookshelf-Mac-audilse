@@ -4,16 +4,23 @@ import AudilsePlayback
 
 struct PlayerBar: View {
     @Bindable var store: AppStore
+    var expanded = false
+    var onExpand: (() -> Void)?
     @State private var showChapters = false
     @State private var showQueue = false
 
     var body: some View {
         VStack(spacing: 0) {
-            Divider().opacity(0.5)
+            if !expanded { Divider().opacity(0.5) }
             if let player = store.activePlayer, let media = player.currentMedia {
-                HStack(spacing: 20) {
-                    nowPlaying(media)
-                        .frame(width: 210, alignment: .leading)
+                (expanded ? AnyLayout(VStackLayout(spacing: 24)) : AnyLayout(HStackLayout(spacing: 20))) {
+                    if !expanded {
+                        Button { onExpand?() } label: {
+                            nowPlaying(media).frame(width: 210, alignment: .leading).contentShape(Rectangle())
+                        }.buttonStyle(.plain).help(L10n.tr("展开播放页"))
+                            .accessibilityLabel(L10n.format("展开播放页：%1$@", media.title))
+                            .accessibilityIdentifier("player.expand")
+                    }
                     VStack(spacing: 9) {
                         HStack(spacing: 22) {
                             Button {
@@ -25,7 +32,7 @@ struct PlayerBar: View {
                                 Group {
                                     if player.isBuffering { ProgressView().controlSize(.small) }
                                     else { Image(systemName: player.isPlaying ? "pause.fill" : "play.fill").font(.system(size: 17, weight: .semibold)) }
-                                }.frame(width: 39, height: 39).background(ShelfTheme.accent, in: Circle()).foregroundStyle(.white)
+                                }.frame(width: expanded ? 64 : 39, height: expanded ? 64 : 39).background(ShelfTheme.accent, in: Circle()).foregroundStyle(.white)
                             }.help(player.isPlaybackRequested ? L10n.tr("暂停") : L10n.tr("播放")).accessibilityIdentifier("player.toggle")
                             Button {
                                 let amount = store.playbackPreferences.jumpForwardAmount
@@ -36,8 +43,8 @@ struct PlayerBar: View {
                         PlaybackProgressView(player: player, useChapterProgress: store.playbackPreferences.useChapterTrack)
                             .id(ObjectIdentifier(player))
                     }.frame(maxWidth: 480)
-                    Spacer(minLength: 0)
-                    HStack(spacing: 14) {
+                    if !expanded { Spacer(minLength: 0) }
+                    HStack(spacing: expanded ? 28 : 14) {
                         Menu {
                             Button(L10n.format("加快 %1$@×", String(describing: store.playbackPreferences.playbackRateIncrementDecrement.formatted()))) { store.adjustPlaybackRate(1, for: player) }.disabled(!player.canAdjustRate(by: store.playbackPreferences.playbackRateIncrementDecrement))
                             Button(L10n.format("减慢 %1$@×", String(describing: store.playbackPreferences.playbackRateIncrementDecrement.formatted()))) { store.adjustPlaybackRate(-1, for: player) }.disabled(!player.canAdjustRate(by: -store.playbackPreferences.playbackRateIncrementDecrement))
@@ -88,7 +95,7 @@ struct PlayerBar: View {
                     Text("AUDILSE").font(.system(size: 8, weight: .medium)).tracking(2).foregroundStyle(.quaternary)
                 }.padding(.horizontal, 29).frame(height: 86)
             }
-        }.background(.regularMaterial)
+        }.background { if !expanded { Rectangle().fill(.regularMaterial) } }
     }
 
     private func nowPlaying(_ media: PlaybackMedia) -> some View {

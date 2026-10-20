@@ -109,7 +109,7 @@ struct CoverView: View {
     }()
 }
 
-private actor CoverDataCache {
+actor CoverDataCache {
     static let shared = CoverDataCache()
     private var tasks: [String: Task<Data?, Never>] = [:]
     func load(key: String, url: URL, client: ABSClient?) async -> Data? {

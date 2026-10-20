@@ -26,7 +26,7 @@ final class AppUpdateController {
     }
     var currentVersionDescription: String {
         guard let current = installedVersion else { return L10n.tr("开发版本") }
-        return "\(current.version) (\(current.build))"
+        return current.version
     }
 
     func check() async {

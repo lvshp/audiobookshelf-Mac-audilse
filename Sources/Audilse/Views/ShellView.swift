@@ -6,6 +6,9 @@ struct ShellView: View {
     @Bindable var store: AppStore
     @State private var columns: NavigationSplitViewVisibility = .all
     @State private var showAccounts = false
+    @State private var showExpandedPlayer = false
+    @FocusState private var searchFocused: Bool
+    @State private var searchBounds: CGRect = .zero
     @State private var subscriptionLibrary: Library?
     @State private var podcastActivityLibrary: Library?
     @State private var showServerManagement = false
@@ -53,8 +56,27 @@ struct ShellView: View {
                         Button { store.notice = nil } label: { Image(systemName: "xmark").font(.caption) }.buttonStyle(.plain)
                     }.padding(.horizontal, 28).padding(.vertical, 9).background(ShelfTheme.accent.opacity(0.04))
                 }
-                PlayerBar(store: store)
+                PlayerBar(store: store, onExpand: { showExpandedPlayer = true })
             }.background(ShelfTheme.canvas)
+            .opacity(showExpandedPlayer ? 0 : 1)
+            .allowsHitTesting(!showExpandedPlayer)
+            .accessibilityHidden(showExpandedPlayer)
+            .overlay {
+                if showExpandedPlayer, let player = store.activePlayer, let media = player.currentMedia {
+                    ExpandedPlayerView(store: store, player: player, media: media,
+                        onCollapse: { showExpandedPlayer = false },
+                        onToggleSidebar: { columns = columns == .all ? .detailOnly : .all })
+                }
+            }
+        }
+        .coordinateSpace(name: "shell.searchFocus")
+        .contentShape(Rectangle())
+        .simultaneousGesture(SpatialTapGesture(coordinateSpace: .named("shell.searchFocus")).onEnded { event in
+            if searchFocused, !searchBounds.contains(event.location) { searchFocused = false }
+        })
+        .onPreferenceChange(SearchBoundsKey.self) { searchBounds = $0 }
+        .onChange(of: showExpandedPlayer) { _, expanded in
+            if expanded { searchFocused = false }
         }
         .toolbar(removing: .sidebarToggle)
         .onChange(of: store.serverTaskActivity.source) { _, _ in dismissedTaskResults = [] }
@@ -127,12 +149,18 @@ struct ShellView: View {
         }
         .onChange(of: store.route) { _, route in
             store.search = ""
+            searchFocused = false
+            showExpandedPlayer = false
             switch route {
             case .home where store.isDemo: Task { await store.loadLibrary() }
             case .library where store.isDemo: Task { await store.loadLibrary() }
             default: break
             }
         }
+        .onChange(of: store.activePlayer?.currentMedia == nil) { _, empty in
+            if empty { showExpandedPlayer = false }
+        }
+        .onChange(of: store.profile?.id) { _, _ in showExpandedPlayer = false }
         .onChange(of: store.activePlayer?.errorDiagnostic) { _, issue in
             if let issue { store.presentError(issue) }
         }
@@ -355,8 +383,16 @@ struct ShellView: View {
             HStack(spacing: 7) {
                 Image(systemName: "magnifyingglass").foregroundStyle(.secondary)
                 TextField(L10n.tr("搜索书名、作者…"), text: $store.search).textFieldStyle(.plain).font(.system(size: 12))
+                    .focused($searchFocused)
+                    .onExitCommand { searchFocused = false }
+                    .accessibilityIdentifier("library.search")
                 if !store.search.isEmpty { Button { store.search = "" } label: { Image(systemName: "xmark.circle.fill").foregroundStyle(.tertiary) }.buttonStyle(.plain) }
             }.padding(.horizontal, 11).padding(.vertical, 7).frame(width: 235).background(.primary.opacity(0.035), in: RoundedRectangle(cornerRadius: 8))
+                .background {
+                    GeometryReader { proxy in
+                        Color.clear.preference(key: SearchBoundsKey.self, value: proxy.frame(in: .named("shell.searchFocus")))
+                    }
+                }
             Button { Task { await store.refresh() } } label: {
                 Image(systemName: "arrow.clockwise").foregroundStyle(.secondary).rotationEffect(.degrees(store.isLoading ? 30 : 0))
             }.buttonStyle(.plain).disabled(store.isLoading || store.isDemo || store.client == nil).help(L10n.tr("刷新书库"))
@@ -494,4 +530,9 @@ struct BookTile: View {
             Button(L10n.tr("标记为已完成"), systemImage: "checkmark.circle") { Task { await store.setFinished(item, finished: true) } }
         }
     }
+}
+
+private struct SearchBoundsKey: PreferenceKey {
+    static var defaultValue: CGRect { .zero }
+    static func reduce(value: inout CGRect, nextValue: () -> CGRect) { value = nextValue() }
 }

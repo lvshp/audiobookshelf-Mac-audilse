@@ -116,3 +116,17 @@ private final class AppUpdateProtocol: URLProtocol, @unchecked Sendable {
     await #expect(throws: CancellationError.self) { try await cancelled.value }
     #expect(try updateDirectories() == originalDirectories)
 }
+
+@Test func updatePatchReleaseWithResetBuildIsNewerThanInstalledVersion() throws {
+    let name = "Audilse-1.0.1-build1-arm64.dmg"
+    let assets: [[String: Any]] = [name, name + ".sha256"].map {
+        ["name": $0, "size": 100, "browser_download_url": "\(updateRepository)/releases/download/v1.0.1/\($0)"]
+    }
+    let release = try GitHubUpdateClient.parseRelease(updateWire(assets, tag: "v1.0.1", notes: "Expanded player and search focus fixes."))
+    for installedBuild in [5, 6, 7, 8] {
+        #expect(try release.version > AppUpdateVersion(version: "1.0.0", build: installedBuild))
+    }
+    #expect(release.version.version == "1.0.1")
+    #expect(release.version.build == 1)
+    #expect(release.notes == "Expanded player and search focus fixes.")
+}

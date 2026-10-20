@@ -1907,3 +1907,9 @@
 "安装包中的应用身份或版本与更新信息不一致。" = "The application identity or version does not match the update.";
 
 "安装准备失败。原应用未被替换，可从 GitHub 手动下载安装。" = "The update could not be prepared. The original app was not replaced. You can install it manually from GitHub.";
+
+/* Expanded player */
+"展开播放页" = "Expand player";
+"展开播放页：%1$@" = "Expand player: %1$@";
+"收起播放页" = "Collapse player";
+"切换侧边栏" = "Toggle sidebar";

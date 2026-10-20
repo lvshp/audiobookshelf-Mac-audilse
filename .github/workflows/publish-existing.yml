@@ -69,12 +69,21 @@ jobs:
           EXPECTED=$(awk '{print $1}' "$DMG.sha256")
           [[ "$EXPECTED" =~ ^[0-9a-f]{64}$ ]]
           printf '%s  %s\n' "$EXPECTED" "$DMG" | sha256sum -c -
+          # Keep the original filename for the updater shipped in 1.0.0.
+          # The public installer uses only the semantic version.
+          PUBLIC_DMG="Audilse-${RELEASE_TAG#v}-arm64.dmg"
+          cp "$DMG" "$PUBLIC_DMG"
+          printf '%s  %s\n' "$EXPECTED" "$PUBLIC_DMG" > "$PUBLIC_DMG.sha256"
           cat > "$RUNNER_TEMP/release-notes.md" <<'NOTES'
           Audiobookshelf 的原生 macOS 客户端，适用于 Apple Silicon（M 系列），需要 macOS 14 或更新版本。
 
           下载 DMG，将 Audilse 拖入 Applications。支持有声书在线与离线收听、章节跳转、进度同步、播客订阅、电子书阅读和服务器管理，提供简体中文与 English。
 
-          包含 HLS 缓冲与章节跳转修复，以及 VLC 在 macOS 27 之前系统上的兼容性修复。
+          本次更新：
+
+          - 点击底部封面或标题，展开右侧播放页；折叠侧边栏后铺满内容窗口。
+          - 播放页支持进度、倍速、定时、章节和队列控制，可通过收起按钮或 Esc 返回。
+          - 修复搜索框焦点无法退出的问题，点击框外或按 Esc 可结束输入并保留搜索文字。
 
           安装包采用 ad-hoc 签名，未经过 Apple 公证。
 
