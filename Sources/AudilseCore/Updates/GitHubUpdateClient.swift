@@ -128,12 +128,19 @@ public actor GitHubUpdateClient {
         let version = String(release.tag_name.dropFirst())
         _ = try AppUpdateVersion(version: version, build: 0)
         try validateURL(release.html_url, path: "/\(repository)/releases/tag/\(release.tag_name)")
-        let prefix = "Audilse-\(version)-build", suffix = "-arm64.dmg"
         var candidates: [(AppUpdateVersion, WireRelease.Asset)] = []
-        for asset in release.assets where asset.name.hasPrefix(prefix) && asset.name.hasSuffix(suffix) {
-            let digits = String(asset.name.dropFirst(prefix.count).dropLast(suffix.count))
-            guard let build = Int(digits), build > 0, String(build) == digits else { throw AppUpdateError.invalidVersion }
-            candidates.append((try AppUpdateVersion(version: version, build: build), asset))
+        // Public releases have one installer per semantic version, with internal build 1.
+        // Read historical build-named releases only when no canonical asset exists.
+        let canonical = release.assets.filter { $0.name == "Audilse-\(version)-arm64.dmg" }
+        if let asset = canonical.first {
+            candidates = [(try AppUpdateVersion(version: version, build: 1), asset)]
+        } else {
+            let prefix = "Audilse-\(version)-build", suffix = "-arm64.dmg"
+            for asset in release.assets where asset.name.hasPrefix(prefix) && asset.name.hasSuffix(suffix) {
+                let digits = String(asset.name.dropFirst(prefix.count).dropLast(suffix.count))
+                guard let build = Int(digits), build > 0, String(build) == digits else { throw AppUpdateError.invalidVersion }
+                candidates.append((try AppUpdateVersion(version: version, build: build), asset))
+            }
         }
         guard let selected = candidates.max(by: { $0.0 < $1.0 }) else { throw AppUpdateError.missingAsset }
         let matchingDMGs = release.assets.filter { $0.name == selected.1.name }
@@ -153,7 +160,14 @@ public actor GitHubUpdateClient {
     }
     private static func validateRelease(_ release: AppUpdateRelease) throws {
         let tag = "v\(release.version.version)"
-        let name = "Audilse-\(release.version.version)-build\(release.version.build)-arm64.dmg"
+        let canonical = "Audilse-\(release.version.version)-arm64.dmg"
+        let name: String
+        if release.dmgURL.lastPathComponent == canonical {
+            guard release.version.build == 1 else { throw AppUpdateError.invalidVersion }
+            name = canonical
+        } else {
+            name = "Audilse-\(release.version.version)-build\(release.version.build)-arm64.dmg"
+        }
         try validateURL(release.dmgURL, path: "/\(repository)/releases/download/\(tag)/\(name)")
         try validateURL(release.checksumURL, path: "/\(repository)/releases/download/\(tag)/\(name).sha256")
         try validateURL(release.pageURL, path: "/\(repository)/releases/tag/\(tag)")

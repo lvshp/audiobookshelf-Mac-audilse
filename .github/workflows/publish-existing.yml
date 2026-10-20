@@ -65,15 +65,10 @@ jobs:
           DMGS=(Audilse-*-arm64.dmg)
           test "${#DMGS[@]}" = 1
           DMG="${DMGS[0]}"
-          [[ "$DMG" == "Audilse-${RELEASE_TAG#v}-build"*"-arm64.dmg" ]]
+          [[ "$DMG" == "Audilse-${RELEASE_TAG#v}-arm64.dmg" ]]
           EXPECTED=$(awk '{print $1}' "$DMG.sha256")
           [[ "$EXPECTED" =~ ^[0-9a-f]{64}$ ]]
           printf '%s  %s\n' "$EXPECTED" "$DMG" | sha256sum -c -
-          # Keep the original filename for the updater shipped in 1.0.0.
-          # The public installer uses only the semantic version.
-          PUBLIC_DMG="Audilse-${RELEASE_TAG#v}-arm64.dmg"
-          cp "$DMG" "$PUBLIC_DMG"
-          printf '%s  %s\n' "$EXPECTED" "$PUBLIC_DMG" > "$PUBLIC_DMG.sha256"
           cat > "$RUNNER_TEMP/release-notes.md" <<'NOTES'
           Audiobookshelf 的原生 macOS 客户端，适用于 Apple Silicon（M 系列），需要 macOS 14 或更新版本。
 

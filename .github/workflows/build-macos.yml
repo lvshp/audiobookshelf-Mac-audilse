@@ -132,13 +132,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # The build-suffixed copy remains available to the 1.0.0 updater.
-          shopt -s nullglob
-          DMGS=(release-assets/Audilse-*-build*-arm64.dmg)
-          test "${#DMGS[@]}" = 1
-          PUBLIC_DMG="release-assets/Audilse-${RELEASE_TAG#v}-arm64.dmg"
-          cp "${DMGS[0]}" "$PUBLIC_DMG"
-          (cd release-assets && shasum -a 256 "${PUBLIC_DMG#release-assets/}" > "${PUBLIC_DMG#release-assets/}.sha256")
+          test -f "release-assets/Audilse-${RELEASE_TAG#v}-arm64.dmg"
           cat > "$RUNNER_TEMP/release-notes.md" <<'NOTES'
           Audilse 的 macOS 安装包，适用于 Apple Silicon（M 系列），需要 macOS 14 或更新版本。
 

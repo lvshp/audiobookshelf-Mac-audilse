@@ -7,7 +7,7 @@ OUTPUT_DIR="${2:-build/delivery}"
 test -d "$APP_PATH"
 VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$APP_PATH/Contents/Info.plist")
 BUILD=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$APP_PATH/Contents/Info.plist")
-[[ "$VERSION" =~ ^[0-9]+(\.[0-9]+)*$ && "$BUILD" =~ ^[0-9]+$ ]]
+[[ "$VERSION" =~ ^[0-9]+(\.[0-9]+)*$ && "$BUILD" = 1 ]]
 test "$(lipo -archs "$APP_PATH/Contents/MacOS/Audilse")" = arm64
 codesign --verify --deep --strict "$APP_PATH"
 mkdir -p "$OUTPUT_DIR" "$PROJECT_DIR/build"
@@ -24,7 +24,7 @@ cleanup() {
 trap cleanup EXIT
 ditto "$APP_PATH" "$STAGE/Audilse.app"
 ln -s /Applications "$STAGE/Applications"
-DMG="$OUTPUT_DIR/Audilse-${VERSION}-build${BUILD}-arm64.dmg"
+DMG="$OUTPUT_DIR/Audilse-${VERSION}-arm64.dmg"
 hdiutil create -volname Audilse -srcfolder "$STAGE" -ov -format UDZO "$DMG"
 hdiutil verify "$DMG"
 hdiutil attach "$DMG" -readonly -nobrowse -mountpoint "$MOUNT" -quiet
@@ -35,4 +35,4 @@ MOUNTED=0
 shasum -a 256 "$DMG" > "$DMG.sha256"
 cp LICENSE "$OUTPUT_DIR/LICENSE.txt"
 cp Packaging/VLC_DISTRIBUTION.md Packaging/THIRD_PARTY_NOTICES.md "$OUTPUT_DIR/"
-printf 'Audilse %s (build %s), Apple Silicon, macOS 14+.\nAd-hoc signed; not notarized.\nKeep the accompanying VLC dependency/source bundle when distributing.\n' "$VERSION" "$BUILD" > "$OUTPUT_DIR/README.txt"
+printf 'Audilse %s, Apple Silicon, macOS 14+.\nAd-hoc signed; not notarized.\nKeep the accompanying VLC dependency/source bundle when distributing.\n' "$VERSION" > "$OUTPUT_DIR/README.txt"

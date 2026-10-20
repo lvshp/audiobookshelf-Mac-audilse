@@ -141,3 +141,29 @@ private final class UpdateProgressRecorder: @unchecked Sendable {
     func append(_ value: AppUpdateProgress) { lock.lock(); defer { lock.unlock() }; recorded.append(value) }
     var values: [AppUpdateProgress] { lock.lock(); defer { lock.unlock() }; return recorded }
 }
+
+@Test func updateCanonicalInstallerWorksWithoutBuildNamedAssets() throws {
+    let name = "Audilse-1.0.1-arm64.dmg"
+    let assets: [[String: Any]] = [name, name + ".sha256"].map {
+        ["name": $0, "size": 100, "browser_download_url": "\(updateRepository)/releases/download/v1.0.1/\($0)"]
+    }
+    let release = try GitHubUpdateClient.parseRelease(updateWire(assets, tag: "v1.0.1"))
+    let malformed: [String: Any] = ["name": "Audilse-1.0.1-buildx-arm64.dmg", "size": 100,
+                                    "browser_download_url": "https://example.com/unused"]
+    let mixed = try GitHubUpdateClient.parseRelease(updateWire(assets + [malformed], tag: "v1.0.1"))
+    #expect(mixed.dmgURL == release.dmgURL)
+    #expect(release.dmgURL.lastPathComponent == name)
+    #expect(release.version.build == 1)
+    #expect(try release.version > AppUpdateVersion(version: "1.0.0", build: 1))
+    #expect(throws: AppUpdateError.missingAsset) {
+        try GitHubUpdateClient.parseRelease(updateWire([assets[0]], tag: "v1.0.1"))
+    }
+    #expect(throws: AppUpdateError.missingAsset) {
+        try GitHubUpdateClient.parseRelease(updateWire(assets + [assets[0]], tag: "v1.0.1"))
+    }
+    var unsafe = assets
+    unsafe[1]["browser_download_url"] = "https://example.com/\(name).sha256"
+    #expect(throws: AppUpdateError.unsafeURL) {
+        try GitHubUpdateClient.parseRelease(updateWire(unsafe, tag: "v1.0.1"))
+    }
+}
