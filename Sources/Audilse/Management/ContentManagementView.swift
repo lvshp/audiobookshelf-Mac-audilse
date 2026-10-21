@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 import AudilseCore
 import UniformTypeIdentifiers
 
@@ -50,14 +51,24 @@ struct ContentManagementView: View {
             }.padding(20)
             Divider()
             ManagementNotice(operation: model.operation)
-            TabView(selection: $tab) {
-                metadata.tabItem { Label(L10n.tr("元数据"), systemImage: "text.alignleft") }.tag(0)
-                matching.tabItem { Label(L10n.tr("匹配"), systemImage: "magnifyingglass") }.tag(1)
-                covers.tabItem { Label(L10n.tr("封面"), systemImage: "photo") }.tag(2)
-                tracks.tabItem { Label(L10n.tr("音轨"), systemImage: "waveform") }.tag(3)
-                chapters.tabItem { Label(L10n.tr("章节"), systemImage: "list.bullet") }.tag(4)
-                tools.tabItem { Label(L10n.tr("文件与工具"), systemImage: "wrench.and.screwdriver") }.tag(5)
-            }.padding(16)
+            Picker(L10n.tr("管理内容页面"), selection: $tab) {
+                Text(L10n.tr("元数据")).tag(0)
+                Text(L10n.tr("匹配")).tag(1)
+                Text(L10n.tr("封面")).tag(2)
+                Text(L10n.tr("音轨")).tag(3)
+                Text(L10n.tr("章节")).tag(4)
+                Text(L10n.tr("文件与工具")).tag(5)
+            }
+            .pickerStyle(.segmented)
+            .labelsHidden()
+            .frame(maxWidth: 720)
+            .padding(.horizontal, 20)
+            .padding(.top, 14)
+            .padding(.bottom, 14)
+            selectedContent
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.horizontal, 16)
+                .padding(.bottom, 16)
         }.frame(minWidth: 850, idealWidth: 1050, minHeight: 650, idealHeight: 820)
         .task { await model.open(store: store, item: item) }
         .onDisappear { model.cancel() }
@@ -65,6 +76,7 @@ struct ContentManagementView: View {
         .onChange(of: fileActionSourceIsCurrent) { _, isCurrent in if !isCurrent { selectedReader = nil } }
         .onChange(of: model.libraryFiles) { _, _ in ebookPage = 0; metadataPage = 0; attachmentPage = 0 }
         .onChange(of: diagnosticFiles) { _, _ in diagnosticPage = 0 }
+        .onChange(of: tab) { _, _ in NSApp.keyWindow?.makeFirstResponder(nil) }
         .sheet(item: $selectedReader) { target in SelectedReaderSheet(store: store, target: target) }
         .alert(confirmation?.title ?? L10n.tr("确认操作"), isPresented: Binding(get: { confirmation != nil }, set: { if !$0 { confirmation = nil } })) {
             if let confirmation {
@@ -75,6 +87,24 @@ struct ContentManagementView: View {
         .fileImporter(isPresented: $importingCover, allowedContentTypes: [.image]) { result in
             switch result { case .success(let url): Task { await model.uploadCover(url) }; case .failure(let error): model.operation.error = L10n.error(error) }
         }
+    }
+    @ViewBuilder private var selectedContent: some View {
+        ZStack {
+            retainedPage(metadata, index: 0)
+            retainedPage(matching, index: 1)
+            retainedPage(covers, index: 2)
+            retainedPage(tracks, index: 3)
+            retainedPage(chapters, index: 4)
+            retainedPage(tools, index: 5)
+        }
+    }
+    private func retainedPage<Content: View>(_ content: Content, index: Int) -> some View {
+        content
+            .opacity(tab == index ? 1 : 0)
+            .disabled(tab != index)
+            .allowsHitTesting(tab == index)
+            .accessibilityHidden(tab != index)
+            .zIndex(tab == index ? 1 : 0)
     }
     private var metadata: some View {
         Form {

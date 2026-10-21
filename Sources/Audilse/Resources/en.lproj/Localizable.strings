@@ -1932,3 +1932,4 @@
 "下载和校验已完成" = "Download and verification complete";
 "此步骤的耗时取决于磁盘与系统检查，请稍候。" = "This step depends on disk and system checks. Please wait.";
 "已用时 %1$@ 秒" = "Elapsed: %1$@ seconds";
+"管理内容页面" = "Content management section";
